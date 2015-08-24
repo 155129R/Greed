@@ -33,15 +33,9 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
-=======
     <ClCompile Include="hinting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
->>>>>>> c889a9b0ce1edf7c7aaceb22f837d1628c189e05
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -51,12 +45,6 @@
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hinting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="move.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

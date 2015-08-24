@@ -30,40 +30,15 @@ void boardGen();
 void printBoard();
 void changeScreen();
 unsigned int currentTurn;
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
-
-string Result;
-string Result2;
-double  g_dElapsedTime;
-double  g_dDeltaTime;
-bool    g_abKeyPressed[K_COUNT];
-COORD consoleSize;
-size_t playfieldX = 30, playfieldY = 30;
-size_t numbers = 9;
-
-vector<vector<unsigned int>> playfield(playfieldY);
-difficulty level = Novice;
-playsize dim = normal;
-int Dchoice = 1;
-int total =0;
-int point =0;
-int total2 =0;
-int point2 =0;
-=======
 bool g_abKeyPressed[K_COUNT];
->>>>>>> c889a9b0ce1edf7c7aaceb22f837d1628c189e05
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
 // Console object
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
-Console g_Console(80,35, "Greed Reloaded");
-=======
 Console g_Console(80,40, "Greed Reloaded");
 
->>>>>>> c889a9b0ce1edf7c7aaceb22f837d1628c189e05
 
 //-----Core functions
 
@@ -91,11 +66,7 @@ void init( void )
 	fieldSize.Y = 20;
 
     // sets the width, height and the font name to use in the console
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
-    g_Console.setConsoleFont(0, 22, L"Consolas");
-=======
     g_Console.setConsoleFont(0, 25, L"Consolas");
->>>>>>> c889a9b0ce1edf7c7aaceb22f837d1628c189e05
 }
 
 //--------------------------------------------------------------
@@ -377,7 +348,7 @@ void renderCharacter()
 {
     // Draw the location of the characters
 	const WORD inactive = 0x0A;
-    int a = 153;
+
 	for (size_t i = 0; i < playerNumber; i++)
 	{
 		WORD charColor[2] = { 0x0E, 0x0D };
@@ -386,12 +357,7 @@ void renderCharacter()
 		COORD*C = &((*P).L);
 		WORD c = (*P).A ? charColor[i] : inactive;
 
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
-		g_Console.writeToBuffer((*C).m_cLocation, (char)a, charColor[i]);
-        a++;
-=======
 		g_Console.writeToBuffer((*P).L, (char)2, charColor[i]);
->>>>>>> c889a9b0ce1edf7c7aaceb22f837d1628c189e05
 	}
 }
 
