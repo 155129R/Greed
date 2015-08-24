@@ -30,7 +30,6 @@ void boardGen();
 void printBoard();
 void changeScreen();
 unsigned int currentTurn;
-<<<<<<< 916031dc9ce3a3b8803277377d554fb58727f3fe
 
 string Result;
 string Result2;
