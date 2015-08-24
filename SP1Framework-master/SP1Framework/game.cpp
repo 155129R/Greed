@@ -2,16 +2,24 @@
 //
 //
 #include "game.h"
-#include "Framework\console.h"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <fstream>
-#include <vector>
-using std::vector;
-using std::string;
+
+double  g_dElapsedTime;
+double  g_dDeltaTime;
+
+COORD consoleSize;
 
 const size_t playerNumber = 2;
+Player players[playerNumber];
+
+vector<vector<PField>> playfield;
+PSize fieldSize;
+size_t numbers = 5;
+
+difficulty level = Novice;
+playsize dim = normal;
+int Dchoice = 1;
+int total = 0;
+int point = 0;
 
 int chooseDiff();
 int chooseSize();
@@ -19,36 +27,17 @@ void changeDiff(int Dchoice);
 void changeSize();
 void boardGen();
 void printBoard();
-void move(int X, int Y, unsigned int P);
 void changeScreen();
-bool check(string key);
 unsigned int currentTurn;
-
-string Result;
-string Result2;
-double  g_dElapsedTime;
-double  g_dDeltaTime;
-bool    g_abKeyPressed[K_COUNT];
-COORD consoleSize;
-size_t playfieldX = 30, playfieldY = 30;
-size_t numbers = 9;
-
-vector<vector<unsigned int>> playfield(playfieldY);
-difficulty level = Novice;
-playsize dim = normal;
-int Dchoice = 1;
-int total =0;
-int point =0;
-int total2 =0;
-int point2 =0;
+bool g_abKeyPressed[K_COUNT];
 
 // Game specific variables here
-SGameChar   g_sChar[playerNumber];
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
 // Console object
-Console g_Console(80,35, "Greed Reloaded");
+Console g_Console(80,25, "Greed Reloaded");
+
 
 //-----Core functions
 
@@ -71,8 +60,12 @@ void init( void )
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
 
+	//Defining playfieldSize
+	fieldSize.X = 15;
+	fieldSize.Y = 9;
+
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 22, L"Consolas");
+    g_Console.setConsoleFont(0, 16, L"Consolas");
 }
 
 //--------------------------------------------------------------
@@ -102,29 +95,24 @@ void shutdown( void )
 // Output   : void
 //--------------------------------------------------------------
 void getInput( void )
-{    //player1
-    g_abKeyPressed[K_UP]            = isKeyPressed('W');
-    g_abKeyPressed[K_UPLEFT]        = isKeyPressed('Q');
-    g_abKeyPressed[K_UPRIGHT]       = isKeyPressed('E');
-    g_abKeyPressed[K_DOWN]          = isKeyPressed('X');
-    g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed('Z');
-    g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed('C');
-    g_abKeyPressed[K_LEFT]          = isKeyPressed('A');
-    g_abKeyPressed[K_RIGHT]         = isKeyPressed('D');
+{    
+    g_abKeyPressed[K_UP]     = isKeyPressed(VK_UP);
+    g_abKeyPressed[K_DOWN]   = isKeyPressed(VK_DOWN);
+    g_abKeyPressed[K_LEFT]   = isKeyPressed(VK_LEFT);
+    g_abKeyPressed[K_RIGHT]  = isKeyPressed(VK_RIGHT);
 
+	g_abKeyPressed[K_UP2] = isKeyPressed(VK_NUMPAD8);
+	g_abKeyPressed[K_UPLEFT2] = isKeyPressed(VK_NUMPAD7);
+	g_abKeyPressed[K_UPRIGHT2] = isKeyPressed(VK_NUMPAD9);
+	g_abKeyPressed[K_DOWN2] = isKeyPressed(VK_NUMPAD2);
+	g_abKeyPressed[K_DOWNLEFT2] = isKeyPressed(VK_NUMPAD1);
+	g_abKeyPressed[K_DOWNRIGHT2] = isKeyPressed(VK_NUMPAD3);
+	g_abKeyPressed[K_LEFT2] = isKeyPressed(VK_NUMPAD4);
+	g_abKeyPressed[K_RIGHT2] = isKeyPressed(VK_NUMPAD6);
 
     g_abKeyPressed[K_SPACE]  = isKeyPressed(VK_SPACE);
     g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
-    g_abKeyPressed[K_RETRY]  = isKeyPressed('R');
-    //player 2
-    g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
-    g_abKeyPressed[K_UPLEFT2]        = isKeyPressed(VK_NUMPAD7);
-    g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed(VK_NUMPAD9);
-    g_abKeyPressed[K_DOWN2]          = isKeyPressed(VK_NUMPAD2);
-    g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed(VK_NUMPAD1);
-    g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed(VK_NUMPAD3);
-    g_abKeyPressed[K_LEFT2]          = isKeyPressed(VK_NUMPAD4);
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);
+    g_abKeyPressed[K_RETRY]=	isKeyPressed('R');
 }
 
 //--------------------------------------------------------------
@@ -198,25 +186,55 @@ void gameplay()
 
 void moveCharacter()
 {
-	//Player 1 controls
-    if (g_abKeyPressed[K_UP])		move(0, -1, 0);
-	if (g_abKeyPressed[K_DOWN])		move(0, 1, 0);
-	if (g_abKeyPressed[K_LEFT])		move(-1, 0, 0);
-	if (g_abKeyPressed[K_RIGHT])	move(1, 0, 0);
-	if (g_abKeyPressed[K_UPLEFT])	move(-1, -1, 0);
-	if (g_abKeyPressed[K_UPRIGHT])	move(1, -1, 0);
-	if (g_abKeyPressed[K_DOWNLEFT])	move(-1, 1, 0);
-	if (g_abKeyPressed[K_DOWNRIGHT])move(1, 1, 0);
+	Player* P = &players[currentTurn];
 
-	//Player 2 controls (please insert input controls for player 2)
-    if (g_abKeyPressed[K_UP2])		    move(0, -1, 1);
-	if (g_abKeyPressed[K_DOWN2])		move(0, 1, 1);
-	if (g_abKeyPressed[K_LEFT2])		move(-1, 0, 1);
-	if (g_abKeyPressed[K_RIGHT2])	    move(1, 0, 1);
-	if (g_abKeyPressed[K_UPLEFT2])	    move(-1, -1, 1);
-	if (g_abKeyPressed[K_UPRIGHT2])	    move(1, -1, 1);
-	if (g_abKeyPressed[K_DOWNLEFT2])	move(-1, 1, 1);
-	if (g_abKeyPressed[K_DOWNRIGHT2])   move(1, 1, 1);
+	//Player 1 controls
+	if (currentTurn == 0)
+	{
+		bool B = false;
+
+		do
+		{
+			if (g_abKeyPressed[K_UP])			if (move(0, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWN])			if (move(0, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_LEFT])			if (move(-1, 0, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_RIGHT])		if (move(1, 0, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPLEFT])		if (move(-1, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPRIGHT])		if (move(1, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNLEFT])		if (move(-1, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNRIGHT])	if (move(1, 1, *P)) { B = true; break; }
+		} while (false);
+
+		if (B)
+		{
+			currentTurn++;
+			hinting(players[currentTurn].L);
+		}
+	}
+
+	//Player 2 controls
+	if (currentTurn == 1)
+	{
+		bool B = false;
+
+		do
+		{
+			if (g_abKeyPressed[K_UP2])			if (move(0, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWN2])		if (move(0, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_LEFT2])		if (move(-1, 0, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_RIGHT2])		if (move(1, 0, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPLEFT2])		if (move(-1, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPRIGHT2])		if (move(1, -1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNLEFT2])	if (move(-1, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNRIGHT2])	if (move(1, 1, *P)) { B = true; break; }
+		} while (false);
+
+		if (B)
+		{
+			currentTurn = 0;
+			hinting(players[currentTurn].L);
+		}
+	}
 
 	//Global controls
 
@@ -230,52 +248,6 @@ void moveCharacter()
         g_bQuitGame = true; 
 }
 
-//X and Y can be -1, 0, or 1 for unit directions; P represents player number (zero-based index)
-void move(int X, int Y, unsigned int P)
-{
-	if (P != currentTurn) return;
-	COORD* C = &(g_sChar[P].m_cLocation);
-
-	int TX = (*C).X + X;
-	int TY = (*C).Y + Y;
-
-	if (TX < 0) return;
-	if (TX >= (int)playfieldX) return;
-	if (TY < 0) return;
-	if (TY >= (int)playfieldY) return;
-
-	int N = playfield[TY][TX];
-
-	if (TX + (N - 1)*X < 0) return;
-	if (TX + (N - 1)*X >= (int)playfieldX) return;
-	if (TY + (N - 1)*Y < 0) return;
-	if (TY + (N - 1)*Y >= (int)playfieldY) return;
-
-	for (int i = 1; i < N; i++)
-	{
-		TX += X; TY += Y;
-
-		if (playfield[TY][TX] == 0) return;
-	}
-
-	for (int i = 0; i < N; i++) playfield[(*C).Y + Y*i][(*C).X + X*i] = 0;
-
-	(*C).X += N*X;
-	(*C).Y += N*Y;
-
-	point = N;						//Point Counter
-    point2 = N;
-    std::ostringstream convert;
-    std::ostringstream convert2;
-    convert << static_cast<int>(total);
-    convert2 << static_cast<int>(total2);
-    Result = convert.str();
-    Result2 = convert2.str();
-
-	currentTurn = (currentTurn < playerNumber - 1) ? currentTurn + 1 : 0;
-
-	return;
-}
 
 //-----Rendering
 
@@ -324,38 +296,45 @@ void renderGame()
 
 void renderMap()
 {
-    COORD c =  g_Console.getConsoleSize();
-    char V;
-     for (unsigned int Y = 0; Y < playfieldY; Y++)
+	for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
     {
-        for (unsigned int X = 0; X < playfieldX; X++)
+        for (unsigned int X = 0; X < fieldSize.X; X++)
         {
-            //gotoXY(X, Y);
+            gotoXY(X, Y);
             
-			V = playfield[Y][X];
-            g_Console.writeToBuffer(X, Y, static_cast<char>(V == 0 ? 0 : V + 48), 0x9F);
+			char V = playfield[Y][X].V;
+
+			WORD C;
+
+			switch (playfield[Y][X].H)
+			{
+			case NONE: C = 0x2F; break;
+			case NEARBY: C = 0xDF; break;
+			case TRAJECTORY: C = 0x5F; break;
+			}
+
+            g_Console.writeToBuffer(X, Y, static_cast<char>(V == 0 ? 0 : V + 48), C);
             
         }
     }
-     g_Console.writeToBuffer(0, playfield.size() + 4, Result, 0x59);
-     g_Console.writeToBuffer(0, playfield.size() + 4, Result2, 0x59);
-    g_Console.writeToBuffer(0, playfield.size() + 1, "Total Points: ", 0x59);
+    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points: ", 0x59);
+	g_Console.writeToBuffer(0, fieldSize.Y + 2, currentTurn + '0', 0x59);
 }
 
 void renderCharacter()
 {
     // Draw the location of the characters
-	WORD charColor[playerNumber] = { 0x0A, 0x0C };
 	const WORD inactive = 0x0A;
-    int a = 153;
+
 	for (size_t i = 0; i < playerNumber; i++)
 	{
-		SGameChar* C = &(g_sChar[i]);
+		WORD charColor[2] = { 0x0F, 0x0D };
 
-		WORD c = (*C).m_bActive ? charColor[i] : inactive;
+		Player* P = &(players[i]);
+		COORD*C = &((*P).L);
+		WORD c = (*P).A ? charColor[i] : inactive;
 
-		g_Console.writeToBuffer((*C).m_cLocation, (char)a, charColor[i]);
-        a++;
+		g_Console.writeToBuffer((*P).L, (char)2, charColor[i]);
 	}
 }
 
@@ -432,23 +411,24 @@ int chooseSize()
 }
 
 void boardGen(){
-    
-    for (unsigned int Y = 0; Y < playfieldY; Y++)
-    {
-        vector<unsigned int> V(playfieldX);
+	playfield.resize(fieldSize.Y);
 
-        for (unsigned int X = 0; X < playfieldX; X++)
+    for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
+    {
+        vector<PField> V(fieldSize.X);
+
+        for (unsigned int X = 0; X < fieldSize.X; X++)
 		{
-			unsigned int chances[8] = {45, 50, 55, 60, 70, 80, 90, 95}; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9; if chance is less than getting a 2, use 1.
+			unsigned int chances[8] = {50, 60, 70, 75, 80, 90, 93, 95}; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9; if chance is less than getting a 2, use 1.
 
 			unsigned int R = rand() % 100;
 
-			V[X] = 1;
+			V[X].V = 1;
 
-			while (V[X] < numbers)
+			while (V[X].V < numbers)
 			{
-				if (R < chances[V[X] - 1]) break;
-				V[X]++;
+				if (R < chances[V[X].V - 1]) break;
+				V[X].V++;
 			}
         }
         playfield[Y] = V;
@@ -458,19 +438,19 @@ void boardGen(){
 	{
 		currentTurn = 0;
 
-		SGameChar* S = &(g_sChar[i]);
-		COORD* L = &((*S).m_cLocation);
+		Player* P = &(players[i]);
+		COORD* L = &((*P).L);
 
 		do
 		{
 			bool onTop = false;
 
-			(*L).X = rand() % playfieldX;
-			(*L).Y = rand() % playfieldY;
+			(*L).X = rand() % fieldSize.X;
+			(*L).Y = rand() % fieldSize.Y;
 
 			for (size_t j = 0; j < i; j++)
 			{
-				COORD* P = &(g_sChar[j].m_cLocation);
+				COORD* P = &(players[j].L);
 				if ((*P).X == (*L).X) { onTop = true; break; }
 				if ((*P).Y == (*L).Y) { onTop = true; break; }
 			}
@@ -478,9 +458,11 @@ void boardGen(){
 			if (onTop) continue;
 		} while (false);
 		
-		playfield[(*L).Y][(*L).X] = 0;
+		playfield[(*L).Y][(*L).X].V = 0;
 
-		(*S).m_bActive = true;
+		(*P).A = true;
 	}
+
+	hinting(players[currentTurn].L);
 }
 //Retry
