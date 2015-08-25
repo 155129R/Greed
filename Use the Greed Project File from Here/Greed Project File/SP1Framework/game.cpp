@@ -2,6 +2,8 @@
 //
 //
 #include "game.h"
+#include <fstream>
+#include <string>
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -19,9 +21,10 @@ size_t numbers = 5;
 difficulty level = Novice;
 playsize dim = normal;
 int Dchoice = 1;
-int total = 0;
-int point = 0;
-
+std::string Result1;
+std::string Result2;
+int total1;
+int total2;
 int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
@@ -249,8 +252,13 @@ void moveCharacter()
 
 	//Global controls
 
-	if (g_abKeyPressed[K_RETRY]) //Retry
+if (g_abKeyPressed[K_RETRY]) //Retry
 	{
+		//PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
+		total1=0;
+		total2=0;
+		Result1.clear();
+		Result2.clear();
 		boardGen();
 		void render();
 	}
@@ -340,9 +348,13 @@ void renderMap()
             
         }
     }
-    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points: ", 0x59);
-	g_Console.writeToBuffer(0, fieldSize.Y + 2, currentTurn + '0', 0x59);
+    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points for player 1: ", 0x59);
+	g_Console.writeToBuffer(0,fieldSize.Y +2,Result1,0x59);
+	g_Console.writeToBuffer(0,fieldSize.Y +3,"Total Points for player 2 :", 0x59);
+	g_Console.writeToBuffer(0,fieldSize.Y +4,Result2,0x59);
+	g_Console.writeToBuffer(0, fieldSize.Y + 5, currentTurn + '0', 0x59);
 }
+
 
 void renderCharacter()
 {

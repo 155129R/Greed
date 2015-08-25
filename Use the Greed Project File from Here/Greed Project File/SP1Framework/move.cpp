@@ -1,4 +1,8 @@
 #include "move.h"
+extern int total1;
+extern std::string Result1;
+extern int total2;
+extern std::string Result2;
 
 bool move(EKEYS key, Player& Pointer)//use -1,0,1
 {
@@ -47,8 +51,11 @@ bool move(EKEYS key, Player& Pointer)//use -1,0,1
 
 		playfield[Pointer.playerLocation.Y][Pointer.playerLocation.X].Value = 0;
 	}
-    Sleep(300);//NOT VERY HELPFULL 
-    Sleep(400);
+	addingPoints(selectedNumber,total1,total2);
+	convertTotalPoints(Result1,Result2,total1,total2);
+
+    //Sleep(300);//NOT VERY HELPFULL 
+    //Sleep(400);
 	return true;
     
 }
