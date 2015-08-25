@@ -1,7 +1,9 @@
 // This is the main file for the game logic and function
 //
 //
+
 #include "game.h"
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -22,6 +24,23 @@ int Dchoice = 1;
 int total = 0;
 int point = 0;
 
+=======
+#include "point.h"
+#include "Framework\console.h"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+#include <vector>
+using std::vector; 
+using std::string;
+
+const size_t playerNumber = 2;
+string Result;
+int points=0;
+int total=0;
+int N=0;
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
@@ -30,7 +49,23 @@ void boardGen();
 void printBoard();
 void changeScreen();
 unsigned int currentTurn;
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 bool g_abKeyPressed[K_COUNT];
+=======
+ //int Nvalue=0;
+double  g_dElapsedTime;
+double  g_dDeltaTime;
+bool    g_abKeyPressed[K_COUNT];
+COORD consoleSize;
+size_t playfieldX = 15, playfieldY = 9;
+size_t numbers = 5;
+
+vector<vector<unsigned int>> playfield(playfieldY);
+difficulty level = Novice;
+playsize dim = normal;
+int Dchoice = 1;
+
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -142,6 +177,7 @@ void update(double dt)
     // get the delta time
     g_dElapsedTime += dt;
     g_dDeltaTime = dt;
+	//addingPoints(N, total);
     switch (g_eGameState)
     {
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
@@ -194,8 +230,20 @@ void gameplay()
 
 void moveCharacter()
 {
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 	Player* P = &players[currentTurn];
 
+=======
+	if (g_abKeyPressed[K_RETRY]) //Retry
+	{	
+		//PlaySound(L"retry.wav",NULL,SND_ASYNC);
+		//int N=0;
+		//total = 0;
+		boardGen();
+		//Result.clear();
+		//pointcounter(Result,N,total,A);	
+	}
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 	//Player 1 controls
 	if (currentTurn == 0)
 	{
@@ -213,6 +261,7 @@ void moveCharacter()
 			if (g_abKeyPressed[K_DOWNRIGHT])	if (move(1, 1, *P)) { B = true; break; }
 		} while (false);
 
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 		if (B)
 		{
 			currentTurn +=1;
@@ -225,6 +274,20 @@ void moveCharacter()
     else if (currentTurn == 1)
 	{
 		bool B = false;
+=======
+	
+    // quits the game if player hits the escape key
+    if (g_abKeyPressed[K_ESCAPE])
+        g_bQuitGame = true; 
+}
+
+//X and Y can be -1, 0, or 1 for unit directions; P represents player number (zero-based index)
+void move(int X, int Y, unsigned int P)
+{
+
+	if (P != currentTurn) return;
+	COORD* C = &(g_sChar[P].m_cLocation);
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 
 		do
 		{
@@ -239,6 +302,7 @@ void moveCharacter()
 			if (g_abKeyPressed[K_DOWNRIGHT2])	    if (move(1, 1, *P)) { B = true; break; }
 		} while (false);
 
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 		if (B)
 		{
 			currentTurn = 0;
@@ -248,6 +312,13 @@ void moveCharacter()
 	}
 
 	//Global controls
+=======
+	int	N = playfield[TY][TX];
+	if (TX + (N - 1)*X < 0) return;
+	if (TX + (N - 1)*X >= (int)playfieldX) return;
+	if (TY + (N - 1)*Y < 0) return;
+	if (TY + (N - 1)*Y >= (int)playfieldY) return;
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 
 	if (g_abKeyPressed[K_RETRY]) //Retry
 	{
@@ -255,6 +326,7 @@ void moveCharacter()
 		void render();
 	}
 
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
 	if (g_abKeyPressed[K_HINT])
 	{
 		if (!hintOn && players[currentTurn].H > 0)
@@ -268,6 +340,28 @@ void moveCharacter()
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
         g_bQuitGame = true; 
+=======
+	for (int i = 0; i < N; i++) playfield[(*C).Y + Y*i][(*C).X + X*i] = 0;
+	{
+	(*C).X += N*X;
+	(*C).Y += N*Y;
+	}
+	addingPoints( N,total);
+	convertTotalPoints (Result,total);
+
+	/*point = N;						//Point Counter
+    point2 = N;
+    std::ostringstream convert;
+    std::ostringstream convert2;
+    convert << static_cast<int>(total);
+    convert2 << static_cast<int>(total2);
+    Result = convert.str();
+    Result2 = convert2.str();*/
+
+	//currentTurn = (currentTurn < playerNumber - 1) ? currentTurn + 1 : 0;
+	
+	
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 }
 
 
@@ -314,10 +408,18 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+	
 }
 
 void renderMap()
 {
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
+=======
+	
+	//convertTotalPoints (Result,total);
+	
+    COORD c =  g_Console.getConsoleSize();
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
     char V;
 	for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
     {
@@ -339,9 +441,21 @@ void renderMap()
             g_Console.writeToBuffer(X, Y, static_cast<char>(V == 0 ? 0 : V + 48), C);
             
         }
+<<<<<<< Updated upstream:Use the Greed Project File from Here/Backup/SP1Framework/game.cpp
     }
     g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points: ", 0x59);
 	g_Console.writeToBuffer(0, fieldSize.Y + 2, currentTurn + '0', 0x59);
+=======
+
+    }	
+	
+	 //g_Console.writeToBuffer(0, playfield.size() + 3,N, 0x59);
+	  g_Console.writeToBuffer(0, playfield.size() + 3,static_cast<int>(points), 0x59);
+	  g_Console.writeToBuffer(0,playfield.size()+ 4,static_cast<int>(total),0x59);
+      g_Console.writeToBuffer(0, playfield.size() + 2,Result, 0x59);
+//     g_Console.writeToBuffer(0, playfield.size() + 4, Result2, 0x59);
+    
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.cpp
 }
 
 void renderCharacter()

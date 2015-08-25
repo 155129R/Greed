@@ -50,6 +50,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,12 +81,17 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hinting.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< Updated upstream:SP1Framework-master/SP1Framework/SP1Framework.vcxproj
     <ClCompile Include="move.cpp" />
+=======
+    <ClCompile Include="points.cpp" />
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/SP1Framework.vcxproj
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

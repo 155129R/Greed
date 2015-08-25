@@ -2,6 +2,7 @@
 #define _GAME_H
 
 #include "Framework\timer.h"
+<<<<<<< Updated upstream:SP1Framework-master/SP1Framework/game.h
 #include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
@@ -10,6 +11,10 @@
 #include <vector>
 using std::vector;
 using std::string;
+=======
+#include "point.h"
+#include <iostream>
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.h
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
@@ -111,6 +116,7 @@ struct VBool
 	vector<vector<bool>> V;
 };
 
+<<<<<<< Updated upstream:SP1Framework-master/SP1Framework/game.h
 
 void hinting(COORD C);
 bool move(int X, int Y, Player& P);
@@ -118,10 +124,26 @@ bool move(int X, int Y, Player& P);
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
+=======
+void init        ( void );      // initialize your variables, allocate memory, etc
+void getInput    ( void );      // get input from player
+void update      ( double dt ); // update the game and the state of the game
+void render      ( void );      // renders the current state of the game to the console
+void shutdown    ( void );      // do clean up, free memory
+void splashScreenWait();    // waits for time to pass in splash screen
+           // gameplay logic
+void moveCharacter();
+void addingPoints(int N,int &total);
+void convertTotalPoints (std::string &Result,int &total);
+void gameplay();       // moves the character, collision detection, physics, etc
+void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
+>>>>>>> Stashed changes:SP1Framework-master(LATEST FRAMEWORK)/SP1Framework-master/SP1Framework/game.h
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
+//void PointCounter(int N,std::string Result);
 void renderMap();
+
 // renders the map to the buffer first
 void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc

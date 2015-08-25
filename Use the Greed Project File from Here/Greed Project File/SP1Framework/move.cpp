@@ -1,4 +1,10 @@
 #include "move.h"
+#include "PointSystem.h"
+#include <string>
+extern int total1 =0;
+extern std::string Result1;
+extern int total2=0;
+extern std::string Result2;
 
 bool move(int X, int Y, Player& P)
 {
@@ -33,6 +39,10 @@ bool move(int X, int Y, Player& P)
 
 		playfield[P.L.Y][P.L.X].V = 0;
 	}
+	addingPoints(N,total1,total2);
+	convertTotalPoints(Result1,Result2,total1,total2);
+
     Sleep(1000);
+	
 	return true;
 }
