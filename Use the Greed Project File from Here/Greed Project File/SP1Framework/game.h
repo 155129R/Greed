@@ -3,7 +3,6 @@
 
 #include "Framework\timer.h"
 #include "Framework\console.h"
-#include "PointSystem.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -30,10 +29,10 @@ enum highlightedState
 	TRAJECTORY
 };
 
-struct PField
+struct playerField
 {
-	unsigned int V;
-	highlightedState H;
+	unsigned int Value;
+	highlightedState Hint;
 };
 
 struct PSize
@@ -42,21 +41,17 @@ struct PSize
 	size_t Y;
 };
 
-extern vector<vector<PField>> playfield;
+extern vector<vector<playerField>> playfield;
 
 extern PSize fieldSize;
-extern int total1;
-extern std::string Result1;
-extern int total2;
-extern std::string Result2;
-extern unsigned int currentTurn;
+
 //End of Playfield variables
 
 //--Player variables
 
 struct Player
 {
-	COORD L;
+	COORD playerLocation;
 	unsigned int H;
 	bool A;
 };
@@ -119,14 +114,13 @@ struct VBool
 };
 
 
-void hinting(COORD C);
+void hinting(COORD hintCoord);
 void hintFlush();
-bool move(int X, int Y, Player& P);
+bool move(EKEYS keys, Player& Pointer);
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
-
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff

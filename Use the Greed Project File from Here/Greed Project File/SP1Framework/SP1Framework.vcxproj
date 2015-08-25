@@ -81,7 +81,6 @@
     <ClCompile Include="hinting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move.cpp" />
-    <ClCompile Include="points.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
@@ -89,7 +88,6 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="hinting.h" />
     <ClInclude Include="move.h" />
-    <ClInclude Include="PointSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

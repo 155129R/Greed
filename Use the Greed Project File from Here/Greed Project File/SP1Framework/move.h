@@ -1,11 +1,10 @@
-#ifndef _GAME_H
-#define _GAME_H
+#ifndef _MOVE_H
+#define _MOVE_H
 
 #include "Framework\timer.h"
 #include "Framework\console.h"
 #include <iostream>
 #include <vector>
-#include <string>
 using std::vector;
 using std::string;
 
@@ -18,10 +17,10 @@ enum highlightedState
 	TRAJECTORY
 };
 
-struct PField
+struct playerField
 {
-	unsigned int V;
-	highlightedState H;
+	unsigned int Value;
+	highlightedState Hint;
 };
 
 struct PSize
@@ -30,10 +29,9 @@ struct PSize
 	size_t Y;
 };
 
-extern vector<vector<PField>> playfield;
+extern vector<vector<playerField>> playfield;
 
 extern PSize fieldSize;
-
 
 //End of Playfield variables
 
@@ -41,14 +39,30 @@ extern PSize fieldSize;
 
 struct Player
 {
-	COORD L;
+	COORD playerLocation;
 	unsigned int H;
 	bool A;
 };
-void	addingPoints(int N,int &total1,int &total2);
-void	convertTotalPoints (string &Result1,string &Result2 ,int &total1,int &total2);
-extern int total1;
-extern std::string Result1;
-extern int total2;
-extern std::string Result2;
-#endif // _GAME_H
+enum EKEYS
+{
+    K_UP,
+    K_UPLEFT,
+    K_UPRIGHT,
+    K_DOWN,
+    K_DOWNLEFT,
+    K_DOWNRIGHT,
+    K_LEFT,
+	K_RIGHT,
+	K_UP2,
+	K_UPLEFT2,
+	K_UPRIGHT2,
+	K_DOWN2,
+	K_DOWNLEFT2,
+	K_DOWNRIGHT2,
+	K_LEFT2,
+	K_RIGHT2,
+
+};
+bool move(EKEYS key, Player& Pointer);//use -1,0,1
+
+#endif // _MOVE_H

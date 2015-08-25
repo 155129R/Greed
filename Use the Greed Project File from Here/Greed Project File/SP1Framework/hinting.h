@@ -17,10 +17,10 @@ enum highlightedState
 	TRAJECTORY
 };
 
-struct PField
+struct playerField
 {
-	unsigned int V;
-	highlightedState H;
+    unsigned int Value;
+	highlightedState Hint;
 };
 
 struct PSize
@@ -29,7 +29,7 @@ struct PSize
 	size_t Y;
 };
 
-extern vector<vector<PField>> playfield;
+extern vector<vector<playerField>> playfield;
 extern PSize fieldSize;
 
 struct VBool

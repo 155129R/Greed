@@ -2,8 +2,7 @@
 //
 //
 #include "game.h"
-#include "PointSystem.h"
-#include <string>
+
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 
@@ -13,17 +12,16 @@ const size_t playerNumber = 2;
 Player players[playerNumber];
 bool hintOn = false;
 
-vector<vector<PField>> playfield;
+vector<vector<playerField>> playfield;
 PSize fieldSize;
 size_t numbers = 5;
 
 difficulty level = Novice;
 playsize dim = normal;
 int Dchoice = 1;
-//int total = 0;
-//int point = 0;
-std::string Result1;
-std::string Result2;
+int total = 0;
+int point = 0;
+
 int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
@@ -33,7 +31,7 @@ void printBoard();
 void changeScreen();
 unsigned int currentTurn;
 bool g_abKeyPressed[K_COUNT];
-extern int total ;
+
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
@@ -205,14 +203,14 @@ void moveCharacter()
 
 		do
 		{
-			if (g_abKeyPressed[K_UP])			if (move(0, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWN])			if (move(0, 1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_LEFT])			if (move(-1, 0, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_RIGHT])		if (move(1, 0, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPLEFT])		if (move(-1, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPRIGHT])		if (move(1, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNLEFT])		if (move(-1, 1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNRIGHT])	if (move(1, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWN])			if (move(K_DOWN, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_LEFT])			if (move(K_LEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_RIGHT])		if (move(K_RIGHT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPLEFT])		if (move(K_UPLEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPRIGHT])		if (move(K_UPRIGHT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNLEFT])		if (move(K_DOWNLEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNRIGHT])	if (move(K_DOWNRIGHT, *P)) { B = true; break; }
 		} while (false);
 
 		if (B)
@@ -231,14 +229,14 @@ void moveCharacter()
 		do
 		{
 
-			if (g_abKeyPressed[K_UP2])			    if (move(0, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWN2])		    if (move(0, 1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_LEFT2])		    if (move(-1, 0, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_RIGHT2])		    if (move(1, 0, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPLEFT2])		    if (move(-1, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPRIGHT2])		    if (move(1, -1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNLEFT2])	    if (move(-1, 1, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNRIGHT2])	    if (move(1, 1, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UP2])			    if (move(K_UP, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWN2])			if (move(K_DOWN, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_LEFT2])			if (move(K_LEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_RIGHT2])		    if (move(K_RIGHT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPLEFT2])		    if (move(K_UPLEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_UPRIGHT2])		    if (move(K_UPRIGHT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNLEFT2])		if (move(K_DOWNLEFT, *P)) { B = true; break; }
+			if (g_abKeyPressed[K_DOWNRIGHT2])	    if (move(K_DOWNRIGHT, *P)) { B = true; break; }
 		} while (false);
 
 		if (B)
@@ -253,11 +251,6 @@ void moveCharacter()
 
 	if (g_abKeyPressed[K_RETRY]) //Retry
 	{
-		PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
-		total1=0;
-		total2=0;
-		Result1.clear();
-		Result2.clear();
 		boardGen();
 		void render();
 	}
@@ -268,7 +261,7 @@ void moveCharacter()
 		{
 			hintOn = true;
 			players[currentTurn].H--;
-			hinting(players[currentTurn].L);
+			hinting(players[currentTurn].playerLocation);
 		}
 	}
 
@@ -332,11 +325,11 @@ void renderMap()
         {
             //gotoXY(X, Y);
             
-			V = playfield[Y][X].V;
+			V = playfield[Y][X].Value;
 
 			WORD C;
 
-			switch (playfield[Y][X].H)
+			switch (playfield[Y][X].Hint)
 			{
 			case NONE: C = 0x2F; break;
 			case NEARBY: C = 0xDF; break;
@@ -347,12 +340,8 @@ void renderMap()
             
         }
     }
-	
-    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points for player 1: ", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +2,Result1,0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +3,"Total Points for player 2 :", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +4,Result2,0x59);
-	g_Console.writeToBuffer(0, fieldSize.Y + 5, currentTurn + '0', 0x59);
+    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points: ", 0x59);
+	g_Console.writeToBuffer(0, fieldSize.Y + 2, currentTurn + '0', 0x59);
 }
 
 void renderCharacter()
@@ -365,10 +354,10 @@ void renderCharacter()
 		WORD charColor[2] = { 0x0E, 0x0D };
 
 		Player* P = &(players[i]);
-		COORD*C = &((*P).L);
+		COORD*C = &((*P).playerLocation);
 		WORD c = (*P).A ? charColor[i] : inactive;
 
-		g_Console.writeToBuffer((*P).L, (char)2, charColor[i]);
+		g_Console.writeToBuffer((*P).playerLocation, (char)2, charColor[i]);
 	}
 }
 
@@ -449,7 +438,7 @@ void boardGen(){
 
     for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
     {
-        vector<PField> V(fieldSize.X);
+        vector<playerField> V(fieldSize.X);
 
         for (unsigned int X = 0; X < fieldSize.X; X++)
 		{
@@ -457,13 +446,13 @@ void boardGen(){
 
 			unsigned int R = rand() % 100;
 
-			V[X].V = 1;
-			V[X].H = NONE;
+			V[X].Value = 1;
+			V[X].Hint = NONE;
 
-			while (V[X].V < numbers)
+			while (V[X].Value < numbers)
 			{
-				if (R < chances[V[X].V - 1]) break;
-				V[X].V++;
+				if (R < chances[V[X].Value - 1]) break;
+				V[X].Value++;
 			}
         }
         playfield[Y] = V;
@@ -474,26 +463,26 @@ void boardGen(){
 		currentTurn = 0;
 
 		Player* P = &(players[i]);
-		COORD* L = &((*P).L);
+		COORD* playerLocation = &((*P).playerLocation);
 
 		do
 		{
 			bool onTop = false;
 
-			(*L).X = rand() % fieldSize.X;
-			(*L).Y = rand() % fieldSize.Y;
+			(*playerLocation).X = rand() % fieldSize.X;
+			(*playerLocation).Y = rand() % fieldSize.Y;
 
 			for (size_t j = 0; j < i; j++)
 			{
-				COORD* P = &(players[j].L);
-				if ((*P).X == (*L).X) { onTop = true; break; }
-				if ((*P).Y == (*L).Y) { onTop = true; break; }
+				COORD* P = &(players[j].playerLocation);
+				if ((*P).X == (*playerLocation).X) { onTop = true; break; }
+				if ((*P).Y == (*playerLocation).Y) { onTop = true; break; }
 			}
 
 			if (onTop) continue;
 		} while (false);
 		
-		playfield[(*L).Y][(*L).X].V = 0;
+		playfield[(*playerLocation).Y][(*playerLocation).X].Value = 0;
 
 		(*P).A = true;
 		(*P).H = 3;

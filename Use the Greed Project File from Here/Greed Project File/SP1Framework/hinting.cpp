@@ -2,49 +2,49 @@
 
 void hintFlush();
 
-const size_t S = 8;
+const size_t directionSize = 8;
 
-const int Dx[S] = { -1, 1, 0, 0, -1, 1, -1, 1 };
-const int Dy[S] = { 0, 0, -1, 1, -1, -1, 1, 1 };
+const int directionX[directionSize] = { -1, 1, 0, 0, -1, 1, -1, 1 };
+const int directionY[directionSize] = { 0, 0, -1, 1, -1, -1, 1, 1 };
 
-void hinting(COORD C)
+void hinting(COORD hintCoord)
 {
-	for (unsigned int D = 0; D < S; D++)
+	for (unsigned int D = 0; D < directionSize; D++)
 	{
-		int MX = Dx[D];
-		int MY = Dy[D];
+		int moveX = directionX[D];
+		int moveY = directionY[D];
 
-		int X = MX + C.X;
-		int Y = MY + C.Y;
+		int hintcoordX = moveX + hintCoord.X;
+		int hintcoordY = moveY + hintCoord.Y;
 
-		if (X < 0) continue;
-		if (Y < 0) continue;
-		if (X >= (int)playfield[0].size()) continue;
-		if (Y >= (int)playfield.size()) continue;
+		if (hintcoordX < 0) continue;
+		if (hintcoordY < 0) continue;
+		if (hintcoordX >= (int)playfield[0].size()) continue;
+		if (hintcoordY >= (int)playfield.size()) continue;
 
-		int N = playfield[Y][X].V;
-		if (N == 0) continue;
+		int finalplace = playfield[hintcoordY][hintcoordX].Value;
+		if (finalplace == 0) continue;
 
-		if (X + MX * (N - 1) < 0) continue;
-		if (Y + MY * (N - 1) < 0) continue;
-		if (X + MX * (N - 1) >= (signed)playfield[0].size()) continue;
-		if (Y + MY * (N - 1) >= (signed)playfield.size()) continue;
+		if (hintcoordX + moveX * (finalplace - 1) < 0) continue;
+		if (hintcoordY + moveY * (finalplace - 1) < 0) continue;
+		if (hintcoordX + moveX * (finalplace - 1) >= (signed)playfield[0].size()) continue;
+		if (hintcoordY + moveY * (finalplace - 1) >= (signed)playfield.size()) continue;
 		
-		bool B = true;
+		bool checktrue = true;
 		
-		for (int i = 1; i < N; i++)
+		for (int i = 1; i < finalplace; i++)
 		{
-			if (playfield[Y + i * MY][X + i * MX].V == 0)
+			if (playfield[hintcoordY + i * moveY][hintcoordX + i * moveX].Value == 0)
 			{
-				B = false;
+				checktrue = false;
 				break;
 			}
 		}
 
-		if (!B) continue;
+		if (!checktrue) continue;
 
-		playfield[Y][X].H = NEARBY;
-		for (int i = 1; i < N; i++) playfield[Y + i * MY][X + i * MX].H = TRAJECTORY;
+		playfield[hintcoordY][hintcoordX].Hint = NEARBY;
+		for (int i = 1; i < finalplace; i++) playfield[hintcoordY + i * moveY][hintcoordX + i * moveX].Hint = TRAJECTORY;
 
 		continue;
 	}
@@ -52,7 +52,7 @@ void hinting(COORD C)
 
 void hintFlush()
 {
-	for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
-	for (unsigned int X = 0; X < fieldSize.X; X++)
-		playfield[Y][X].H = NONE;
+	for (unsigned int hintcoordY = 0; hintcoordY < fieldSize.Y; hintcoordY++)
+	for (unsigned int hintcoordX = 0; hintcoordX < fieldSize.X; hintcoordX++)
+		playfield[hintcoordY][hintcoordX].Hint = NONE;
 }
