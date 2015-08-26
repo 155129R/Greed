@@ -1,5 +1,5 @@
-#ifndef _GAME_H
-#define _GAME_H
+#ifndef _HINTING_H
+#define _HINTING_H
 
 #include "Framework\console.h"
 #include <iostream>

@@ -1,8 +1,4 @@
 #include "move.h"
-extern int total1;
-extern std::string Result1;
-extern int total2;
-extern std::string Result2;
 
 bool move(EKEYS key, Player& Pointer)//use -1,0,1
 {
@@ -11,13 +7,13 @@ bool move(EKEYS key, Player& Pointer)//use -1,0,1
     switch(key)
     {
     case K_UP:                      coordY = -1;                break;
-    case K_UPLEFT:                  coordX = -1;  coordY = -1;  break;
-    case K_UPRIGHT:                 coordX = 1;   coordY = -1;  break;
     case K_DOWN:                    coordY = 1;                 break;
-    case K_DOWNLEFT:                coordX = -1;  coordY = 1;   break;
-    case K_DOWNRIGHT:               coordX = 1;   coordY = 1;   break;
     case K_LEFT:                    coordX = -1;                break;
     case K_RIGHT:                   coordX = 1;                 break;
+    case K_DOWNLEFT:                coordX = -1;  coordY = 1;   break;
+    case K_DOWNRIGHT:               coordX = 1;   coordY = 1;   break;
+    case K_UPLEFT:                  coordX = -1;  coordY = -1;  break;
+    case K_UPRIGHT:                 coordX = 1;   coordY = -1;  break;
     
     }
 	int currentcoordX = Pointer.playerLocation.X + coordX;//cuurent location on player in direction by one step
@@ -51,11 +47,8 @@ bool move(EKEYS key, Player& Pointer)//use -1,0,1
 
 		playfield[Pointer.playerLocation.Y][Pointer.playerLocation.X].Value = 0;
 	}
-	addingPoints(selectedNumber,total1,total2);
-	convertTotalPoints(Result1,Result2,total1,total2);
-
-    //Sleep(300);//NOT VERY HELPFULL 
-    //Sleep(400);
+    Sleep(300);//NOT VERY HELPFULL 
+    Sleep(400);
 	return true;
     
 }
