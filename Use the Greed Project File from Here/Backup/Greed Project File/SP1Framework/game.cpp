@@ -2,8 +2,6 @@
 //
 //
 #include "game.h"
-#include <fstream>
-#include <string>
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -21,10 +19,9 @@ size_t numbers = 5;
 difficulty level = Novice;
 playsize dim = normal;
 int Dchoice = 1;
-std::string Result1;
-std::string Result2;
-int total1;
-int total2;
+int total = 0;
+int point = 0;
+
 int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
@@ -100,8 +97,27 @@ void shutdown( void )
 //--------------------------------------------------------------
 void getInput( void )
 {   
-    //PLAYER1
-    g_abKeyPressed[K_UP]            = isKeyPressed('W');
+ //   //PLAYER1
+ //   g_abKeyPressed[K_UP]            = isKeyPressed(VK_NUMPAD8);
+ //   g_abKeyPressed[K_UPLEFT]        = isKeyPressed(VK_NUMPAD7);
+	//g_abKeyPressed[K_UPRIGHT]       = isKeyPressed(VK_NUMPAD9);
+ //   g_abKeyPressed[K_DOWN]          = isKeyPressed(VK_NUMPAD2);
+ //   g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed(VK_NUMPAD1);
+	//g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed(VK_NUMPAD3);
+ //   g_abKeyPressed[K_LEFT]          = isKeyPressed(VK_NUMPAD4);
+ //   g_abKeyPressed[K_RIGHT]         = isKeyPressed(VK_NUMPAD6);
+
+ //   //PLAYER2
+ //   g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
+ //   g_abKeyPressed[K_UPLEFT2]        = isKeyPressed(VK_NUMPAD7);
+	//g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed(VK_NUMPAD9);
+ //   g_abKeyPressed[K_DOWN2]          = isKeyPressed(VK_NUMPAD2);
+ //   g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed(VK_NUMPAD1);
+	//g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed(VK_NUMPAD3);
+ //   g_abKeyPressed[K_LEFT2]          = isKeyPressed(VK_NUMPAD4);
+ //   g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);
+
+     g_abKeyPressed[K_UP]            = isKeyPressed('W');
     g_abKeyPressed[K_UPLEFT]        = isKeyPressed('Q');
 	g_abKeyPressed[K_UPRIGHT]       = isKeyPressed('E');
     g_abKeyPressed[K_DOWN]          = isKeyPressed('X');
@@ -118,16 +134,6 @@ void getInput( void )
 	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed('C');
     g_abKeyPressed[K_LEFT2]          = isKeyPressed('A');
     g_abKeyPressed[K_RIGHT2]         = isKeyPressed('D');
-
-    //PLAYER2
-    /*g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
-    g_abKeyPressed[K_UPLEFT2]        = isKeyPressed(VK_NUMPAD7);
-	g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed(VK_NUMPAD9);
-    g_abKeyPressed[K_DOWN2]          = isKeyPressed(VK_NUMPAD2);
-    g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed(VK_NUMPAD1);
-	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed(VK_NUMPAD3);
-    g_abKeyPressed[K_LEFT2]          = isKeyPressed(VK_NUMPAD4);
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);*/
 
     g_abKeyPressed[K_SPACE]         = isKeyPressed(VK_SPACE);
     g_abKeyPressed[K_ESCAPE]        = isKeyPressed(VK_ESCAPE);
@@ -215,7 +221,7 @@ void moveCharacter()
 
 		do
 		{
-			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true;  exit; break; }
+			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_DOWN])			if (move(K_DOWN, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_LEFT])			if (move(K_LEFT, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_RIGHT])		if (move(K_RIGHT, *P)) { B = true; break; }
@@ -261,13 +267,8 @@ void moveCharacter()
 
 	//Global controls
 
-if (g_abKeyPressed[K_RETRY]) //Retry
+	if (g_abKeyPressed[K_RETRY]) //Retry
 	{
-		//PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
-		total1=0;
-		total2=0;
-		Result1.clear();
-		Result2.clear();
 		boardGen();
 		void render();
 	}
@@ -357,13 +358,9 @@ void renderMap()
             
         }
     }
-    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points for player 1: ", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +2,Result1,0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +3,"Total Points for player 2 :", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +4,Result2,0x59);
-	g_Console.writeToBuffer(0, fieldSize.Y + 5, currentTurn + '0', 0x59);
+    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points: ", 0x59);
+	g_Console.writeToBuffer(0, fieldSize.Y + 2, currentTurn + '0', 0x59);
 }
-
 
 void renderCharacter()
 {
@@ -409,50 +406,50 @@ void renderToScreen()
 
 //-----Others
 
-void changeScreen(){
-    int choice = chooseSize();
-    switch(choice){
-        case 1: playfield.resize(15);
-            break;
-        case 2: playfield.resize(30);
-            break;
-        case 3: playfield.resize(40);
-            break;
-    }
-}
-
-void changeDiff(int Dchoice){
-    Dchoice = chooseDiff();
-    switch(Dchoice){
-    case 1: level = Novice;
-            break;
-        case 2: level = Intermediate;
-            break;
-        case 3: level = Advanced;
-            break;
-    }
-    g_eGameState = S_GAME;
-}
-
-int chooseDiff()
-{
-    int choice;
-    std::cout<<"Select your difficulty: "<<"(1 for Novice, 2 for Intermediate, 3 for Advance)"<<std::endl;
-    std::cin>>choice;
-    
-    return choice;
-}
-
-int chooseSize()
-{
-    int choice;
-    std::cout<<"Sizes: "<<std::endl;
-    std::cout<<"1: 15 x 15"<<std::endl;
-    std::cout<<"2: 30 x 30"<<std::endl;
-    std::cout<<"3: 45 x 45"<<std::endl;
-    std::cin>>choice;
-    return choice;
-}
+//void changeScreen(){
+//    int choice = chooseSize();
+//    switch(choice){
+//        case 1: playfield.resize(15);
+//            break;
+//        case 2: playfield.resize(30);
+//            break;
+//        case 3: playfield.resize(40);
+//            break;
+//    }
+//}
+//
+//void changeDiff(int Dchoice){
+//    Dchoice = chooseDiff();
+//    switch(Dchoice){
+//    case 1: level = Novice;
+//            break;
+//        case 2: level = Intermediate;
+//            break;
+//        case 3: level = Advanced;
+//            break;
+//    }
+//    g_eGameState = S_GAME;
+//}
+//
+//int chooseDiff()
+//{
+//    int choice;
+//    std::cout<<"Select your difficulty: "<<"(1 for Novice, 2 for Intermediate, 3 for Advance)"<<std::endl;
+//    std::cin>>choice;
+//    
+//    return choice;
+//}
+//
+//int chooseSize()
+//{
+//    int choice;
+//    std::cout<<"Sizes: "<<std::endl;
+//    std::cout<<"1: 15 x 15"<<std::endl;
+//    std::cout<<"2: 30 x 30"<<std::endl;
+//    std::cout<<"3: 45 x 45"<<std::endl;
+//    std::cin>>choice;
+//    return choice;
+//}
 
 void boardGen(){
 	playfield.resize(fieldSize.Y);
@@ -509,4 +506,3 @@ void boardGen(){
 		(*P).H = 3;
 	}
 }
-//Retry

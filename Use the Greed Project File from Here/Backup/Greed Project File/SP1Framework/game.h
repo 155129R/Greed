@@ -5,6 +5,8 @@
 #include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
+#include <sstream>
+#include <fstream>
 #include <vector>
 using std::vector;
 using std::string;
@@ -41,6 +43,7 @@ struct PSize
 
 extern vector<vector<playerField>> playfield;
 
+extern PSize fieldSize;
 
 //End of Playfield variables
 
@@ -109,12 +112,7 @@ struct VBool
 {
 	vector<vector<bool>> V;
 };
-extern PSize fieldSize;
-extern int total1;
-extern std::string Result1;
-extern int total2;
-extern std::string Result2;
-extern unsigned int currentTurn;
+
 
 void hinting(COORD hintCoord);
 void hintFlush();
