@@ -7,17 +7,13 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
-
+size_t numbers = 5;
 COORD consoleSize;
-
 const size_t playerNumber = 2;
 Player players[playerNumber];
 bool hintOn = false;
-
 vector<vector<playerField>> playfield;
 PSize fieldSize;
-size_t numbers = 5;
-
 difficulty level = Novice;
 playsize dim = normal;
 int Dchoice = 1;
@@ -29,10 +25,8 @@ int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
 void changeSize();
-void boardGen();
-void printBoard();
+
 void changeScreen();
-void renderPlayersTurn();
 unsigned int currentTurn;
 bool g_abKeyPressed[K_COUNT];
 
@@ -102,33 +96,24 @@ void shutdown( void )
 void getInput( void )
 {   
     //PLAYER1
-    g_abKeyPressed[K_UP]            = isKeyPressed('W');
-    g_abKeyPressed[K_UPLEFT]        = isKeyPressed('Q');
-	g_abKeyPressed[K_UPRIGHT]       = isKeyPressed('E');
-    g_abKeyPressed[K_DOWN]          = isKeyPressed('X');
-    g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed('Z');
-	g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed('C');
-    g_abKeyPressed[K_LEFT]          = isKeyPressed('A');
-    g_abKeyPressed[K_RIGHT]         = isKeyPressed('D');
-
-    g_abKeyPressed[K_UP2]            = isKeyPressed('W');
-    g_abKeyPressed[K_UPLEFT2]        = isKeyPressed('Q');
-	g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed('E');
-    g_abKeyPressed[K_DOWN2]          = isKeyPressed('X');
-    g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed('Z');
-	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed('C');
-    g_abKeyPressed[K_LEFT2]          = isKeyPressed('A');
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed('D');
+    g_abKeyPressed[K_UP]            = isKeyPressed(VK_NUMPAD8);
+    g_abKeyPressed[K_UPLEFT]        = isKeyPressed(VK_NUMPAD7);
+	g_abKeyPressed[K_UPRIGHT]       = isKeyPressed(VK_NUMPAD9);
+    g_abKeyPressed[K_DOWN]          = isKeyPressed(VK_NUMPAD2);
+    g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed(VK_NUMPAD1);
+	g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed(VK_NUMPAD3);
+    g_abKeyPressed[K_LEFT]          = isKeyPressed(VK_NUMPAD4);
+    g_abKeyPressed[K_RIGHT]         = isKeyPressed(VK_NUMPAD6);
 
     //PLAYER2
-    /*g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
+    g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
     g_abKeyPressed[K_UPLEFT2]        = isKeyPressed(VK_NUMPAD7);
 	g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed(VK_NUMPAD9);
     g_abKeyPressed[K_DOWN2]          = isKeyPressed(VK_NUMPAD2);
     g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed(VK_NUMPAD1);
 	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed(VK_NUMPAD3);
     g_abKeyPressed[K_LEFT2]          = isKeyPressed(VK_NUMPAD4);
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);*/
+    g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);
 
     g_abKeyPressed[K_SPACE]         = isKeyPressed(VK_SPACE);
     g_abKeyPressed[K_ESCAPE]        = isKeyPressed(VK_ESCAPE);
@@ -187,45 +172,7 @@ void render()
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
-void renderPlayersTurn()
-{	
-	COORD C;
-	C.X =playfield.size()+4;
-	C.Y=7;
-	if(currentTurn==0)
-	{
-		std::string Players1Turn;
-		std::ifstream currentPlayerTurn;
-		currentPlayerTurn.open("Player1.txt");
-		for(int j=0; j<20; j++)
-		{
-			for(int i=0;currentPlayerTurn.good(); i++)
-			{
-			std::getline(currentPlayerTurn, Players1Turn);
-			g_Console.writeToBuffer(C.X,C.Y, Players1Turn,0x59);
-			C.Y++;
-			}
-			C.X++;
-		}
-	}
-	else if(currentTurn==1)
-	{
-		std::string Players2Turn;
-		std::ifstream currentPlayerTurn;
-		currentPlayerTurn.open("Player2.txt");
-		for(int j=0; j<20; j++)
-		{
-			for(int i=0;currentPlayerTurn.good(); i++)
-			{
-			std::getline(currentPlayerTurn, Players2Turn);
-			g_Console.writeToBuffer(C.X,C.Y, Players2Turn,0x59);
-			C.Y++;
-			}
-			C.X++;
-		}
 
-	}
-}
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
@@ -254,7 +201,7 @@ void moveCharacter()
 
 		do
 		{
-			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true;  exit; break; }
+			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_DOWN])			if (move(K_DOWN, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_LEFT])			if (move(K_LEFT, *P)) { B = true; break; }
 			if (g_abKeyPressed[K_RIGHT])		if (move(K_RIGHT, *P)) { B = true; break; }
@@ -370,39 +317,8 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-	renderPlayersTurn();
 }
 
-void renderMap()
-{
-    char V;
-	for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
-    {
-        for (unsigned int X = 0; X < fieldSize.X; X++)
-        {
-            //gotoXY(X, Y);
-            
-			V = playfield[Y][X].Value;
-
-			WORD C;
-
-			switch (playfield[Y][X].Hint)
-			{
-			case NONE: C = 0x2F; break;
-			case NEARBY: C = 0xDF; break;
-			case TRAJECTORY: C = 0x5F; break;
-			}
-
-            g_Console.writeToBuffer(X, Y, static_cast<char>(V == 0 ? 0 : V + 48), C);
-            
-        }
-    }
-    g_Console.writeToBuffer(0, fieldSize.Y + 1, "Total Points for player 1: ", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +2,Result1,0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +3,"Total Points for player 2 :", 0x59);
-	g_Console.writeToBuffer(0,fieldSize.Y +4,Result2,0x59);
-	g_Console.writeToBuffer(0, fieldSize.Y + 5, currentTurn + '0', 0x59);
-}
 
 
 void renderCharacter()
@@ -494,59 +410,3 @@ int chooseSize()
     return choice;
 }
 
-void boardGen(){
-	playfield.resize(fieldSize.Y);
-
-    for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
-    {
-        vector<playerField> V(fieldSize.X);
-
-        for (unsigned int X = 0; X < fieldSize.X; X++)
-		{
-			unsigned int chances[8] = {20, 60, 70, 75, 80, 90, 93, 95}; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9; if chance is less than getting a 2, use 1.
-
-			unsigned int R = rand() % 100;
-
-			V[X].Value = 1;
-			V[X].Hint = NONE;
-
-			while (V[X].Value < numbers)
-			{
-				if (R < chances[V[X].Value - 1]) break;
-				V[X].Value++;
-			}
-        }
-        playfield[Y] = V;
-    }
-
-	for (size_t i = 0; i < playerNumber; i++)
-	{
-		currentTurn = 0;
-
-		Player* P = &(players[i]);
-		COORD* playerLocation = &((*P).playerLocation);
-
-		do
-		{
-			bool onTop = false;
-
-			(*playerLocation).X = rand() % fieldSize.X;
-			(*playerLocation).Y = rand() % fieldSize.Y;
-
-			for (size_t j = 0; j < i; j++)
-			{
-				COORD* P = &(players[j].playerLocation);
-				if ((*P).X == (*playerLocation).X) { onTop = true; break; }
-				if ((*P).Y == (*playerLocation).Y) { onTop = true; break; }
-			}
-
-			if (onTop) continue;
-		} while (false);
-		
-		playfield[(*playerLocation).Y][(*playerLocation).X].Value = 0;
-
-		(*P).A = true;
-		(*P).H = 3;
-	}
-}
-//Retry
