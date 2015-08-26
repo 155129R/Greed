@@ -32,6 +32,7 @@ void changeSize();
 void boardGen();
 void printBoard();
 void changeScreen();
+void renderPlayersTurn();
 unsigned int currentTurn;
 bool g_abKeyPressed[K_COUNT];
 
@@ -186,7 +187,45 @@ void render()
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
+void renderPlayersTurn()
+{	
+	COORD C;
+	C.X =playfield.size()+4;
+	C.Y=7;
+	if(currentTurn==0)
+	{
+		std::string Players1Turn;
+		std::ifstream currentPlayerTurn;
+		currentPlayerTurn.open("Player1.txt");
+		for(int j=0; j<20; j++)
+		{
+			for(int i=0;currentPlayerTurn.good(); i++)
+			{
+			std::getline(currentPlayerTurn, Players1Turn);
+			g_Console.writeToBuffer(C.X,C.Y, Players1Turn,0x59);
+			C.Y++;
+			}
+			C.X++;
+		}
+	}
+	else if(currentTurn==1)
+	{
+		std::string Players2Turn;
+		std::ifstream currentPlayerTurn;
+		currentPlayerTurn.open("Player2.txt");
+		for(int j=0; j<20; j++)
+		{
+			for(int i=0;currentPlayerTurn.good(); i++)
+			{
+			std::getline(currentPlayerTurn, Players2Turn);
+			g_Console.writeToBuffer(C.X,C.Y, Players2Turn,0x59);
+			C.Y++;
+			}
+			C.X++;
+		}
 
+	}
+}
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
@@ -331,6 +370,7 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+	renderPlayersTurn();
 }
 
 void renderMap()
