@@ -1,8 +1,6 @@
 #include "hinting.h"
 
 void hintFlush();
-PSize fieldSize;
-vector<vector<playerField>> playfield;
 
 const size_t directionSize = 8;
 
