@@ -1,8 +1,11 @@
 #include "move.h"
+
 extern int total1;
 extern std::string Result1;
 extern int total2;
 extern std::string Result2;
+
+
 
 bool move(EKEYS key, Player& Pointer)//use -1,0,1
 {

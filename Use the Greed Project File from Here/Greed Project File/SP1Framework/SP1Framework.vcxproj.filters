@@ -42,10 +42,7 @@
     <ClCompile Include="points.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HighScore.cpp">
+    <ClCompile Include="gameGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,10 +65,10 @@
     <ClInclude Include="PointSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="board.h">
+    <ClInclude Include="test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HighScore.h">
+    <ClInclude Include="gameGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
