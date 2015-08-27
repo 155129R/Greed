@@ -5,7 +5,6 @@
 #include "Framework\console.h"
 #include <iostream>
 #include <vector>
-#include "test.h"
 using std::vector;
 using std::string;
 
@@ -24,7 +23,11 @@ struct playerField
 	highlightedState Hint;
 };
 
-
+struct PSize
+{
+	size_t X;
+	size_t Y;
+};
 
 struct Player
 {
@@ -35,7 +38,7 @@ struct Player
 
 extern vector<vector<playerField>> playfield;
 
-
+extern PSize fieldSize;
 
 //End of Playfield variables
 
@@ -68,6 +71,8 @@ enum EKEYS
 
 };
 bool move(EKEYS key, Player& Pointer);//use -1,0,1
+bool check(EKEYS key, Player& Pointer);
+void moveChar(Player& Pointer);
 void addingPoints(int selectedNumber,int &total1,int&total2);
 void convertTotalPoints (std::string &Result1,std::string &Result2,int &total1,int &total2);
 extern unsigned int currentTurn;

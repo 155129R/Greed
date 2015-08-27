@@ -20,7 +20,6 @@ void shutdown(void);      // do clean up, free memory
 
 //--Playfield variables
 
-//Defines an enum to represent different highlighted states.
 enum highlightedState
 {
 	NONE,
@@ -28,107 +27,45 @@ enum highlightedState
 	TRAJECTORY
 };
 
-//---
-//Defines a cell in the playfield.
-//Variable highlight represents a highlighted state.
-//---
-struct PlayfieldCell
+struct playerField
 {
-	unsigned int value;
-	highlightedState highlight;
+	unsigned int Value;
+	highlightedState Hint;
 };
 
-class Chances
+struct PSize
 {
-public:
-	unsigned int percentiles[8]; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9 respectively. Uses 1 if rolled value is less than required for 2.
-
-	unsigned int rollValue(unsigned int maxValue = 9)
-	{
-		unsigned int rolledValue = rand() % 100;
-		unsigned int returningValue = 1;
-
-		while (returningValue < maxValue)
-		{
-			if (rolledValue < percentiles[returningValue - 1]) break;
-			returningValue++;
-		}
-
-		return returningValue;
-	}
+	size_t X;
+	size_t Y;
 };
 
-//---
-//Defines a playfield class.
-//---
-class Playfield
-{
-public:
-	size_t sizeX;
-	size_t sizeY;
-	size_t numberLimit;
+extern vector<vector<playerField>> playfield;
 
-	vector<vector<PlayfieldCell>> cell;
-
-	unsigned int chances[8];
-
-	//Resizes the playfield to square.
-	void resize(size_t width)
-	{
-		sizeX = width;
-		sizeY = sizeX;
-
-		cell.resize(sizeY);
-	}
-
-	//Resizes the playfield with given length and height.
-	void resize(size_t width, size_t height)
-	{
-		sizeX = width;
-		sizeY = height;
-
-		cell.resize(sizeY);
-	}
-};
-
-extern Playfield playfield;
 
 //End of Playfield variables
 
-
 //--Player variables
-//---
-//Defines a player.
-//---
+
 struct Player
 {
-	bool active;
-	unsigned int playerNum;
-
-	unsigned int hintsAvailable;
-	unsigned int totalScore;
-	string scoreText;
-
 	COORD playerLocation;
+	unsigned int H;
+	bool A;
 };
 
-extern Player player1;
-extern Player player2;
-
 //End of Player variables
-
-//---
-//Enumeration to store the control keys that your game will have
-//---
+void changeDiff();          //Changes the difficulty according to user's chosen difficulty
+void applyDiff();           //Apply changes for difficulty
+// Enumeration to store the control keys that your game will have
 enum EKEYS
 {
-	K_UP,
-	K_UPLEFT,
-	K_UPRIGHT,
-	K_DOWN,
-	K_DOWNLEFT,
-	K_DOWNRIGHT,
-	K_LEFT,
+    K_UP,
+    K_UPLEFT,
+    K_UPRIGHT,
+    K_DOWN,
+    K_DOWNLEFT,
+    K_DOWNRIGHT,
+    K_LEFT,
 	K_RIGHT,
 	K_UP2,
 	K_UPLEFT2,
@@ -138,85 +75,69 @@ enum EKEYS
 	K_DOWNRIGHT2,
 	K_LEFT2,
 	K_RIGHT2,
-	K_ESCAPE,
-	K_SPACE,
-	K_ENTER,
+    K_ESCAPE,
+    K_SPACE,
     K_RETRY,
 	K_HINT,
     K_COUNT
 };
 
-//---
-//Key state class extended for pressed and released events.
-//---
-class KeyState
-{
-public:
-	char key;
-
-	bool onPressed = false;
-	bool onReleased = false;
-
-	void ifHeld()
-	{
-		bool K = isKeyPressed(key);
-
-		onPressed = K && !H;
-		onReleased = !K && H;
-
-		H = K;
-	}
-
-private:
-	bool H = false;
-};
-
-//---
-//Enum for the different screen states
-//---
+// Enumeration for the different screen states
 enum EGAMESTATES
 {
     S_SPLASHSCREEN,
     S_MAINMENU,
+    S_PLAYERMENU,
     S_DIFFICULTY,
+    S_LOADING1,
+    S_LOADING2,
     S_GAME,
     S_COUNT
 };
 
-enum difficulty{
 
-    Novice = 1,
-    Intermediate = 2,
-    Advanced = 3
-
+struct VBool
+{
+	vector<vector<bool>> V;
 };
-
-enum playsize{
-    mini = 1,
-    normal = 2,
-    big = 3
-};
-
+extern PSize fieldSize;
+extern int total1;
+extern std::string Result1;
+extern int total2;
+extern std::string Result2;
 extern unsigned int currentTurn;
+extern EGAMESTATES g_eGameState;
+extern size_t numbers;
+extern Console g_Console;
+extern int playerinTotal;
 
+
+void hinting(COORD hintCoord);
 void hintFlush();
 bool move(EKEYS keys, Player& Pointer);
-Player* pickPlayer(unsigned int N);
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
+void moveCharacter();       // moves the character, collision detection, physics, etc
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
-
 void renderGame();          // renders the game stuff
-void renderMap();			// renders the map to buffer
-void renderCharacter();     // renders the character to buffer
-void renderGUI();
-
+void renderMap();           //Renders the Map
+void processDiff();         //Process difficulty input
+void renderDiff();          //Get player to input difficulty
+void processPlayerMenu();
+void renderPlayerMenu();
+void applyplayer();
+void changeDiff();
+void applyDiff();
+void load1process();
+void load2process();
+void renderLoading1();
+void renderLoading2();
+// renders the map to the buffer first
+void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
+void boardGen();
 
-extern COORD renderOffset;
-extern Console g_Console;
-
-#endif
+#endif // _GAME_H
