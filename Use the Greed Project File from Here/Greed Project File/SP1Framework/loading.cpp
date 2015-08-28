@@ -6,7 +6,8 @@ void load1process(){
 
 	changeDiff();
 	applyDiff();
-
+    applyplayer();
+    totalplayerNumber();
 	g_eGameState = S_LOADING2;
 }
 
