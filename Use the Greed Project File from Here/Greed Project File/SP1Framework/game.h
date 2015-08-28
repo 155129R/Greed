@@ -159,13 +159,16 @@ public:
 	bool onPressed;
 	bool onReleased;
 
+    // default constructor
+    KeyState()
+    {
+        init();
+    }
+    // overloaded constructor with parameter
     KeyState(char K)
     {
+        init();
         key = K;
-
-        onPressed = false;
-        onReleased = false;
-        H = false;
     }
 
 	void ifHeld()
@@ -180,6 +183,15 @@ public:
 
 private:
 	bool H;
+
+    void init()
+    {
+        key = 0;
+
+        onPressed = false;
+        onReleased = false;
+        H = false;
+    }
 };
 
 //---
