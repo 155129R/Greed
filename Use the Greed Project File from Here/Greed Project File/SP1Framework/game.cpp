@@ -15,7 +15,7 @@ double  g_dDeltaTime;
 
 const short fontSize = 16;
 const short consoleX = 80;
-const short consoleY = 36;
+const short consoleY = 45;
 
 COORD renderOffset;
 
@@ -40,13 +40,10 @@ std::string Result1;
 std::string Result2;
 int total1;
 int total2;
-int chooseDiff();
-int chooseSize();
-void changeDiff(int Dchoice);
-void changeSize();
+
 void boardGen();
-void printBoard();
-void changeScreen();
+
+
 void printNumber(COORD C, unsigned int N, WORD col);
 
 unsigned int currentTurn;
@@ -71,6 +68,7 @@ Console g_Console(consoleX, consoleY, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
+    
 	const unsigned int* P;
 	switch (genID)
 	{
@@ -80,8 +78,8 @@ void init( void )
 
 	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
 
-	playfield.resize(24, 8);
-	playfield.numberLimit = 7;
+	playfield.resize(35, 35);
+	playfield.numberLimit = 5;
 
 	//--Defining keystates
 
@@ -225,7 +223,7 @@ void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
     { 
-        g_eGameState = S_GAME;
+        g_eGameState = S_DIFFICULTY;
         boardGen();
     }
 }
