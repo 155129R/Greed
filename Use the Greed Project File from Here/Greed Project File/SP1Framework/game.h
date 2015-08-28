@@ -244,5 +244,6 @@ void renderLoading2();
 extern COORD renderOffset;
 extern Console g_Console;
 extern EGAMESTATES g_eGameState;
+extern unsigned int genID;
 
 #endif

@@ -34,6 +34,7 @@ unsigned int genID = 0;
 
 const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
 const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
+const unsigned int chances3[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 2
 
 Playfield playfield;
 
@@ -77,8 +78,9 @@ void init( void )
 	const unsigned int* P;
 	switch (genID)
 	{
-	case 0: P = chances1;
-	case 1: P = chances2;
+	    case 0: P = chances1;
+	    case 1: P = chances2;
+        case 2: P = chances3;
 	}
 
 	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
@@ -328,9 +330,9 @@ void renderSplashScreen()  // renders the splash screen
   
     std::string gamename;
     COORD c = g_Console.getConsoleSize();
-    c.Y /= 2;
+    c.Y = 0;
     c.X = c.X / 1;
-    c.Y += 1;
+    
     c.X += 22;
     std::ifstream myfile;
     myfile.open("mainscreen.txt");
@@ -341,7 +343,7 @@ void renderSplashScreen()  // renders the splash screen
         }
     c.X -= 20;
     c.Y += 1;
-    c.Y /= 3;
+  
     c.X = c.X / 2 - 9;
     c.X -= 1;
      g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);

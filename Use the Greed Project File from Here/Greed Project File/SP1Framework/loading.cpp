@@ -12,6 +12,7 @@ void load1process(){
 }
 
 void load2process(){
+
 	boardGen();
 	g_eGameState = S_GAME;
 }

@@ -25,16 +25,19 @@ void applyDiff(){
 	{
 		playfield.resize(35,35);
 		playfield.numberLimit = 5;
+        genID = 0;
 	}
 
 	else if (level == Intermediate){
 		playfield.resize(30,30);
 		playfield.numberLimit = 7;
+        genID = 1;
 	}
 	else if (level == Advanced){
 
 		playfield.resize(20,20);
 		playfield.numberLimit = 9;
+        genID = 2;
 	}
 
 }
