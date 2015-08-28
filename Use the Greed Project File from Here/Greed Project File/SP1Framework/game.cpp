@@ -5,6 +5,7 @@
 #include "gameGUI.h"
 #include "board.h"
 #include <fstream>
+#include <sstream>
 #include <string>
 
 bool entered;
@@ -13,7 +14,7 @@ bool hintOn;
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 
-const short fontSize = 16;
+const short fontSize = 28;
 const short consoleX = 80;
 const short consoleY = 45;
 
@@ -30,7 +31,7 @@ unsigned int genID = 0;
 
 const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
 const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
-
+const unsigned int chances3[8] = { 31, 35, 40, 50, 60, 70, 80, 90 };	//genID = 2
 Playfield playfield;
 
 
@@ -165,6 +166,8 @@ void update(double dt)
     {
 	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
 		break;
+    case S_PLAYERMENU: processPlayerMenu();
+        break;
 	case S_DIFFICULTY: processDiff();
 		break;
 	case S_LOADING1: load1process();
@@ -206,6 +209,8 @@ void render()
     {
 	case S_SPLASHSCREEN: renderSplashScreen();
 		break;
+    case S_PLAYERMENU: renderPlayerMenu();
+        break;
 	case S_DIFFICULTY: renderDiff();
 		break;
 	case S_LOADING1: renderLoading1();
@@ -223,8 +228,8 @@ void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
     { 
-        g_eGameState = S_DIFFICULTY;
-        boardGen();
+        g_eGameState = S_PLAYERMENU;
+
     }
 }
 
@@ -373,21 +378,21 @@ void renderGUI()
 
 void renderFramerate()
 {
-    //COORD c;
-    //// displays the framerate
-    //std::ostringstream ss;
-    //ss << std::fixed << std::setprecision(3);
-    //ss << 1.0 / g_dDeltaTime << "fps";
-    //c.X = g_Console.getConsoleSize().X - 9;
-    //c.Y = 0;
-    //g_Console.writeToBuffer(c, ss.str());
+    COORD c;
+    // displays the framerate
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(3);
+    ss << 1.0 / g_dDeltaTime << "fps";
+    c.X = g_Console.getConsoleSize().X - 9;
+    c.Y = 0;
+    g_Console.writeToBuffer(c, ss.str());
 
-    //// displays the elapsed time
-    //ss.str("");
-    //ss << g_dElapsedTime << "secs";
-    //c.X = 0;
-    //c.Y = 0;
-    //g_Console.writeToBuffer(c, ss.str(), 0x59);
+    // displays the elapsed time
+    ss.str("");
+    ss << g_dElapsedTime << "secs";
+    c.X = 0;
+    c.Y = 0;
+    g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
 void renderToScreen()
@@ -405,6 +410,7 @@ Player* pickPlayer(unsigned int N)
 	switch (N)
 	{
 	case 0: P = &player1; break;
+
 	case 1: P = &player2; break;
 	}
 

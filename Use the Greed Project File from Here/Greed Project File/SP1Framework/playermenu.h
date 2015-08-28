@@ -1,5 +1,7 @@
 #include <iostream>
 
+void applyplayer();
+void totalplayerNumber();
 
 enum numberofPlayers{
 

@@ -47,7 +47,7 @@ void boardGen()
 		playfield.cell[Y] = V;
 	}
 
-	for (size_t i = 0; i < 2; i++)
+	for (size_t i = 0; i < totalPlayers; i++)
 	{
 		Player* P = pickPlayer(i);
 
@@ -85,13 +85,14 @@ void renderCharacter()
 	WORD charColor;
 
 	Player *P;
-
-	for (unsigned int i = 0; i < 2; i++)
+    char playerChar = 153;
+	for (unsigned int i = 0; i < totalPlayers; i++)
 	{
 		P = pickPlayer(i);
 		COORD L = (*P).playerLocation;
+        
 
-		COORD loc = renderOffset; \
+		COORD loc = renderOffset; 
 			loc.X += L.X;
 		loc.Y += L.Y;
 
@@ -102,6 +103,7 @@ void renderCharacter()
 		default: charColor = 0x0F; break;
 		}
 
-		g_Console.writeToBuffer(loc, (char)2, charColor);
+		g_Console.writeToBuffer(loc, (char)playerChar, charColor);
+        playerChar++;
 	}
 }

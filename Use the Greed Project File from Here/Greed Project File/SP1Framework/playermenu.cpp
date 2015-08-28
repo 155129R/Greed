@@ -7,7 +7,7 @@
 numberofPlayers Number = Single;
 
 
-int playerinTotal;
+
 
 
 
@@ -26,12 +26,12 @@ void totalplayerNumber(){
 void applyplayer(){
     if(Number == Single){
 
-   playerinTotal = 1;
+   totalPlayers = 1;
 
     }
     else if(Number == Multi){
 
-    playerinTotal = 2;
+    totalPlayers = 2;
 
     }
 

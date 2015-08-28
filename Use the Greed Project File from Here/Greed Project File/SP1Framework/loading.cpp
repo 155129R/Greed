@@ -1,12 +1,14 @@
 #include "game.h"
 #include "board.h"
+#include "playermenu.h"
 #include <iostream>
 
 void load1process(){
 
 	changeDiff();
 	applyDiff();
-
+    totalplayerNumber();
+    applyplayer();
 	g_eGameState = S_LOADING2;
 }
 

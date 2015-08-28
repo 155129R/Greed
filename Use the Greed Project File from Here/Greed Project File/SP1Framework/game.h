@@ -116,7 +116,7 @@ struct Player
 
 extern Player player1;
 extern Player player2;
-
+extern unsigned int totalPlayers;
 //End of Player variables
 
 //---
@@ -201,6 +201,7 @@ enum EGAMESTATES
 {
     S_SPLASHSCREEN,
     S_MAINMENU,
+    S_PLAYERMENU,
 	S_LOADING1,
 	S_LOADING2,
     S_DIFFICULTY,
@@ -235,6 +236,9 @@ void renderFramerate();     // renders debug information, frame rate, elapsed ti
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void changeDiff();          //Changes the difficulty according to user's chosen difficulty
 void applyDiff();           //Apply changes for difficulty
+void renderPlayerMenu();
+void processPlayerMenu();
+
 void load1process();
 void load2process();
 void processDiff();
