@@ -64,11 +64,11 @@ void renderPlayerMenu(){
 }
 
 void processPlayerMenu(){
-    if(isKeyPressed('1')){
+    if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    Number = static_cast<numberofPlayers>(1);
 	    g_eGameState = S_DIFFICULTY;
     }
-    if(isKeyPressed('2')){
+    if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
 	    Number = static_cast<numberofPlayers>(2);
 	    g_eGameState = S_DIFFICULTY;
     }

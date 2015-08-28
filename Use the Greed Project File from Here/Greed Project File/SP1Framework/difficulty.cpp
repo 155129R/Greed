@@ -88,15 +88,15 @@ void renderDiff(){
 
 void processDiff(){
 
-	if(isKeyPressed('1')){
+	if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    level = static_cast<Difficulty>(1);
 	    g_eGameState = S_LOADING1;
     }
-    if(isKeyPressed('2')){
+    if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
 	    level = static_cast<Difficulty>(2);
 	    g_eGameState = S_LOADING1;
     }
-    if(isKeyPressed('3')){
+    if((isKeyPressed('3'))||(isKeyPressed(VK_NUMPAD3))){
 	    level = static_cast<Difficulty>(3);
 	    g_eGameState = S_LOADING1;
     }
