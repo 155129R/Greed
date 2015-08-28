@@ -155,21 +155,19 @@ class KeyState
 {
 public:
 	char key;
-    
+
 	bool onPressed;
 	bool onReleased;
 
-    // default constructor
-    KeyState()
-    {
-        init();
-    }
-    // overloaded constructor with parameter
-    KeyState(char K)
-    {
-        init();
-        key = K;
-    }
+	KeyState()
+	{
+		init();
+	}
+	KeyState(char K)
+	{
+		key = K;
+		init();
+	}
 
 	void ifHeld()
 	{
@@ -184,14 +182,13 @@ public:
 private:
 	bool H;
 
-    void init()
-    {
-        key = 0;
+	void init()
+	{
 
-        onPressed = false;
-        onReleased = false;
-        H = false;
-    }
+		onPressed = false;
+		onReleased = false;
+		H = false;
+	}
 };
 
 //---
@@ -209,7 +206,6 @@ enum EGAMESTATES
     S_COUNT
 };
 
-
 enum playsize{
     mini = 1,
     normal = 2,
@@ -220,8 +216,6 @@ extern unsigned int currentTurn;
 extern bool hintOn;
 extern bool entered;
 
-void hintFlush();
-bool move(EKEYS keys, Player& Pointer);
 Player* pickPlayer(unsigned int N);
 
 void splashScreenWait();    // waits for time to pass in splash screen
@@ -236,9 +230,10 @@ void renderFramerate();     // renders debug information, frame rate, elapsed ti
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void changeDiff();          //Changes the difficulty according to user's chosen difficulty
 void applyDiff();           //Apply changes for difficulty
-void renderPlayerMenu();
 void processPlayerMenu();
-
+void renderPlayerMenu();
+void applyplayer();
+void totalplayerNumber();
 void load1process();
 void load2process();
 void processDiff();

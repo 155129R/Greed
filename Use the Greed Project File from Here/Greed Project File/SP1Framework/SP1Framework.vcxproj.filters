@@ -92,5 +92,11 @@
     <ClInclude Include="playermenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="directions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="points.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

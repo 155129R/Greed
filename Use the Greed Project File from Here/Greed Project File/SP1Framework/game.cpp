@@ -4,8 +4,9 @@
 #include "game.h"
 #include "gameGUI.h"
 #include "board.h"
+#include "hinting.h"
+#include "move.h"
 #include <fstream>
-#include <sstream>
 #include <string>
 
 bool entered;
@@ -14,26 +15,27 @@ bool hintOn;
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 
-const short fontSize = 28;
+const short fontSize = 25;
 const short consoleX = 80;
-const short consoleY = 45;
+const short consoleY = 40;
 
 COORD renderOffset;
 
-unsigned int totalPlayers = 2;
+unsigned int totalPlayers = 1;
 Player player1;
 Player player2;
 const EKEYS playerKeys1[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
 const EKEYS playerKeys2[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
+
+const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
 
 Chances boardChances;
 unsigned int genID = 0;
 
 const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
 const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
-const unsigned int chances3[8] = { 31, 35, 40, 50, 60, 70, 80, 90 };	//genID = 2
-Playfield playfield;
 
+Playfield playfield;
 
 playsize dim = normal;
 int Dchoice = 1;
@@ -41,10 +43,13 @@ std::string Result1;
 std::string Result2;
 int total1;
 int total2;
-
+int chooseDiff();
+int chooseSize();
+void changeDiff(int Dchoice);
+void changeSize();
 void boardGen();
-
-
+void printBoard();
+void changeScreen();
 void printNumber(COORD C, unsigned int N, WORD col);
 
 unsigned int currentTurn;
@@ -69,7 +74,6 @@ Console g_Console(consoleX, consoleY, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
-    
 	const unsigned int* P;
 	switch (genID)
 	{
@@ -79,8 +83,8 @@ void init( void )
 
 	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
 
-	playfield.resize(35, 35);
-	playfield.numberLimit = 5;
+	playfield.resize(30, 30);
+	playfield.numberLimit = 7;
 
 	//--Defining keystates
 
@@ -166,10 +170,10 @@ void update(double dt)
     {
 	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
 		break;
-    case S_PLAYERMENU: processPlayerMenu();
-        break;
 	case S_DIFFICULTY: processDiff();
 		break;
+    case S_PLAYERMENU: processPlayerMenu();
+        break;
 	case S_LOADING1: load1process();
 		break;
 	case S_LOADING2: load2process();
@@ -229,7 +233,7 @@ void splashScreenWait()    // waits for time to pass in splash screen
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
     { 
         g_eGameState = S_PLAYERMENU;
-
+        
     }
 }
 
@@ -257,7 +261,10 @@ void gameplay()
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		EKEYS K = PK[i];
-		if (keyStates[K].onPressed) if (move(K, *P)) { B = true; break; }
+		if (keyStates[K].onPressed)
+		{
+			if (move(P, directions[i])) { B = true; break; }
+		}
 	}
 
 	if (B)
@@ -265,7 +272,8 @@ void gameplay()
 		currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
 		entered = false;
 		hintOn = false;
-		hintFlush();
+		hideHints();
+		findMoves((*(pickPlayer(currentTurn))).playerLocation);
 	}
 
 	skipEntered:
@@ -292,6 +300,8 @@ void gameplay()
 		{
 			hintOn = true;
 			(*P).hintsAvailable--;
+
+			showHints((*P).playerLocation);
 		}
 	}
 
@@ -378,21 +388,21 @@ void renderGUI()
 
 void renderFramerate()
 {
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+    //COORD c;
+    //// displays the framerate
+    //std::ostringstream ss;
+    //ss << std::fixed << std::setprecision(3);
+    //ss << 1.0 / g_dDeltaTime << "fps";
+    //c.X = g_Console.getConsoleSize().X - 9;
+    //c.Y = 0;
+    //g_Console.writeToBuffer(c, ss.str());
 
-    // displays the elapsed time
-    ss.str("");
-    ss << g_dElapsedTime << "secs";
-    c.X = 0;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+    //// displays the elapsed time
+    //ss.str("");
+    //ss << g_dElapsedTime << "secs";
+    //c.X = 0;
+    //c.Y = 0;
+    //g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
 void renderToScreen()
@@ -410,7 +420,6 @@ Player* pickPlayer(unsigned int N)
 	switch (N)
 	{
 	case 0: P = &player1; break;
-
 	case 1: P = &player2; break;
 	}
 

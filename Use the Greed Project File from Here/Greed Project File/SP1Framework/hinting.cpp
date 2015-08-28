@@ -1,60 +1,72 @@
 #include "hinting.h"
 
-void hintFlush();
-PSize fieldSize;
-vector<vector<playerField>> playfield;
+bool allowedMoves[8];
 
-const size_t directionSize = 8;
-
-const int directionX[directionSize] = { -1, 1, 0, 0, -1, 1, -1, 1 };
-const int directionY[directionSize] = { 0, 0, -1, 1, -1, -1, 1, 1 };
-
-void hinting(COORD hintCoord)
+void findMoves(COORD P)
 {
-	for (unsigned int D = 0; D < directionSize; D++)
+	for (unsigned int i = 0; i < 8; i++)
 	{
-		int moveX = directionX[D];
-		int moveY = directionY[D];
+		allowedMoves[i] = false;
 
-		int hintcoordX = moveX + hintCoord.X;
-		int hintcoordY = moveY + hintCoord.Y;
+		int TX = P.X + unitX[i];
+		if (TX < 0) continue;
+		if (TX >= (signed)playfield.sizeX) continue;
 
-		if (hintcoordX < 0) continue;
-		if (hintcoordY < 0) continue;
-		if (hintcoordX >= (int)playfield[0].size()) continue;
-		if (hintcoordY >= (int)playfield.size()) continue;
+		int TY = P.Y + unitY[i];
+		if (TY < 0) continue;
+		if (TY >= (signed)playfield.sizeY) continue;
 
-		int finalplace = playfield[hintcoordY][hintcoordX].Value;
-		if (finalplace == 0) continue;
-
-		if (hintcoordX + moveX * (finalplace - 1) < 0) continue;
-		if (hintcoordY + moveY * (finalplace - 1) < 0) continue;
-		if (hintcoordX + moveX * (finalplace - 1) >= (signed)playfield[0].size()) continue;
-		if (hintcoordY + moveY * (finalplace - 1) >= (signed)playfield.size()) continue;
+		unsigned int V = playfield.cell[TY][TX].value;
+		if (V == 0) continue;
 		
-		bool checktrue = true;
-		
-		for (int i = 1; i < finalplace; i++)
+		if (P.X + unitX[i] * V < 0) continue;
+		if (P.X + unitX[i] * V >= playfield.sizeX) continue;
+
+		if (P.Y + unitY[i] * V < 0) continue;
+		if (P.Y + unitY[i] * V >= playfield.sizeY) continue;
+
+		allowedMoves[i] = true;
+
+		bool m = allowedMoves[i];
+
+		for (unsigned int j = 2; j <= V; j++)
 		{
-			if (playfield[hintcoordY + i * moveY][hintcoordX + i * moveX].Value == 0)
-			{
-				checktrue = false;
-				break;
-			}
+			unsigned int XX = P.X + unitX[i] * j;
+			unsigned int YY = P.Y + unitY[i] * j;
+
+			if (playfield.cell[YY][XX].value == 0) { allowedMoves[i] = false; break; }
 		}
-
-		if (!checktrue) continue;
-
-		playfield[hintcoordY][hintcoordX].Hint = NEARBY;
-		for (int i = 1; i < finalplace; i++) playfield[hintcoordY + i * moveY][hintcoordX + i * moveX].Hint = TRAJECTORY;
-
-		continue;
 	}
 }
 
-void hintFlush()
+void showHints(COORD P)
 {
-	for (unsigned int hintcoordY = 0; hintcoordY < fieldSize.Y; hintcoordY++)
-	for (unsigned int hintcoordX = 0; hintcoordX < fieldSize.X; hintcoordX++)
-		playfield[hintcoordY][hintcoordX].Hint = NONE;
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		if (!allowedMoves[i]) continue;
+
+		unsigned int XX = P.X + unitX[i];
+		unsigned int YY = P.Y + unitY[i];
+
+		playfield.cell[YY][XX].highlight = NEARBY;
+
+		unsigned int V = playfield.cell[YY][XX].value;
+
+		for (unsigned int j = 2; j <= V; j++)
+		{
+			XX += unitX[i]; YY += unitY[i];
+			playfield.cell[YY][XX].highlight = TRAJECTORY;
+		}
+	}
+}
+
+void hideHints()
+{
+	for (unsigned int i = 0; i < playfield.sizeX; i++)
+	{
+		for (unsigned int j = 0; j < playfield.sizeY; j++)
+		{
+			playfield.cell[j][i].highlight = NONE;
+		}
+	}
 }

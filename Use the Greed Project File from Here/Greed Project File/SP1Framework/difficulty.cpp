@@ -49,7 +49,7 @@ void renderDiff(){
 	std::string advanced;
 	COORD c = g_Console.getConsoleSize();
 
-	g_Console.writeToBuffer(0, 1, "Choose Your Difficulty (1,2, or 3)", 0x04);
+	g_Console.writeToBuffer(0, 0, "Choose Your Difficulty (1,2, or 3)", 0x04);
 
 	c.Y = 4;
 	c.X = 4;
