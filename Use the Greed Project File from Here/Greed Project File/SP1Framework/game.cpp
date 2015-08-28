@@ -232,10 +232,7 @@ void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
     { 
-
         g_eGameState = S_PLAYERMENU;
-    
-        
     }
 }
 
@@ -373,13 +370,16 @@ void renderGUI()
 	loc.X -= 9;
 	loc.Y += 1;
 
-	drawPlayerGUI(loc,0);
+	drawPlayerGUI(loc, 0);
 
-	loc = renderOffset;
-	loc.X += playfield.sizeX + 1;
-	loc.Y += 1;
+	if (totalPlayers == 2)
+	{
+		loc = renderOffset;
+		loc.X += playfield.sizeX + 1;
+		loc.Y += 1;
 
-	drawPlayerGUI(loc, 1);
+		drawPlayerGUI(loc, 1);
+	}
 
 	loc.X = 0;
 	loc.Y = 0;
@@ -427,4 +427,3 @@ Player* pickPlayer(unsigned int N)
 
 	return P;
 }
-//Retry

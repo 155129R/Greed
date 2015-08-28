@@ -17,5 +17,7 @@ bool move(Player* P, Directions D)
 		playfield.cell[(*P).playerLocation.Y][(*P).playerLocation.X].value = 0;
 	}
 
+	(*P).totalScore += V;
+
 	return true;
 }

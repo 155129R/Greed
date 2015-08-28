@@ -6,11 +6,6 @@
 
 numberofPlayers Number = Single;
 
-
-
-
-
-
 void totalplayerNumber(){
     switch(Number){
         case 1: Number = Single; break;
@@ -34,8 +29,6 @@ void applyplayer(){
     totalPlayers = 2;
 
     }
-
-   
 }
 
 
@@ -51,28 +44,27 @@ void renderPlayerMenu(){
     
     std::ifstream Singlefile;
     Singlefile.open("Single.txt");
-        for(int i=0; Singlefile.good(); i++){
-            std::getline(Singlefile, Single);
-            g_Console.writeToBuffer(c, Single, 0x04);
-            c.Y += 1;
-        }
+    for(int i=0; Singlefile.good(); i++){
+        std::getline(Singlefile, Single);
+        g_Console.writeToBuffer(c, Single, 0x04);
+        c.Y += 1;
+    }
 
     c.Y += 2;
 
-
-     std::ifstream Multifile;
+    std::ifstream Multifile;
     Multifile.open("Multi.txt");
-        for(int i=0; Multifile.good(); i++){
-            std::getline(Multifile, Multi);
-            g_Console.writeToBuffer(c, Multi, 0x04);
-            c.Y += 1;
-        }
+    for(int i=0; Multifile.good(); i++){
+        std::getline(Multifile, Multi);
+        g_Console.writeToBuffer(c, Multi, 0x04);
+        c.Y += 1;
+    }
 
     c.Y += 2;
 }
 
 void processPlayerMenu(){
-       int input;
+    int input;
     std::cin>>input;
     Number = static_cast<numberofPlayers>(input);
     g_eGameState = S_DIFFICULTY;
