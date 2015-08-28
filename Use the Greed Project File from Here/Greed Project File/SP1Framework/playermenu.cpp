@@ -64,10 +64,15 @@ void renderPlayerMenu(){
 }
 
 void processPlayerMenu(){
-    int input;
-    std::cin>>input;
-    Number = static_cast<numberofPlayers>(input);
-    g_eGameState = S_DIFFICULTY;
+    if(isKeyPressed('1')){
+	    Number = static_cast<numberofPlayers>(1);
+	    g_eGameState = S_DIFFICULTY;
+    }
+    if(isKeyPressed('2')){
+	    Number = static_cast<numberofPlayers>(2);
+	    g_eGameState = S_DIFFICULTY;
+    }
+    
 }
 
 

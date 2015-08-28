@@ -87,8 +87,17 @@ void renderDiff(){
 }
 
 void processDiff(){
-	int input;
-	std::cin >> input;
-	level = static_cast<Difficulty>(input);
-	g_eGameState = S_LOADING1;
+
+	if(isKeyPressed('1')){
+	    level = static_cast<Difficulty>(1);
+	    g_eGameState = S_LOADING1;
+    }
+    if(isKeyPressed('2')){
+	    level = static_cast<Difficulty>(2);
+	    g_eGameState = S_LOADING1;
+    }
+    if(isKeyPressed('3')){
+	    level = static_cast<Difficulty>(3);
+	    g_eGameState = S_LOADING1;
+    }
 }
