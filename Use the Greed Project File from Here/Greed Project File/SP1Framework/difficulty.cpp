@@ -23,20 +23,17 @@ void changeDiff(){
 void applyDiff(){
 	if (level == Novice)
 	{
-		playfield.sizeX = 35;
-		playfield.sizeY = 35;
+		playfield.resize(35,35);
 		playfield.numberLimit = 5;
 	}
 
 	else if (level == Intermediate){
-		playfield.sizeX = 30;
-		playfield.sizeY = 30;
+		playfield.resize(30,30);
 		playfield.numberLimit = 7;
 	}
 	else if (level == Advanced){
 
-		playfield.sizeX = 20;
-		playfield.sizeY = 20;
+		playfield.resize(20,20);
 		playfield.numberLimit = 9;
 	}
 
