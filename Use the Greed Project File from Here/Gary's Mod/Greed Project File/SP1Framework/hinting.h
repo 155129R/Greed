@@ -1,37 +1,15 @@
-#ifndef _GAME_H
-#define _GAME_H
+#ifndef _HINTING_H
+#define _HINTING_H
 
-#include "Framework\console.h"
-#include <iostream>
-#include <vector>
-#include "test.h"
-using std::vector;
-using std::string;
+#include "game.h"
 
+void findMoves(COORD P);
+void showHints(COORD P);
+void hideHints();
 
-//--Playfield variables
+extern bool allowedMoves[8];
 
-enum highlightedState
-{
-	NONE,
-	NEARBY,
-	TRAJECTORY
-};
+const char unitX[8] = { -1, 1, 0, 0, -1, 1, -1, 1 };
+const char unitY[8] = { 0, 0, -1, 1, -1, -1, 1, 1 };
 
-struct playerField
-{
-    unsigned int Value;
-	highlightedState Hint;
-};
-
-
-extern vector<vector<playerField>> playfield;
-
-
-struct VBool
-{
-	vector<vector<bool>> V;
-};
-
-
-#endif // _GAME_H
+#endif 

@@ -4,6 +4,8 @@
 #include "game.h"
 #include "gameGUI.h"
 #include "board.h"
+#include "hinting.h"
+#include "move.h"
 #include <fstream>
 #include <string>
 
@@ -25,6 +27,8 @@ Player player2;
 const EKEYS playerKeys1[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
 const EKEYS playerKeys2[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
 
+const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
+
 Chances boardChances;
 unsigned int genID = 0;
 
@@ -32,7 +36,6 @@ const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
 const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
 
 Playfield playfield;
-
 
 playsize dim = normal;
 int Dchoice = 1;
@@ -254,7 +257,10 @@ void gameplay()
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		EKEYS K = PK[i];
-		if (keyStates[K].onPressed) if (move(K, *P)) { B = true; break; }
+		if (keyStates[K].onPressed)
+		{
+			if (move(P, directions[i])) { B = true; break; }
+		}
 	}
 
 	if (B)
@@ -262,7 +268,8 @@ void gameplay()
 		currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
 		entered = false;
 		hintOn = false;
-		hintFlush();
+		hideHints();
+		findMoves((*(pickPlayer(currentTurn))).playerLocation);
 	}
 
 	skipEntered:
@@ -289,6 +296,8 @@ void gameplay()
 		{
 			hintOn = true;
 			(*P).hintsAvailable--;
+
+			showHints((*P).playerLocation);
 		}
 	}
 

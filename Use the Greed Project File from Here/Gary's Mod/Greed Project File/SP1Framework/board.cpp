@@ -1,5 +1,5 @@
-#include "game.h"
 #include "board.h"
+#include "hinting.h"
 
 void renderMap()
 {
@@ -26,7 +26,6 @@ void renderMap()
 		}
 	}
 }
-
 
 void boardGen()
 {
@@ -76,6 +75,8 @@ void boardGen()
 	currentTurn = 0;
 	entered = true;
 	hintOn = false;
+
+	findMoves(player1.playerLocation);
 }
 
 void renderCharacter()

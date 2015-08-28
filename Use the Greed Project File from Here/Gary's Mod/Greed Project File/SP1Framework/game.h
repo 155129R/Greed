@@ -156,8 +156,18 @@ class KeyState
 public:
 	char key;
 
-	bool onPressed = false;
-	bool onReleased = false;
+	bool onPressed;
+	bool onReleased;
+
+	KeyState()
+	{
+		init();
+	}
+	KeyState(char K)
+	{
+		key = K;
+		init();
+	}
 
 	void ifHeld()
 	{
@@ -170,7 +180,15 @@ public:
 	}
 
 private:
-	bool H = false;
+	bool H;
+
+	void init()
+	{
+
+		onPressed = false;
+		onReleased = false;
+		H = false;
+	}
 };
 
 //---
@@ -187,7 +205,6 @@ enum EGAMESTATES
     S_COUNT
 };
 
-
 enum playsize{
     mini = 1,
     normal = 2,
@@ -198,8 +215,6 @@ extern unsigned int currentTurn;
 extern bool hintOn;
 extern bool entered;
 
-void hintFlush();
-bool move(EKEYS keys, Player& Pointer);
 Player* pickPlayer(unsigned int N);
 
 void splashScreenWait();    // waits for time to pass in splash screen

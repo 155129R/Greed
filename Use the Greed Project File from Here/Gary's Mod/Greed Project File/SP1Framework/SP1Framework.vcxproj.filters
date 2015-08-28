@@ -86,5 +86,8 @@
     <ClInclude Include="difficulty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="directions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="board.h" />
     <ClInclude Include="difficulty.h" />
+    <ClInclude Include="directions.h" />
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
