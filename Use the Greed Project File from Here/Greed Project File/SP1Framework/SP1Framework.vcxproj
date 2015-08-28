@@ -80,6 +80,7 @@
     <ClCompile Include="Framework\console.cpp" />
     <ClCompile Include="Framework\timer.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameGUI.cpp" />
     <ClCompile Include="hinting.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="main.cpp" />
@@ -92,9 +93,11 @@
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameGUI.h" />
     <ClInclude Include="hinting.h" />
     <ClInclude Include="move.h" />
     <ClInclude Include="PointSystem.h" />
+    <ClInclude Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,94 +1,107 @@
 #include "game.h"
 #include "board.h"
 
-
-
 void renderMap()
 {
-    char V;
-	for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
-    {
-        for (unsigned int X = 0; X < fieldSize.X; X++)
-        {
-            //gotoXY(X, Y);
-            
-			V = playfield[Y][X].Value;
-
+	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
+	{
+		for (unsigned int X = 0; X < playfield.sizeX; X++)
+		{
 			WORD C;
 
-			switch (playfield[Y][X].Hint)
+			char V = playfield.cell[Y][X].value;
+
+			switch (playfield.cell[Y][X].highlight)
 			{
 			case NONE: C = 0x2F; break;
 			case NEARBY: C = 0xDF; break;
 			case TRAJECTORY: C = 0x5F; break;
 			}
 
-            g_Console.writeToBuffer(X, Y, static_cast<char>(V == 0 ? 0 : V + 48), C);
-            
-        }
-    }
-    g_Console.writeToBuffer(fieldSize.X + 4, 4, "Total Points for player 1: ", 0x59);
-	g_Console.writeToBuffer(fieldSize.X + 31,4,Result1,0x59);
-	g_Console.writeToBuffer(fieldSize.X + 4,6,"Total Points for player 2: ", 0x59);
-	g_Console.writeToBuffer(fieldSize.X + 31,6,Result2,0x59);
-	g_Console.writeToBuffer(0, fieldSize.Y + 5, currentTurn + '0', 0x59);
+			COORD loc = renderOffset;
+			loc.X += X;
+			loc.Y += Y;
 
+			g_Console.writeToBuffer(loc, V == 0 ? 0 : V + '0', C);
+		}
+	}
 }
 
 
-
-void boardGen(){
-	playfield.resize(fieldSize.Y);
-
-    for (unsigned int Y = 0; Y < fieldSize.Y; Y++)
-    {
-        vector<playerField> V(fieldSize.X);
-
-        for (unsigned int X = 0; X < fieldSize.X; X++)
-		{
-			unsigned int chances[8] = {20, 60, 70, 75, 80, 90, 93, 95}; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9; if chance is less than getting a 2, use 1.
-
-			unsigned int R = rand() % 100;
-
-			V[X].Value = 1;
-			V[X].Hint = NONE;
-
-			while (V[X].Value < numbers)
-			{
-				if (R < chances[V[X].Value - 1]) break;
-				V[X].Value++;
-			}
-        }
-        playfield[Y] = V;
-    }
-
-	for (size_t i = 0; i < playerNumber; i++)
+void boardGen()
+{
+	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
 	{
-		currentTurn = 0;
+		vector<PlayfieldCell> V(playfield.sizeX);
 
-		Player* P = &(players[i]);
+		for (unsigned int X = 0; X < playfield.sizeX; X++)
+		{
+			V[X].highlight = NONE;
+
+			V[X].value = boardChances.rollValue(playfield.numberLimit);
+
+			unsigned int K = V[X].value;
+
+			K = K;
+		}
+		playfield.cell[Y] = V;
+	}
+
+	for (size_t i = 0; i < 2; i++)
+	{
+		Player* P = pickPlayer(i);
+
 		COORD* playerLocation = &((*P).playerLocation);
 
-		do
+	reattempt:
+
+		(*playerLocation).X = rand() % playfield.sizeX;
+		(*playerLocation).Y = rand() % playfield.sizeY;
+
+		for (size_t j = 0; j < i; j++)
 		{
-			bool onTop = false;
+			Player* P = pickPlayer(j);
+			COORD* T = &((*P).playerLocation);
+			if ((*T).X == (*playerLocation).X) goto reattempt;
+			if ((*T).Y == (*playerLocation).Y) goto reattempt;
+		}
 
-			(*playerLocation).X = rand() % fieldSize.X;
-			(*playerLocation).Y = rand() % fieldSize.Y;
+		playfield.cell[(*playerLocation).Y][(*playerLocation).X].value = 0;
 
-			for (size_t j = 0; j < i; j++)
-			{
-				COORD* P = &(players[j].playerLocation);
-				if ((*P).X == (*playerLocation).X) { onTop = true; break; }
-				if ((*P).Y == (*playerLocation).Y) { onTop = true; break; }
-			}
+		(*P).active = true;
+		(*P).hintsAvailable = 3;
+		(*P).totalScore = 0;
+	}
 
-			if (onTop) continue;
-		} while (false);
-		
-		playfield[(*playerLocation).Y][(*playerLocation).X].Value = 0;
+	currentTurn = 0;
+	entered = true;
+	hintOn = false;
+}
 
-		(*P).A = true;
-		(*P).H = 3;
+void renderCharacter()
+{
+	// Draw the location of the characters
+	const WORD inactive = 0x0A;
+	WORD charColor;
+
+	Player *P;
+
+	for (unsigned int i = 0; i < 2; i++)
+	{
+		P = pickPlayer(i);
+		COORD L = (*P).playerLocation;
+
+		COORD loc = renderOffset; \
+			loc.X += L.X;
+		loc.Y += L.Y;
+
+		switch (i)
+		{
+		case 0: charColor = 0x0E; break;
+		case 1: charColor = 0x0D; break;
+		default: charColor = 0x0F; break;
+		}
+
+		g_Console.writeToBuffer(loc, (char)2, charColor);
 	}
 }

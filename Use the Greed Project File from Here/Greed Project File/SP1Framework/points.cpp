@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
-#include "PointSystem.h"
-#include <string>
+#include "points.h"
+
 //int total=0;
 //int points=0;
 void addingPoints(int selectedNumber,int &total1,int &total2);

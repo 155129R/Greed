@@ -2,44 +2,63 @@
 //
 //
 #include "game.h"
+#include "gameGUI.h"
+#include "board.h"
 #include <fstream>
-#include <sstream>
 #include <string>
+
+bool entered;
+bool hintOn;
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
-size_t numbers = 5;
-COORD consoleSize;
+
+const short fontSize = 16;
+const short consoleX = 80;
+const short consoleY = 36;
+
+COORD renderOffset;
+
+unsigned int totalPlayers = 2;
+Player player1;
+Player player2;
+const EKEYS playerKeys1[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
+const EKEYS playerKeys2[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
+
+Chances boardChances;
+unsigned int genID = 0;
+
+const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
+const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
+
+Playfield playfield;
 
 
-bool hintOn = false;
-vector<vector<playerField>> playfield;
-PSize fieldSize;
-
+playsize dim = normal;
 int Dchoice = 1;
 std::string Result1;
 std::string Result2;
 int total1;
 int total2;
-
 int chooseDiff();
 int chooseSize();
 void changeDiff(int Dchoice);
 void changeSize();
-
+void boardGen();
+void printBoard();
 void changeScreen();
+void printNumber(COORD C, unsigned int N, WORD col);
+
 unsigned int currentTurn;
-bool g_abKeyPressed[K_COUNT];
-const size_t playerNumber = 2;
-Player players[playerNumber];
+
+KeyState keyStates[K_COUNT];
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
 // Console object
-Console g_Console(80,50, "Greed Reloaded");
-
+Console g_Console(consoleX, consoleY, "Greed Reloaded");
 
 //-----Core functions
 
@@ -52,6 +71,49 @@ Console g_Console(80,50, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
+	const unsigned int* P;
+	switch (genID)
+	{
+	case 0: P = chances1;
+	case 1: P = chances2;
+	}
+
+	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
+
+	playfield.resize(24, 8);
+	playfield.numberLimit = 7;
+
+	//--Defining keystates
+
+	//Player 1
+	keyStates[K_UP].key = VK_NUMPAD8;
+	keyStates[K_UPLEFT].key = VK_NUMPAD7;
+	keyStates[K_UPRIGHT].key = VK_NUMPAD9;
+	keyStates[K_DOWN].key = VK_NUMPAD2;
+	keyStates[K_DOWNLEFT].key = VK_NUMPAD1;
+	keyStates[K_DOWNRIGHT].key = VK_NUMPAD3;
+	keyStates[K_LEFT].key = VK_NUMPAD4;
+	keyStates[K_RIGHT].key = VK_NUMPAD6;
+
+	//Player 2
+	keyStates[K_UP2].key = VK_NUMPAD8;
+	keyStates[K_UPLEFT2].key = VK_NUMPAD7;
+	keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
+	keyStates[K_DOWN2].key = VK_NUMPAD2;
+	keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
+	keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
+	keyStates[K_LEFT2].key = VK_NUMPAD4;
+	keyStates[K_RIGHT2].key = VK_NUMPAD6;
+
+	//Others
+	keyStates[K_ESCAPE].key = VK_ESCAPE;
+	keyStates[K_SPACE].key = VK_SPACE;
+	keyStates[K_ENTER].key = VK_RETURN;
+	keyStates[K_RETRY].key = 'R';
+	keyStates[K_HINT].key = 'H';
+
+	//--End of Defining keystates
+
 	// rand() initialization
 	srand((unsigned int)time(0)); rand();
 
@@ -62,27 +124,8 @@ void init( void )
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
 
-	//Defining playfieldSize
-	fieldSize.X = 30;
-	fieldSize.Y = 30;
-
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 25, L"Consolas");
-}
-
-//--------------------------------------------------------------
-// Purpose  : Reset before exiting the program
-//            Do your clean up of memory here
-//            This is called once just before the game exits
-// Input    : Void
-// Output   : void
-//--------------------------------------------------------------
-void shutdown( void )
-{
-    // Reset to white text on black background
-    colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-    g_Console.clearBuffer();
+    g_Console.setConsoleFont(0, fontSize, L"Consolas");
 }
 
 //--------------------------------------------------------------
@@ -98,53 +141,7 @@ void shutdown( void )
 //--------------------------------------------------------------
 void getInput( void )
 {   
-    //Alphanumeric Keys
-    //Player 1
-    g_abKeyPressed[K_UP]            = isKeyPressed('W');
-    g_abKeyPressed[K_UPLEFT]        = isKeyPressed('Q');
-	g_abKeyPressed[K_UPRIGHT]       = isKeyPressed('E');
-    g_abKeyPressed[K_DOWN]          = isKeyPressed('X');
-    g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed('Z');
-	g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed('C');
-    g_abKeyPressed[K_LEFT]          = isKeyPressed('A');
-    g_abKeyPressed[K_RIGHT]         = isKeyPressed('D');
-
-    //Player 2
-    g_abKeyPressed[K_UP2]            = isKeyPressed('W');
-    g_abKeyPressed[K_UPLEFT2]        = isKeyPressed('Q');
-	g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed('E');
-    g_abKeyPressed[K_DOWN2]          = isKeyPressed('X');
-    g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed('Z');
-	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed('C');
-    g_abKeyPressed[K_LEFT2]          = isKeyPressed('A');
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed('D');
-
-//----------------------------------------------------------------------------------------
-    //NUMPAD
-    //PLAYER1
-   /* g_abKeyPressed[K_UP]            = isKeyPressed(VK_NUMPAD8);
-    g_abKeyPressed[K_UPLEFT]        = isKeyPressed(VK_NUMPAD7);
-	g_abKeyPressed[K_UPRIGHT]       = isKeyPressed(VK_NUMPAD9);
-    g_abKeyPressed[K_DOWN]          = isKeyPressed(VK_NUMPAD2);
-    g_abKeyPressed[K_DOWNLEFT]      = isKeyPressed(VK_NUMPAD1);
-	g_abKeyPressed[K_DOWNRIGHT]     = isKeyPressed(VK_NUMPAD3);
-    g_abKeyPressed[K_LEFT]          = isKeyPressed(VK_NUMPAD4);
-    g_abKeyPressed[K_RIGHT]         = isKeyPressed(VK_NUMPAD6);
-*/
-    //PLAYER2
-   /* g_abKeyPressed[K_UP2]            = isKeyPressed(VK_NUMPAD8);
-    g_abKeyPressed[K_UPLEFT2]        = isKeyPressed(VK_NUMPAD7);
-	g_abKeyPressed[K_UPRIGHT2]       = isKeyPressed(VK_NUMPAD9);
-    g_abKeyPressed[K_DOWN2]          = isKeyPressed(VK_NUMPAD2);
-    g_abKeyPressed[K_DOWNLEFT2]      = isKeyPressed(VK_NUMPAD1);
-	g_abKeyPressed[K_DOWNRIGHT2]     = isKeyPressed(VK_NUMPAD3);
-    g_abKeyPressed[K_LEFT2]          = isKeyPressed(VK_NUMPAD4);
-    g_abKeyPressed[K_RIGHT2]         = isKeyPressed(VK_NUMPAD6);*/
-
-    g_abKeyPressed[K_SPACE]         = isKeyPressed(VK_SPACE);
-    g_abKeyPressed[K_ESCAPE]        = isKeyPressed(VK_ESCAPE);
-    g_abKeyPressed[K_RETRY]         = isKeyPressed('R');
-	g_abKeyPressed[K_HINT]          = isKeyPressed('H');
+	for (unsigned int i = 0; i < K_COUNT; i++) keyStates[i].ifHeld();
 }
 
 //--------------------------------------------------------------
@@ -168,17 +165,32 @@ void update(double dt)
     g_dDeltaTime = dt;
     switch (g_eGameState)
     {
-        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
-            break;
-        case S_DIFFICULTY: processDiff();
-            break;
-        case S_LOADING1: load1process();
-            break;
-        case S_LOADING2: load2process();
-            break;
-        case S_GAME: gameplay(); // gameplay logic when we are in the game
-            break;
+	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
+		break;
+	case S_DIFFICULTY: processDiff();
+		break;
+	case S_LOADING1: load1process();
+		break;
+	case S_LOADING2: load2process();
+		break;
+	case S_GAME: gameplay(); // gameplay logic when we are in the game
+		break;
     }
+}
+
+//--------------------------------------------------------------
+// Purpose  : Reset before exiting the program
+//            Do your clean up of memory here
+//            This is called once just before the game exits
+// Input    : Void
+// Output   : void
+//--------------------------------------------------------------
+void shutdown( void )
+{
+    // Reset to white text on black background
+    colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
+    g_Console.clearBuffer();
 }
 
 //--------------------------------------------------------------
@@ -194,16 +206,16 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
-        case S_SPLASHSCREEN: renderSplashScreen();
-            break;
-        case S_DIFFICULTY: renderDiff();
-            break;
-        case S_LOADING1: renderLoading1();
-            break;
-        case S_LOADING2: renderLoading2();
-            break;
-        case S_GAME: renderGame();
-            break;
+	case S_SPLASHSCREEN: renderSplashScreen();
+		break;
+	case S_DIFFICULTY: renderDiff();
+		break;
+	case S_LOADING1: renderLoading1();
+		break;
+	case S_LOADING2: renderLoading2();
+		break;
+	case S_GAME: renderGame();
+		break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -213,8 +225,8 @@ void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
     { 
-        g_eGameState = S_DIFFICULTY;
-        
+        g_eGameState = S_GAME;
+        boardGen();
     }
 }
 
@@ -222,93 +234,74 @@ void splashScreenWait()    // waits for time to pass in splash screen
 
 void gameplay()
 {
-    moveCharacter();    
-                        // sound can be played here too.
-}
+	//Input section
+	Player* P; //Pointer for player
+	const EKEYS* PK; //Pointer for keys array
 
-void moveCharacter()
-{
-	Player* P = &players[currentTurn];
+	P = pickPlayer(currentTurn);
 
-	//Player 1 controls
-	if (currentTurn == 0)
+	switch (currentTurn)
 	{
-		bool B = false;
-
-		do
-		{
-			if (g_abKeyPressed[K_UP])			if (move(K_UP, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWN])			if (move(K_DOWN, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_LEFT])			if (move(K_LEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_RIGHT])		if (move(K_RIGHT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPLEFT])		if (move(K_UPLEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPRIGHT])		if (move(K_UPRIGHT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNLEFT])		if (move(K_DOWNLEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNRIGHT])	if (move(K_DOWNRIGHT, *P)) { B = true; break; }
-		} while (false);
-
-		if (B)
-		{
-			currentTurn +=1;
-			hintOn = false;
-			hintFlush();
-		}
+	case 0: PK = playerKeys1; break;
+	case 1: PK = playerKeys2; break;
 	}
 
-	//Player 2 controls
-    else if (currentTurn == 1)
+	//Player controls
+	if (!entered) goto skipEntered;
+
+	bool B = false;
+
+	for (unsigned int i = 0; i < 8; i++)
 	{
-		bool B = false;
-
-		do
-		{
-
-			if (g_abKeyPressed[K_UP2])			    if (move(K_UP, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWN2])			if (move(K_DOWN, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_LEFT2])			if (move(K_LEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_RIGHT2])		    if (move(K_RIGHT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPLEFT2])		    if (move(K_UPLEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_UPRIGHT2])		    if (move(K_UPRIGHT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNLEFT2])		if (move(K_DOWNLEFT, *P)) { B = true; break; }
-			if (g_abKeyPressed[K_DOWNRIGHT2])	    if (move(K_DOWNRIGHT, *P)) { B = true; break; }
-		} while (false);
-
-		if (B)
-		{
-			currentTurn = 0;
-			hintOn = false;
-			hintFlush();
-		}
+		EKEYS K = PK[i];
+		if (keyStates[K].onPressed) if (move(K, *P)) { B = true; break; }
 	}
+
+	if (B)
+	{
+		currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+		entered = false;
+		hintOn = false;
+		hintFlush();
+	}
+
+	skipEntered:
 
 	//Global controls
 
-if (g_abKeyPressed[K_RETRY]) //Retry
+	if (keyStates[K_RETRY].onPressed) //Retry
 	{
 		//PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
-		total1=0;
-		total2=0;
+		total1 = 0;
+		total2 = 0;
 		Result1.clear();
 		Result2.clear();
 		boardGen();
 		void render();
 	}
 
-	if (g_abKeyPressed[K_HINT])
+	if (keyStates[K_HINT].onPressed)
 	{
-		if (!hintOn && players[currentTurn].H > 0)
+		Player* P;
+		P = pickPlayer(currentTurn);
+
+		if (!hintOn && (*P).hintsAvailable > 0)
 		{
 			hintOn = true;
-			players[currentTurn].H--;
-			hinting(players[currentTurn].playerLocation);
+			(*P).hintsAvailable--;
 		}
 	}
 
-    // quits the game if player hits the escape key
-    if (g_abKeyPressed[K_ESCAPE])
-        g_bQuitGame = true; 
-}
+	if (keyStates[K_ENTER].onPressed)
+	{
+		entered = true;
+	}
 
+	// quits the game if player hits the escape key
+	if (keyStates[K_ESCAPE].onPressed) g_bQuitGame = true;
+
+	//End of Input section
+}
 
 //-----Rendering
 
@@ -351,39 +344,45 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
+	renderOffset.X = (consoleX - playfield.sizeX) / 2;
+	renderOffset.Y = 0;
+
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+	renderGUI();
 }
 
-
-
-void renderCharacter()
+void renderGUI()
 {
-    // Draw the location of the characters
-	const WORD inactive = 0x0A;
+	COORD loc = renderOffset;
+	loc.X -= 9;
+	loc.Y += 1;
 
-	for (size_t i = 0; i < playerNumber; i++)
-	{
-		WORD charColor[2] = { 0x0E, 0x0D };
+	drawPlayerGUI(loc,0);
 
-		Player* P = &(players[i]);
-		COORD*C = &((*P).playerLocation);
-		WORD c = (*P).A ? charColor[i] : inactive;
+	loc = renderOffset;
+	loc.X += playfield.sizeX + 1;
+	loc.Y += 1;
 
-		g_Console.writeToBuffer((*P).playerLocation, (char)2, charColor[i]);
-	}
+	drawPlayerGUI(loc, 1);
+
+	loc.X = 0;
+	loc.Y = 0;
+
+	g_Console.writeToBuffer(loc, currentTurn + '0', 0x0F); loc.Y++;
+	g_Console.writeToBuffer(loc, (entered ? 1 : 0) + '0', 0x0F); loc.Y++;
 }
 
 void renderFramerate()
 {
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+    //COORD c;
+    //// displays the framerate
+    //std::ostringstream ss;
+    //ss << std::fixed << std::setprecision(3);
+    //ss << 1.0 / g_dDeltaTime << "fps";
+    //c.X = g_Console.getConsoleSize().X - 9;
+    //c.Y = 0;
+    //g_Console.writeToBuffer(c, ss.str());
 
     //// displays the elapsed time
     //ss.str("");
@@ -401,4 +400,16 @@ void renderToScreen()
 
 //-----Others
 
+Player* pickPlayer(unsigned int N)
+{
+	Player* P;
 
+	switch (N)
+	{
+	case 0: P = &player1; break;
+	case 1: P = &player2; break;
+	}
+
+	return P;
+}
+//Retry
