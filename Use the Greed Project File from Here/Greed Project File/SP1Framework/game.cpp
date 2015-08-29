@@ -8,7 +8,9 @@
 #include "move.h"
 #include <fstream>
 #include <string>
-
+#include "HighScore.h"
+#include "difficulty.h"
+#include "playermenu.h"
 bool entered;
 bool hintOn;
 
@@ -116,6 +118,7 @@ void init( void )
 	keyStates[K_ENTER].key = VK_RETURN;
 	keyStates[K_RETRY].key = 'R';
 	keyStates[K_HINT].key = 'H';
+	keyStates[K_HIGHSCORE].key='K';
 
 	//--End of Defining keystates
 
@@ -127,7 +130,7 @@ void init( void )
     g_dBounceTime = 0.0;
 
     // sets the initial state for the game
-    g_eGameState = S_SPLASHSCREEN;
+    g_eGameState = S_MAINMENU;
 
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, fontSize, L"Consolas");
@@ -174,14 +177,21 @@ void update(double dt)
 		break;
 	case S_DIFFICULTY: processDiff();
 		break;
-    case S_PLAYERMENU: processPlayerMenu();
+    case S_PLAYERMENU:{ processPlayerMenu();
+		}
         break;
 	case S_LOADING1: load1process();
 		break;
-	case S_LOADING2: load2process();
+	case S_LOADING2: { load2process();}
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
+			case S_HIGHSCORE:{NameInputKeys();NameInput();}
+						 break;
+	case S_PRINTHIGHSCORE: ResetSelectedHighScoreInput();
+		break;
+	case S_MAINMENU:{selectMenuInput();
+		break;}
     }
 }
 
@@ -219,12 +229,17 @@ void render()
         break;
 	case S_DIFFICULTY: renderDiff();
 		break;
-	case S_LOADING1: renderLoading1();
+	case S_LOADING1: {renderLoading1();}
 		break;
 	case S_LOADING2: renderLoading2();
 		break;
 	case S_GAME: renderGame();
 		break;
+	case S_HIGHSCORE: {AskforInput();displayPlayerName();print();}
+			break;
+	case S_PRINTHIGHSCORE: {printall();renderResetSelectedHighScore();}
+		    break;
+	case S_MAINMENU:{renderSplashScreen();renderMenu();}break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -291,7 +306,10 @@ void gameplay()
 		boardGen();
 		void render();
 	}
-
+	if(isKeyPressed('N'))
+	{
+		g_eGameState=S_HIGHSCORE;
+	}
 	if (keyStates[K_HINT].onPressed)
 	{
 		Player* P;
@@ -331,9 +349,7 @@ void renderSplashScreen()  // renders the splash screen
     std::string gamename;
     COORD c = g_Console.getConsoleSize();
     c.Y = 0;
-    c.X = c.X / 1;
-    
-    c.X += 22;
+    c.X = 5;
     std::ifstream myfile;
     myfile.open("mainscreen.txt");
         for(int i=0; myfile.good(); i++){
@@ -341,7 +357,7 @@ void renderSplashScreen()  // renders the splash screen
             g_Console.writeToBuffer(c, gamename, 0x04);
             c.Y += 1;
         }
-    c.X -= 20;
+   /* c.X -= 20;
     c.Y += 1;
   
     c.X = c.X / 2 - 9;
@@ -353,7 +369,7 @@ void renderSplashScreen()  // renders the splash screen
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
-
+*/
 }
 
 void renderGame()

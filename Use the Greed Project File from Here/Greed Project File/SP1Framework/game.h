@@ -145,7 +145,8 @@ enum EKEYS
 	K_ENTER,
     K_RETRY,
 	K_HINT,
-    K_COUNT
+    K_COUNT,
+	K_HIGHSCORE
 };
 
 //---
@@ -203,7 +204,11 @@ enum EGAMESTATES
 	S_LOADING2,
     S_DIFFICULTY,
     S_GAME,
-    S_COUNT
+    S_COUNT,
+	S_HIGHSCORE,
+	S_PRINTHIGHSCORE,
+	S_HIGHSCOREWRITE,
+	S_OPTION
 };
 
 enum playsize{
@@ -232,7 +237,7 @@ void changeDiff();          //Changes the difficulty according to user's chosen 
 void applyDiff();           //Apply changes for difficulty
 void processPlayerMenu();
 void renderPlayerMenu();
-void applyplayer();
+void applyplayer(int totalPlayers);
 void totalplayerNumber();
 void load1process();
 void load2process();

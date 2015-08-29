@@ -2,7 +2,7 @@
 #include "difficulty.h"
 #include <fstream>
 
-Difficulty level = Novice;
+extern Difficulty level = Novice;
 
 //S_LOADING 1
 
@@ -13,7 +13,7 @@ void changeDiff(){
 	case 2: level = Intermediate; break;
 
 	case 3: level = Advanced; break;
-
+	
 	default: g_Console.writeToBuffer(4, 4, "Invalid option");
 		//_eGameState = S_PLAYERMENU;
 
