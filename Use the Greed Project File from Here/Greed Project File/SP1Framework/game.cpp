@@ -240,7 +240,10 @@ void render()
         break;
     case S_P2CTRL: renderPlayerControl();
         break;
-	case S_MAINMENU:{renderSplashScreen();renderMenu();}
+	case S_MAINMENU:{renderSplashScreen();renderMenu();	total1 = 0;
+		total2 = 0;
+		Result1.clear();
+		Result2.clear();}
 		break;
     case S_OPTION: renderOptionsMenu();
         break;
