@@ -2,6 +2,8 @@
 
 void printNumber(COORD C, unsigned int N, WORD col);
 
+void playersTurn(COORD C, unsigned int N, WORD col);
+
 void drawPlayerGUI(COORD loc, unsigned int playerNum)
 {
 	Player* p = pickPlayer(playerNum);
@@ -31,7 +33,9 @@ void drawPlayerGUI(COORD loc, unsigned int playerNum)
 	{
 		WORD c = ((*p).hintsAvailable > i) ? 0x5E : 0x50;
 		g_Console.writeToBuffer(loc.X + 4 - 2 * i, loc.Y, "?", c);
-	}
+	} loc.Y++; loc.X--;
+
+	playersTurn(loc, playerNum, 0x5B);
 }
 
 void printNumber(COORD C, unsigned int N, WORD col)
@@ -43,4 +47,10 @@ void printNumber(COORD C, unsigned int N, WORD col)
 		g_Console.writeToBuffer(C, N % 10 + '0', col); C.X--;
 		N /= 10;
 	}
+}
+
+void playersTurn(COORD C, unsigned int P, WORD col)
+{
+	if (totalPlayers == 1) return;
+	if (currentTurn == P) g_Console.writeToBuffer(C, "^^^^^^", col);
 }

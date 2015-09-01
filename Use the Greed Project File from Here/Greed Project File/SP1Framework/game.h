@@ -142,7 +142,6 @@ enum EKEYS
 	K_RIGHT2,
 	K_ESCAPE,
 	K_SPACE,
-	K_ENTER,
     K_RETRY,
 	K_HINT,
     K_COUNT
@@ -221,7 +220,6 @@ enum playsize{
 
 extern unsigned int currentTurn;
 extern bool hintOn;
-extern bool entered;
 extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
 

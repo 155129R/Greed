@@ -73,7 +73,6 @@ void boardGen()
 	}
 
 	currentTurn = 0;
-	entered = true;
 	hintOn = false;
 
 	findMoves(player1.playerLocation);

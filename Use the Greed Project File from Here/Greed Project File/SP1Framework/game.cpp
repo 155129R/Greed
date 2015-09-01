@@ -10,7 +10,6 @@
 #include <string>
 #include "HighScore.h"
 #include "startmenu.h"
-bool entered;
 bool hintOn;
 
 double  g_dElapsedTime;
@@ -55,8 +54,6 @@ void changeScreen();
 void printNumber(COORD C, unsigned int N, WORD col);
 
 unsigned int currentTurn;
-
-
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -103,8 +100,8 @@ void init( void )
 	    keyStates[K_LEFT].key = 'A';
 	    keyStates[K_RIGHT].key = 'D';
 
-	//Player 2
 
+	//Player 2
 	    keyStates[K_UP2].key = 'W';
 	    keyStates[K_UPLEFT2].key = 'Q';
 	    keyStates[K_UPRIGHT2].key = 'E';
@@ -113,12 +110,9 @@ void init( void )
 	    keyStates[K_DOWNRIGHT2].key = 'C';
 	    keyStates[K_LEFT2].key = 'A';
 	    keyStates[K_RIGHT2].key = 'D';
-    
-
 	//Others
 	keyStates[K_ESCAPE].key = VK_ESCAPE;
 	keyStates[K_SPACE].key = VK_SPACE;
-	keyStates[K_ENTER].key = VK_RETURN;
 	keyStates[K_RETRY].key = 'R';
 	keyStates[K_HINT].key = 'H';
 
@@ -284,8 +278,6 @@ void gameplay()
 	}
 
 	//Player controls
-	if (!entered) goto skipEntered;
-
 	bool B = false;
 
 	for (unsigned int i = 0; i < 8; i++)
@@ -305,8 +297,6 @@ void gameplay()
 		hideHints();
 		findMoves((*(pickPlayer(currentTurn))).playerLocation);
 	}
-
-	skipEntered:
 
 	//Global controls
 
@@ -333,11 +323,6 @@ void gameplay()
 
 			showHints((*P).playerLocation);
 		}
-	}
-
-	if (keyStates[K_ENTER].onPressed)
-	{
-		entered = true;
 	}
 
 	// quits the game if player hits the escape key
@@ -416,9 +401,6 @@ void renderGUI()
 
 	loc.X = 0;
 	loc.Y = 0;
-
-	g_Console.writeToBuffer(loc, currentTurn + '0', 0x0F); loc.Y++;
-	g_Console.writeToBuffer(loc, (entered ? 1 : 0) + '0', 0x0F); loc.Y++;
 }
 
 void renderFramerate()
