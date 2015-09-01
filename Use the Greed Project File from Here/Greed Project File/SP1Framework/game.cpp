@@ -30,11 +30,7 @@ const EKEYS playerKeys2[] = { K_UP2, K_UPLEFT2, K_UPRIGHT2, K_DOWN2, K_DOWNLEFT2
 const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
 
 Chances boardChances;
-unsigned int genID = 0;
 
-const unsigned int chances1[8] = { 50, 60, 70, 80, 85, 90, 93, 95 };	//genID = 0
-const unsigned int chances2[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 1
-const unsigned int chances3[8] = { 30, 35, 40, 50, 60, 70, 80, 90 };	//genID = 2
 
 Playfield playfield;
 
@@ -73,19 +69,6 @@ Console g_Console(consoleX, consoleY, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
-
-	const unsigned int* P;
-	switch (genID)
-	{
-	    case 0: P = chances1;
-	    case 1: P = chances2;
-        case 2: P = chances3;
-	}
-
-	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
-
-	playfield.resize(30, 30);
-	playfield.numberLimit = 7;
 
 	//--Defining keystates
 

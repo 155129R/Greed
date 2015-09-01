@@ -222,6 +222,7 @@ extern unsigned int currentTurn;
 extern bool hintOn;
 extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
+extern unsigned int genID;
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
@@ -251,10 +252,11 @@ void processDiff();
 void renderDiff();
 void renderLoading1();
 void renderLoading2();
+void chancesofNumber();
 
 extern COORD renderOffset;
 extern Console g_Console;
 extern EGAMESTATES g_eGameState;
-extern unsigned int genID;
+
 
 #endif

@@ -23,6 +23,7 @@ void renderMap()
 			loc.Y += Y;
 
 			g_Console.writeToBuffer(loc, V == 0 ? 0 : V + '0', C);
+            checkWinner();
 		}
 	}
 }

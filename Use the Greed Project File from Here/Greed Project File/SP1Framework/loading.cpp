@@ -8,6 +8,7 @@ void load1process(){
 	applyDiff();
     applyplayer();
     totalplayerNumber();
+    chancesofNumber();
 	g_eGameState = S_LOADING2;
 }
 

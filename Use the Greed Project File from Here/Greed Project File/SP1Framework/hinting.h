@@ -6,6 +6,7 @@
 void findMoves(COORD P);
 void showHints(COORD P);
 void hideHints();
+void checkWinner();
 
 extern bool allowedMoves[8];
 

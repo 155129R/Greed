@@ -70,3 +70,18 @@ void hideHints()
 		}
 	}
 }
+void checkWinner()
+{
+    bool B = false;
+    for (unsigned int i = 0; i < 8; i++)
+    {
+        B |= allowedMoves[i];
+    }
+    
+    if ( B == false)
+    {
+        g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x04);
+    }
+
+
+}

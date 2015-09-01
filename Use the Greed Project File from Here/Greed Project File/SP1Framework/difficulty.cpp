@@ -3,6 +3,7 @@
 #include <fstream>
 
 Difficulty level = Novice;
+unsigned int genID = 0;
 
 //S_LOADING 1
 
@@ -40,6 +41,23 @@ void applyDiff(){
         genID = 2;
 	}
 
+}
+
+void chancesofNumber()
+{
+
+	const unsigned int* P;
+	switch (genID)
+	{
+	    case 0: P = chances1;
+            break;
+	    case 1: P = chances2;
+            break;
+        case 2: P = chances3;
+            break;
+	}
+
+	for (unsigned int i = 0; i < 8; i++) boardChances.percentiles[i] = P[i];
 }
 
 //S_DIFFICULTY
@@ -90,22 +108,18 @@ void processDiff(){
 
 	if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    level = static_cast<Difficulty>(1);
-		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
 	    level = static_cast<Difficulty>(2);
-		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
     if((isKeyPressed('3'))||(isKeyPressed(VK_NUMPAD3))){
 	    level = static_cast<Difficulty>(3);
-		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
 	  if (isKeyPressed(VK_ESCAPE))
 	  {
-		  PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_PLAYERMENU;
 	  }
 
