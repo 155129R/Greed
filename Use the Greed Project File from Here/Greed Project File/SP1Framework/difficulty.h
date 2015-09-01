@@ -1,6 +1,7 @@
 #ifndef _difficulty
 #define _difficulty
 
+
 enum Difficulty{
 
 	Novice = 1,

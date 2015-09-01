@@ -4,7 +4,7 @@
 #include "playermenu.h"
 #include "board.h"
 #include "startmenu.h"
-extern numberofPlayers Number;
+
 COORD D;
 void renderMenu()
 {

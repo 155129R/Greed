@@ -1,9 +1,14 @@
 #include "hinting.h"
+#include "game.h"
+#include "playermenu.h"
+#include <fstream>
 
 bool allowedMoves[8];
 
+
 void findMoves(COORD P)
 {
+
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		allowedMoves[i] = false;
@@ -80,7 +85,51 @@ void checkWinner()
     
     if ( B == false)
     {
-        g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x04);
+       
+            player1.playerLocation.X = 0;
+            player1.playerLocation.Y = 0;
+            g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x04);
+        
+      if ( totalPlayers == 2)
+        {
+            player2.playerLocation.X = 1;
+            player2.playerLocation.Y = 0;
+            COORD victoryTextCOORD;
+            victoryTextCOORD.X = 15;
+            victoryTextCOORD.Y = 15;
+            if (player1.totalScore > player2.totalScore)
+            {
+                
+                std::ifstream player1wonFile;
+                std::string playerwon;
+	            player1wonFile.open("player1win.txt");
+	            while(player1wonFile.good())
+	            {
+	                std::getline(player1wonFile,playerwon);
+	                g_Console.writeToBuffer(victoryTextCOORD.X ,victoryTextCOORD.Y, playerwon, 0x3F);
+                    victoryTextCOORD.Y++;
+	            }
+	            player1wonFile.close();
+             
+            }
+            else if (player2.totalScore > player1.totalScore)
+            {
+                std::ifstream player2wonFile;
+                std::string playerwon;
+	            player2wonFile.open("player2win.txt");
+	            while(player2wonFile.good())
+	            {
+	                std::getline(player2wonFile,playerwon);
+	                g_Console.writeToBuffer(victoryTextCOORD.X,victoryTextCOORD.Y, playerwon, 0x3F);
+                    victoryTextCOORD.Y++;
+
+	            }
+	            player2wonFile.close();
+          
+            
+            }
+           
+        }
     }
 
 

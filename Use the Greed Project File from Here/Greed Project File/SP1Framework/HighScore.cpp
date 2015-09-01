@@ -473,6 +473,8 @@ void write()
 	
 	WriteFile.close();
 }
+
+
 void print()
 {
 		COORD c;c.X=0;

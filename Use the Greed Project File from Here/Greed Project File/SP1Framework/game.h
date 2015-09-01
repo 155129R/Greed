@@ -224,6 +224,7 @@ extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
 extern unsigned int genID;
 
+
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
 void clearScreen();         // clears the current screen and draw from scratch 

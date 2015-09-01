@@ -5,7 +5,6 @@
 #include "board.h"
 
 extern numberofPlayers Number = Single;
-
 void totalplayerNumber(){
     switch(Number){
         case 1: Number = Single; break;

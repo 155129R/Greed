@@ -6,4 +6,6 @@ void boardGen();
 void renderMap();
 void renderCharacter();
 
+extern char playerChar;
+
 #endif
