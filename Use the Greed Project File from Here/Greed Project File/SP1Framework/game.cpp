@@ -48,7 +48,11 @@ void boardGen();
 void printBoard();
 void changeScreen();
 void printNumber(COORD C, unsigned int N, WORD col);
-
+void renderhighscore();
+void  renderprinthighscore();
+void rendermainmenu();
+void inputhighscore();
+void inputprintallhighscore();
 unsigned int currentTurn;
 
 // Game specific variables here
@@ -164,7 +168,7 @@ void update(double dt)
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-	case S_MAINMENU: {selectMenuInput();/*PlaySound(L"MainMenuTheme.wav",NULL,SND_NOSTOP | SND_ASYNC|SND_LOOP);*/}
+	case S_MAINMENU: {selectMenuInput();}
 		break;
     case S_P1CTRL: processPlayer1Control();
         break;
@@ -172,11 +176,11 @@ void update(double dt)
         break;
     case S_OPTION: processOptionsMenu();
         break;
-	case S_HIGHSCORE:{NameInputKeys();NameInput();}
-						 break;
-	case S_PRINTHIGHSCORE: {NameInputKeys();ResetSelectedHighScoreInput();}
+	case S_HIGHSCORE: inputhighscore();
 		break;
-    }
+	case S_PRINTHIGHSCORE: {inputprintallhighscore();}
+		break;
+  }
 }
 
 //--------------------------------------------------------------
@@ -223,22 +227,49 @@ void render()
         break;
     case S_P2CTRL: renderPlayerControl();
         break;
-	case S_MAINMENU:{renderSplashScreen();renderMenu();	total1 = 0;
-		total2 = 0;
-		Result1.clear();
-		Result2.clear();}
+	case S_MAINMENU:{rendermainmenu();}
 		break;
     case S_OPTION: renderOptionsMenu();
         break;
-	case S_HIGHSCORE: {AskforInput();displayPlayerName();print();}
+	case S_HIGHSCORE: {renderhighscore();}
 			break;
-	case S_PRINTHIGHSCORE: {printall();renderResetSelectedHighScore();}
+	case S_PRINTHIGHSCORE: { renderprinthighscore();}
 		    break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
+void inputprintallhighscore()
+{
+	NameInputKeys();
+	ResetSelectedHighScoreInput();
+}
 
+void inputhighscore()
+{
+	NameInputKeys();NameInput();
+}
+void rendermainmenu()
+{
+	renderSplashScreen();
+	renderMenu();
+	total1 = 0;
+	total2 = 0;
+	Result1.clear();
+	Result2.clear();
+}
+void renderhighscore()
+{
+	AskforInput();
+	displayPlayerName();
+	print();
+
+}
+void renderprinthighscore()
+{
+	printall();
+	renderResetSelectedHighScore();
+}
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
