@@ -292,7 +292,7 @@ void gameplay()
 	if (B)
 	{
 		currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
-		entered = false;
+
 		hintOn = false;
 		hideHints();
 		findMoves((*(pickPlayer(currentTurn))).playerLocation);
