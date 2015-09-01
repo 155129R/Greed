@@ -24,13 +24,13 @@ void changeDiff(){
 void applyDiff(){
 	if (level == Novice)
 	{
-		playfield.resize(35,35);
+		playfield.resize(30,30);
 		playfield.numberLimit = 5;
         genID = 0;
 	}
 
 	else if (level == Intermediate){
-		playfield.resize(30,30);
+		playfield.resize(25,25);
 		playfield.numberLimit = 7;
         genID = 1;
 	}

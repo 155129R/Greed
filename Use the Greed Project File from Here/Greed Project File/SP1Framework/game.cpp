@@ -17,7 +17,7 @@ double  g_dDeltaTime;
 
 const short fontSize = 28;
 const short consoleX = 100;
-const short consoleY = 25;
+const short consoleY = 35;
 
 COORD renderOffset;
 
