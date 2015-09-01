@@ -181,7 +181,7 @@ void update(double dt)
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-	case S_MAINMENU: selectMenuInput();
+	case S_MAINMENU: {selectMenuInput();/*PlaySound(L"MainMenuTheme.wav",NULL,SND_NOSTOP | SND_ASYNC|SND_LOOP);*/}
 		break;
     case S_P1CTRL: processPlayer1Control();
         break;
@@ -302,7 +302,7 @@ void gameplay()
 
 	if (keyStates[K_RETRY].onPressed) //Retry
 	{
-		//PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
+		PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
 		total1 = 0;
 		total2 = 0;
 		Result1.clear();
@@ -326,10 +326,11 @@ void gameplay()
 	}
 
 	// quits the game if player hits the escape key
-	if (keyStates[K_ESCAPE].onPressed) g_bQuitGame = true;
-	if(isKeyPressed('N'))
+	/*if (keyStates[K_ESCAPE].onPressed) g_bQuitGame = true;*/
+	if(isKeyPressed(VK_ESCAPE))
 	{
 		g_eGameState=S_HIGHSCORE;
+		Sleep(200);
 	}
 	//End of Input section
 }

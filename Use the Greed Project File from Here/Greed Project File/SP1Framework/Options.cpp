@@ -46,17 +46,17 @@ void processOptionsMenu()
 {
 
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
-	   
+	   PlaySound(L"joke.wav",NULL,SND_ASYNC);
         g_eGameState = S_P1CTRL;
         
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
-	    
+	    PlaySound(L"joke.wav",NULL,SND_ASYNC);
         g_eGameState = S_P2CTRL;
         
     }
     if (isKeyPressed(VK_ESCAPE))
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_MAINMENU;
 	  }
     

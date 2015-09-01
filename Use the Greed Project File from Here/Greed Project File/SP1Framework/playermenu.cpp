@@ -65,15 +65,20 @@ void renderPlayerMenu(){
 
 void processPlayerMenu(){
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
-	    Number = static_cast<numberofPlayers>(1);
+	    
+		PlaySound(L"joke.wav",NULL,SND_ASYNC);
+		Number = static_cast<numberofPlayers>(1);
 	    g_eGameState = S_DIFFICULTY;
+
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
-	    Number = static_cast<numberofPlayers>(2);
+	    PlaySound(L"joke.wav",NULL,SND_ASYNC);
+		Number = static_cast<numberofPlayers>(2);
 	    g_eGameState = S_DIFFICULTY;
     }
     if (isKeyPressed(VK_ESCAPE))
 	  {
+		  PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_MAINMENU;
 	  }
     

@@ -16,6 +16,7 @@ bool move(Player* P, Directions D)
 
 		playfield.cell[(*P).playerLocation.Y][(*P).playerLocation.X].value = 0;
 	}
+	PlaySound(L"points.wav",NULL,SND_ASYNC);
 	addingPoints(V, total1, total2);
   convertTotalPoints(Result1,Result2, total1, total2);
 	(*P).totalScore += V;

@@ -72,18 +72,22 @@ void selectMenuInput()
 	 if(isKeyPressed(VK_NUMPAD1)||isKeyPressed('1'))
 	 {
 		 g_eGameState=S_PLAYERMENU;
+		 PlaySound(L"joke.wav",NULL,SND_ASYNC);
+
 	 }
 	 if(isKeyPressed(VK_NUMPAD2)||isKeyPressed('2'))
 	  {
 		  g_eGameState=S_OPTION;
+		  PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	  }
 	 
 	  if(isKeyPressed(VK_NUMPAD3)||isKeyPressed('3'))
 	  {
 		  g_eGameState=S_PRINTHIGHSCORE;
+		  PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	  }
 	  if(isKeyPressed(VK_NUMPAD4)||isKeyPressed('4'))
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_bQuitGame = true; 
 	  }
 }

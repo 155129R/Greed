@@ -117,8 +117,8 @@ void NameInputKeys()
 }
 void NameInput()
 {
-	/*if(PlayerName.length()<11)
-	{*/
+	if(PlayerName.length()<11)
+	{
 	
 	if(g_abKeyPressedName[K_A])
 	{
@@ -266,7 +266,7 @@ void NameInput()
 	   {
 		   PlayerName+='9';
 	  }
-	  
+	  }
 	 if(g_abKeyPressedName[K_BACKSPACE])
 	{
 		if(PlayerName.length()<1)
@@ -277,6 +277,7 @@ void NameInput()
 		{
 		PlayerName.pop_back();
 		}
+	 
 	 }
 	 if(g_abKeyPressedName[K_ENTER2] && checkcounter==0)
 	{
@@ -285,9 +286,10 @@ void NameInput()
 		//g_eGameState=S_PRINTHIGHSCORE;
 		checkcounter++;
 	}
-	  if (g_abKeyPressedName[K_ESCAPE2])
+	  if (isKeyPressed(VK_ESCAPE))
 	  {
 		  g_eGameState=S_MAINMENU;
+		  checkcounter=0;
 	  }
 
 
@@ -521,15 +523,18 @@ void print()
             g_Console.writeToBuffer(c, Title,0x04);
 			c.Y+=1;
         }
-		g_Console.writeToBuffer(0,14,FirstPlayer);
-		g_Console.writeToBuffer(0+FirstPlayer.length(),14," : ");
-		g_Console.writeToBuffer(0+2+FirstPlayer.length(),14,CheckPlayer1Score);
-		g_Console.writeToBuffer(0,15,SecondPlayer);
-		g_Console.writeToBuffer(0+SecondPlayer.length(),15," : ");
-		g_Console.writeToBuffer(0+2+SecondPlayer.length(),15,CheckPlayer2Score);
-		g_Console.writeToBuffer(0,16,ThirdPlayer);
-		g_Console.writeToBuffer(0+ThirdPlayer.length(),16," : ");
-		g_Console.writeToBuffer(0+2+ThirdPlayer.length(),16,CheckPlayer3Score);
+		g_Console.writeToBuffer(1,14,"First :");
+		g_Console.writeToBuffer(8,14,FirstPlayer);
+		g_Console.writeToBuffer(8+FirstPlayer.length(),14," : ");
+		g_Console.writeToBuffer(8+2+FirstPlayer.length(),14,CheckPlayer1Score);
+		g_Console.writeToBuffer(0,15,"Second :");
+		g_Console.writeToBuffer(8,15,SecondPlayer);
+		g_Console.writeToBuffer(8+SecondPlayer.length(),15," : ");
+		g_Console.writeToBuffer(8+2+SecondPlayer.length(),15,CheckPlayer2Score);
+		g_Console.writeToBuffer(1,16,"Third :");
+		g_Console.writeToBuffer(8,16,ThirdPlayer);
+		g_Console.writeToBuffer(8+ThirdPlayer.length(),16," : ");
+		g_Console.writeToBuffer(8+2+ThirdPlayer.length(),16,CheckPlayer3Score);
 
 
 
@@ -538,8 +543,15 @@ void print()
 			Result1="0";
 		}
 		g_Console.writeToBuffer(0,3,"Total Points Earned:");
+		if (total1>total2)
+		{
 		g_Console.writeToBuffer(22,3,Result1, 0x04);
-		
+		}
+		else
+		{
+
+			g_Console.writeToBuffer(22,3,Result2, 0x04);
+		}
 		ReadFile.close();
 } 
 
@@ -676,33 +688,33 @@ void  ResetSelectedHighScoreInput()
 {
 	
 		if(g_abKeyPressedName[K_1])
-		 {
+		 {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  ResetNovice1();
 		 }
 		if(g_abKeyPressedName[K_2])
-		 {
+		 {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		   ResetIntermediate1();
 		 }
 	 
 		 if(g_abKeyPressedName[K_3])
-	     {
+	     {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		ResetAdvanced1();
 	
 	     } 
 	   if(g_abKeyPressedName[K_4])
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  ResetNovice2();
 	  }
 	  if(g_abKeyPressedName[K_5])
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		   ResetIntermediate2();
 	  }
 	  if(g_abKeyPressedName[K_6])
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		ResetAdvanced2();
 	  }
 	  if (g_abKeyPressedName[K_ESCAPE2])
-	  {
+	  {PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_MAINMENU;
 	  }
 

@@ -90,18 +90,22 @@ void processDiff(){
 
 	if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    level = static_cast<Difficulty>(1);
+		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
 	    level = static_cast<Difficulty>(2);
+		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
     if((isKeyPressed('3'))||(isKeyPressed(VK_NUMPAD3))){
 	    level = static_cast<Difficulty>(3);
+		PlaySound(L"joke.wav",NULL,SND_ASYNC);
 	    g_eGameState = S_LOADING1;
     }
 	  if (isKeyPressed(VK_ESCAPE))
 	  {
+		  PlaySound(L"joke.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_PLAYERMENU;
 	  }
 
