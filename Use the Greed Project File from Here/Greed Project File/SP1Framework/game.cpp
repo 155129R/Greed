@@ -94,10 +94,17 @@ void init( void )
 
 	//Player 1
 
-
+        keyStates[K_UP].key = 'W';
+	    keyStates[K_UPLEFT].key = 'Q';
+	    keyStates[K_UPRIGHT].key = 'E';
+	    keyStates[K_DOWN].key = 'X';
+	    keyStates[K_DOWNLEFT].key = 'Z';
+	    keyStates[K_DOWNRIGHT].key = 'C';
+	    keyStates[K_LEFT].key = 'A';
+	    keyStates[K_RIGHT].key = 'D';
 
 	//Player 2
-    if(p2KeySet == 0){
+
 	    keyStates[K_UP2].key = 'W';
 	    keyStates[K_UPLEFT2].key = 'Q';
 	    keyStates[K_UPRIGHT2].key = 'E';
@@ -106,17 +113,8 @@ void init( void )
 	    keyStates[K_DOWNRIGHT2].key = 'C';
 	    keyStates[K_LEFT2].key = 'A';
 	    keyStates[K_RIGHT2].key = 'D';
-    }
-    if(p2KeySet == 1){
-	    keyStates[K_UP2].key = VK_NUMPAD8;
-	    keyStates[K_UPLEFT2].key = VK_NUMPAD7;
-	    keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
-	    keyStates[K_DOWN2].key = VK_NUMPAD2;
-	    keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
-	    keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
-	    keyStates[K_LEFT2].key = VK_NUMPAD4;
-	    keyStates[K_RIGHT2].key = VK_NUMPAD6;
-    }
+    
+
 	//Others
 	keyStates[K_ESCAPE].key = VK_ESCAPE;
 	keyStates[K_SPACE].key = VK_SPACE;
