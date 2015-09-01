@@ -2,7 +2,7 @@
 #include "difficulty.h"
 #include <fstream>
 
-extern Difficulty level = Novice;
+Difficulty level = Novice;
 
 //S_LOADING 1
 
@@ -13,7 +13,7 @@ void changeDiff(){
 	case 2: level = Intermediate; break;
 
 	case 3: level = Advanced; break;
-	
+
 	default: g_Console.writeToBuffer(4, 4, "Invalid option");
 		//_eGameState = S_PLAYERMENU;
 
@@ -100,4 +100,9 @@ void processDiff(){
 	    level = static_cast<Difficulty>(3);
 	    g_eGameState = S_LOADING1;
     }
+	  if (isKeyPressed(VK_ESCAPE))
+	  {
+		  g_eGameState=S_PLAYERMENU;
+	  }
+
 }

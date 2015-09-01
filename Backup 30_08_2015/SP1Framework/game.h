@@ -150,6 +150,8 @@ enum EKEYS
 
 //---
 //Key state class extended for pressed and released events.
+extern bool p1KeySet;
+extern bool p2KeySet;
 //---
 class KeyState
 {
@@ -205,6 +207,8 @@ enum EGAMESTATES
     S_GAME,
     S_COUNT,
 	S_OPTION,
+    S_P1CTRL,
+    S_P2CTRL,
 	S_HIGHSCORE,
 	S_PRINTHIGHSCORE
 };
@@ -218,7 +222,7 @@ enum playsize{
 extern unsigned int currentTurn;
 extern bool hintOn;
 extern bool entered;
-
+extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
 
 void splashScreenWait();    // waits for time to pass in splash screen
@@ -237,6 +241,12 @@ void processPlayerMenu();
 void renderPlayerMenu();
 void applyplayer();
 void totalplayerNumber();
+void processOptionsMenu();
+void renderOptionsMenu();
+void renderPlayerControl();
+void processPlayer1Control();
+void renderPlayer2Control();
+void processPlayer2Control();
 void load1process();
 void load2process();
 void processDiff();

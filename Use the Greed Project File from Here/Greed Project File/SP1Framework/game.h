@@ -145,12 +145,13 @@ enum EKEYS
 	K_ENTER,
     K_RETRY,
 	K_HINT,
-    K_COUNT,
-	K_HIGHSCORE
+    K_COUNT
 };
 
 //---
 //Key state class extended for pressed and released events.
+extern bool p1KeySet;
+extern bool p2KeySet;
 //---
 class KeyState
 {
@@ -205,10 +206,11 @@ enum EGAMESTATES
     S_DIFFICULTY,
     S_GAME,
     S_COUNT,
+	S_OPTION,
+    S_P1CTRL,
+    S_P2CTRL,
 	S_HIGHSCORE,
-	S_PRINTHIGHSCORE,
-	S_HIGHSCOREWRITE,
-	S_OPTION
+	S_PRINTHIGHSCORE
 };
 
 enum playsize{
@@ -220,14 +222,14 @@ enum playsize{
 extern unsigned int currentTurn;
 extern bool hintOn;
 extern bool entered;
-
+extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
-
+void setcursor(bool visible, DWORD size); //Changes cursor "visibility"
 void renderGame();          // renders the game stuff
 void renderCharacter();     // renders the character to buffer
 void renderGUI();
@@ -237,8 +239,14 @@ void changeDiff();          //Changes the difficulty according to user's chosen 
 void applyDiff();           //Apply changes for difficulty
 void processPlayerMenu();
 void renderPlayerMenu();
-void applyplayer(int totalPlayers);
+void applyplayer();
 void totalplayerNumber();
+void processOptionsMenu();
+void renderOptionsMenu();
+void renderPlayerControl();
+void processPlayer1Control();
+void renderPlayer2Control();
+void processPlayer2Control();
 void load1process();
 void load2process();
 void processDiff();

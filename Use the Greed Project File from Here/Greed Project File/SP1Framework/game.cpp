@@ -9,17 +9,16 @@
 #include <fstream>
 #include <string>
 #include "HighScore.h"
-#include "difficulty.h"
-#include "playermenu.h"
+#include "startmenu.h"
 bool entered;
 bool hintOn;
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 
-const short fontSize = 30;
-const short consoleX = 80;
-const short consoleY = 40;
+const short fontSize = 28;
+const short consoleX = 100;
+const short consoleY = 25;
 
 COORD renderOffset;
 
@@ -27,7 +26,7 @@ unsigned int totalPlayers = 1;
 Player player1;
 Player player2;
 const EKEYS playerKeys1[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
-const EKEYS playerKeys2[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
+const EKEYS playerKeys2[] = { K_UP2, K_UPLEFT2, K_UPRIGHT2, K_DOWN2, K_DOWNLEFT2, K_DOWNRIGHT2, K_LEFT2, K_RIGHT2 };
 
 const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
 
@@ -57,7 +56,7 @@ void printNumber(COORD C, unsigned int N, WORD col);
 
 unsigned int currentTurn;
 
-KeyState keyStates[K_COUNT];
+
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -77,6 +76,7 @@ Console g_Console(consoleX, consoleY, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
+
 	const unsigned int* P;
 	switch (genID)
 	{
@@ -93,32 +93,36 @@ void init( void )
 	//--Defining keystates
 
 	//Player 1
-	keyStates[K_UP].key = VK_NUMPAD8;
-	keyStates[K_UPLEFT].key = VK_NUMPAD7;
-	keyStates[K_UPRIGHT].key = VK_NUMPAD9;
-	keyStates[K_DOWN].key = VK_NUMPAD2;
-	keyStates[K_DOWNLEFT].key = VK_NUMPAD1;
-	keyStates[K_DOWNRIGHT].key = VK_NUMPAD3;
-	keyStates[K_LEFT].key = VK_NUMPAD4;
-	keyStates[K_RIGHT].key = VK_NUMPAD6;
+
+
 
 	//Player 2
-	keyStates[K_UP2].key = VK_NUMPAD8;
-	keyStates[K_UPLEFT2].key = VK_NUMPAD7;
-	keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
-	keyStates[K_DOWN2].key = VK_NUMPAD2;
-	keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
-	keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
-	keyStates[K_LEFT2].key = VK_NUMPAD4;
-	keyStates[K_RIGHT2].key = VK_NUMPAD6;
-
+    if(p2KeySet == 0){
+	    keyStates[K_UP2].key = 'W';
+	    keyStates[K_UPLEFT2].key = 'Q';
+	    keyStates[K_UPRIGHT2].key = 'E';
+	    keyStates[K_DOWN2].key = 'X';
+	    keyStates[K_DOWNLEFT2].key = 'Z';
+	    keyStates[K_DOWNRIGHT2].key = 'C';
+	    keyStates[K_LEFT2].key = 'A';
+	    keyStates[K_RIGHT2].key = 'D';
+    }
+    if(p2KeySet == 1){
+	    keyStates[K_UP2].key = VK_NUMPAD8;
+	    keyStates[K_UPLEFT2].key = VK_NUMPAD7;
+	    keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
+	    keyStates[K_DOWN2].key = VK_NUMPAD2;
+	    keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
+	    keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
+	    keyStates[K_LEFT2].key = VK_NUMPAD4;
+	    keyStates[K_RIGHT2].key = VK_NUMPAD6;
+    }
 	//Others
 	keyStates[K_ESCAPE].key = VK_ESCAPE;
 	keyStates[K_SPACE].key = VK_SPACE;
 	keyStates[K_ENTER].key = VK_RETURN;
 	keyStates[K_RETRY].key = 'R';
 	keyStates[K_HINT].key = 'H';
-	keyStates[K_HIGHSCORE].key='K';
 
 	//--End of Defining keystates
 
@@ -173,25 +177,30 @@ void update(double dt)
     g_dDeltaTime = dt;
     switch (g_eGameState)
     {
-	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
-		break;
+	//case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
+	//	break;
 	case S_DIFFICULTY: processDiff();
 		break;
-    case S_PLAYERMENU:{ processPlayerMenu();
-		}
+    case S_PLAYERMENU: processPlayerMenu();
         break;
 	case S_LOADING1: load1process();
 		break;
-	case S_LOADING2: { load2process();}
+	case S_LOADING2: load2process();
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-			case S_HIGHSCORE:{NameInputKeys();NameInput();}
-						 break;
-	case S_PRINTHIGHSCORE: ResetSelectedHighScoreInput();
+	case S_MAINMENU: selectMenuInput();
 		break;
-	case S_MAINMENU:{selectMenuInput();
-		break;}
+    case S_P1CTRL: processPlayer1Control();
+        break;
+    case S_P2CTRL: processPlayer2Control();
+        break;
+    case S_OPTION: processOptionsMenu();
+        break;
+	case S_HIGHSCORE:{NameInputKeys();NameInput();}
+						 break;
+	case S_PRINTHIGHSCORE: {NameInputKeys();ResetSelectedHighScoreInput();}
+		break;
     }
 }
 
@@ -223,23 +232,30 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
-	case S_SPLASHSCREEN: renderSplashScreen();
-		break;
+	/*case S_SPLASHSCREEN: renderSplashScreen();
+		break;*/
     case S_PLAYERMENU: renderPlayerMenu();
         break;
 	case S_DIFFICULTY: renderDiff();
 		break;
-	case S_LOADING1: {renderLoading1();}
+	case S_LOADING1: renderLoading1();
 		break;
 	case S_LOADING2: renderLoading2();
 		break;
 	case S_GAME: renderGame();
 		break;
+    case S_P1CTRL: renderPlayerControl();
+        break;
+    case S_P2CTRL: renderPlayerControl();
+        break;
+	case S_MAINMENU:{renderSplashScreen();renderMenu();}
+		break;
+    case S_OPTION: renderOptionsMenu();
+        break;
 	case S_HIGHSCORE: {AskforInput();displayPlayerName();print();}
 			break;
 	case S_PRINTHIGHSCORE: {printall();renderResetSelectedHighScore();}
 		    break;
-	case S_MAINMENU:{renderSplashScreen();renderMenu();}break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -306,10 +322,7 @@ void gameplay()
 		boardGen();
 		void render();
 	}
-	if(isKeyPressed('N'))
-	{
-		g_eGameState=S_HIGHSCORE;
-	}
+
 	if (keyStates[K_HINT].onPressed)
 	{
 		Player* P;
@@ -331,7 +344,10 @@ void gameplay()
 
 	// quits the game if player hits the escape key
 	if (keyStates[K_ESCAPE].onPressed) g_bQuitGame = true;
-
+	if(isKeyPressed('N'))
+	{
+		g_eGameState=S_HIGHSCORE;
+	}
 	//End of Input section
 }
 
@@ -348,16 +364,17 @@ void renderSplashScreen()  // renders the splash screen
   
     std::string gamename;
     COORD c = g_Console.getConsoleSize();
+	
     c.Y = 0;
-    c.X = 5;
-    std::ifstream myfile;
+    c.X = 0; 
+	std::ifstream myfile;
     myfile.open("mainscreen.txt");
         for(int i=0; myfile.good(); i++){
             std::getline(myfile, gamename);
             g_Console.writeToBuffer(c, gamename, 0x04);
             c.Y += 1;
         }
-   /* c.X -= 20;
+ /*   c.X -= 20;
     c.Y += 1;
   
     c.X = c.X / 2 - 9;
@@ -368,8 +385,8 @@ void renderSplashScreen()  // renders the splash screen
 
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
-*/
+    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);*/
+
 }
 
 void renderGame()

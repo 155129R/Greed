@@ -12,10 +12,10 @@ void convertTotalPoints (std::string &Result1,std::string Result2,int &total1,in
 //	addingPoints();
 //	convertTotalPoints();
 
-void addingPoints(int V ,int &total1,int &total2)
+void addingPoints(int V,int &total1,int &total2)
 {
 	//PlaySound(L"points.wav",NULL,SND_ASYNC);
-	//std::cin >> Nvalue;
+	//std::cin >> Nvalue; 
 	if(currentTurn == 0)
 	{
 		int points=V;

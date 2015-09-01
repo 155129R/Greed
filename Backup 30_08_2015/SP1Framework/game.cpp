@@ -16,9 +16,9 @@ bool hintOn;
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 
-const short fontSize = 30;
+const short fontSize = 28;
 const short consoleX = 100;
-const short consoleY = 60;
+const short consoleY = 25;
 
 COORD renderOffset;
 
@@ -26,7 +26,7 @@ unsigned int totalPlayers = 1;
 Player player1;
 Player player2;
 const EKEYS playerKeys1[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
-const EKEYS playerKeys2[] = { K_UP, K_UPLEFT, K_UPRIGHT, K_DOWN, K_DOWNLEFT, K_DOWNRIGHT, K_LEFT, K_RIGHT };
+const EKEYS playerKeys2[] = { K_UP2, K_UPLEFT2, K_UPRIGHT2, K_DOWN2, K_DOWNLEFT2, K_DOWNRIGHT2, K_LEFT2, K_RIGHT2 };
 
 const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
 
@@ -56,7 +56,7 @@ void printNumber(COORD C, unsigned int N, WORD col);
 
 unsigned int currentTurn;
 
-KeyState keyStates[K_COUNT];
+
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -93,25 +93,30 @@ void init( void )
 	//--Defining keystates
 
 	//Player 1
-	keyStates[K_UP].key = VK_NUMPAD8;
-	keyStates[K_UPLEFT].key = VK_NUMPAD7;
-	keyStates[K_UPRIGHT].key = VK_NUMPAD9;
-	keyStates[K_DOWN].key = VK_NUMPAD2;
-	keyStates[K_DOWNLEFT].key = VK_NUMPAD1;
-	keyStates[K_DOWNRIGHT].key = VK_NUMPAD3;
-	keyStates[K_LEFT].key = VK_NUMPAD4;
-	keyStates[K_RIGHT].key = VK_NUMPAD6;
+
+
 
 	//Player 2
-	keyStates[K_UP2].key = VK_NUMPAD8;
-	keyStates[K_UPLEFT2].key = VK_NUMPAD7;
-	keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
-	keyStates[K_DOWN2].key = VK_NUMPAD2;
-	keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
-	keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
-	keyStates[K_LEFT2].key = VK_NUMPAD4;
-	keyStates[K_RIGHT2].key = VK_NUMPAD6;
-
+    if(p2KeySet == 0){
+	    keyStates[K_UP2].key = 'W';
+	    keyStates[K_UPLEFT2].key = 'Q';
+	    keyStates[K_UPRIGHT2].key = 'E';
+	    keyStates[K_DOWN2].key = 'X';
+	    keyStates[K_DOWNLEFT2].key = 'Z';
+	    keyStates[K_DOWNRIGHT2].key = 'C';
+	    keyStates[K_LEFT2].key = 'A';
+	    keyStates[K_RIGHT2].key = 'D';
+    }
+    if(p2KeySet == 1){
+	    keyStates[K_UP2].key = VK_NUMPAD8;
+	    keyStates[K_UPLEFT2].key = VK_NUMPAD7;
+	    keyStates[K_UPRIGHT2].key = VK_NUMPAD9;
+	    keyStates[K_DOWN2].key = VK_NUMPAD2;
+	    keyStates[K_DOWNLEFT2].key = VK_NUMPAD1;
+	    keyStates[K_DOWNRIGHT2].key = VK_NUMPAD3;
+	    keyStates[K_LEFT2].key = VK_NUMPAD4;
+	    keyStates[K_RIGHT2].key = VK_NUMPAD6;
+    }
 	//Others
 	keyStates[K_ESCAPE].key = VK_ESCAPE;
 	keyStates[K_SPACE].key = VK_SPACE;
@@ -186,6 +191,12 @@ void update(double dt)
 		break;
 	case S_MAINMENU: selectMenuInput();
 		break;
+    case S_P1CTRL: processPlayer1Control();
+        break;
+    case S_P2CTRL: processPlayer2Control();
+        break;
+    case S_OPTION: processOptionsMenu();
+        break;
 	case S_HIGHSCORE:{NameInputKeys();NameInput();}
 						 break;
 	case S_PRINTHIGHSCORE: {NameInputKeys();ResetSelectedHighScoreInput();}
@@ -233,8 +244,14 @@ void render()
 		break;
 	case S_GAME: renderGame();
 		break;
+    case S_P1CTRL: renderPlayerControl();
+        break;
+    case S_P2CTRL: renderPlayerControl();
+        break;
 	case S_MAINMENU:{renderSplashScreen();renderMenu();}
 		break;
+    case S_OPTION: renderOptionsMenu();
+        break;
 	case S_HIGHSCORE: {AskforInput();displayPlayerName();print();}
 			break;
 	case S_PRINTHIGHSCORE: {printall();renderResetSelectedHighScore();}
@@ -349,7 +366,7 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
 	
     c.Y = 0;
-    c.X = 15; 
+    c.X = 0; 
 	std::ifstream myfile;
     myfile.open("mainscreen.txt");
         for(int i=0; myfile.good(); i++){

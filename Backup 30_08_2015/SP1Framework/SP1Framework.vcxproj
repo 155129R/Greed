@@ -87,6 +87,7 @@
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move.cpp" />
+    <ClCompile Include="Options.cpp" />
     <ClCompile Include="playermenu.cpp" />
     <ClCompile Include="points.cpp" />
     <ClCompile Include="startmenu.cpp" />

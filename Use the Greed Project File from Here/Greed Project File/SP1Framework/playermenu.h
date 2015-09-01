@@ -1,11 +1,8 @@
 #include <iostream>
 
-void applyplayer(int totalPlayers);
+void applyplayer();
 void totalplayerNumber();
-void applyplayer(int totalPlayers);
-void selectMenuInput();
-void renderMenu();
-//extern int totalPlayers();
+
 enum numberofPlayers{
 
    Single =1,

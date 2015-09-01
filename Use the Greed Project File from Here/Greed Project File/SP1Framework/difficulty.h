@@ -3,10 +3,10 @@
 
 enum Difficulty{
 
-	Novice= 1,
+	Novice = 1,
 	Intermediate = 2,
 	Advanced = 3
-	
 
 };
+
 #endif
