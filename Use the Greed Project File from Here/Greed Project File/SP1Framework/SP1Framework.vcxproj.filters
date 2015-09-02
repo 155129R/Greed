@@ -69,6 +69,12 @@
     <ClCompile Include="tutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="countdowntimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modemenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -84,9 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PointSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="board.h">
@@ -116,7 +119,10 @@
     <ClInclude Include="HighScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tutorial.h">
+    <ClInclude Include="modemenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="countdowntimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

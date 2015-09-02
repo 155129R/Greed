@@ -8,6 +8,8 @@ void showHints(COORD P);
 void hideHints();
 void checkWinner();
 
+bool hasPossibleMoves();
+
 extern bool allowedMoves[8];
 
 const char unitX[8] = { -1, 1, 0, 0, -1, 1, -1, 1 };

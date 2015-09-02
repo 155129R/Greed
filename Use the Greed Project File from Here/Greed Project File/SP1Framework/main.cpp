@@ -1,6 +1,5 @@
 // This is the main file to hold everthing together
 
-#include "Framework\timer.h"
 #include "game.h"
 
 CStopWatch g_Timer;                            // Timer function to keep track of time and the frame rate

@@ -1,14 +1,12 @@
 #include "hinting.h"
+
 #include "game.h"
-#include "playermenu.h"
-#include <fstream>
+#include "countdowntimer.h"
 
 bool allowedMoves[8];
 
-
 void findMoves(COORD P)
 {
-
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		allowedMoves[i] = false;
@@ -42,6 +40,8 @@ void findMoves(COORD P)
 			if (playfield.cell[YY][XX].value == 0) { allowedMoves[i] = false; break; }
 		}
 	}
+
+	if (!hasPossibleMoves()) gameRunning = false;
 }
 
 void showHints(COORD P)
@@ -75,12 +75,26 @@ void hideHints()
 		}
 	}
 }
+
+bool hasPossibleMoves()
+{
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		if (allowedMoves[i]) return true;
+	}
+	return false;
+}
+
 void checkWinner()
 {
     bool B = false;
     for (unsigned int i = 0; i < 8; i++)
     {
         B |= allowedMoves[i];
+        if(((timer == true) && (totalPlayers == 1)))
+        {
+            
+        }
     }
     
     if ( B == false)	
@@ -125,8 +139,20 @@ void checkWinner()
 
 	            }
 	            player2wonFile.close();
-          
-            
+            }
+            else if (player2.totalScore == player1.totalScore)
+            {
+                std::ifstream playersDraw;
+                std::string draw;
+	            playersDraw.open("drawtxt");
+	            while(playersDraw.good())
+	            {
+	                std::getline(playersDraw,draw);
+	                g_Console.writeToBuffer(victoryTextCOORD.X,victoryTextCOORD.Y, draw, 0x3F);
+                    victoryTextCOORD.Y++;
+
+	            }
+	            playersDraw.close();
             }
            
         }

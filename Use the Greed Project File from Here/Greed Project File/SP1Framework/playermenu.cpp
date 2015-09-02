@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "game.h"
 #include "playermenu.h"
 #include "board.h"
@@ -66,13 +64,13 @@ void processPlayerMenu(){
 	    
 		PlaySound(L"button.wav",NULL,SND_ASYNC);
 		Number = static_cast<numberofPlayers>(1);
-	    g_eGameState = S_DIFFICULTY;
+	    g_eGameState = S_MODE;
 
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
 	    PlaySound(L"button.wav",NULL,SND_ASYNC);
 		Number = static_cast<numberofPlayers>(2);
-	    g_eGameState = S_DIFFICULTY;
+	    g_eGameState = S_MODE;
     }
     if (isKeyPressed(VK_ESCAPE))
 	  {

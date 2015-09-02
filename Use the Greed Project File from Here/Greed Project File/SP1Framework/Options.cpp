@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "game.h"
 
 bool p1KeySet = 0;
@@ -19,46 +17,52 @@ void renderOptionsMenu()
     textPrintCoord.Y = 3;
 
 	p1File.open("p1controls.txt");
-	
-		
-        
-		while(p1File.good())
-		{
-			std::getline(p1File,p1control);
-				g_Console.writeToBuffer(textPrintCoord,p1control,0x04);
-			textPrintCoord.Y++;
-		}
-		p1File.close();
+    while(p1File.good())
+	{
+		std::getline(p1File,p1control);
+			g_Console.writeToBuffer(textPrintCoord,p1control,0x04);
+		textPrintCoord.Y++;
+	}
+	p1File.close();
+
     textPrintCoord.Y += 5;
-        p2File.open("p2controls.txt");
-		while(p2File.good())
-		{
-			std::getline(p2File,p2control);
-				g_Console.writeToBuffer(textPrintCoord,p2control,0x04);
-			textPrintCoord.Y++;
-		}
-		p2File.close();
-    
-    
+
+    p2File.open("p2controls.txt");
+	while(p2File.good())
+	{
+		std::getline(p2File,p2control);
+			g_Console.writeToBuffer(textPrintCoord,p2control,0x04);
+		textPrintCoord.Y++;
+	}
+	p2File.close();
 }
 
 void processOptionsMenu()
 {
-
-    if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
+	if (
+		(isKeyPressed('1')) ||
+		(isKeyPressed(VK_NUMPAD1))
+	   )
+	{
 	   PlaySound(L"button.wav",NULL,SND_ASYNC);
-        g_eGameState = S_P1CTRL;
-        
+       g_eGameState = S_P1CTRL;
     }
-    if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
+
+    if (
+		(isKeyPressed('2')) || 
+		(isKeyPressed(VK_NUMPAD2))
+	   )
+	{
 	    PlaySound(L"button.wav",NULL,SND_ASYNC);
         g_eGameState = S_P2CTRL;
         
     }
+
     if (isKeyPressed(VK_ESCAPE))
-	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
-		  g_eGameState=S_MAINMENU;
-	  }
+	{
+		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		g_eGameState=S_MAINMENU;
+	}
     
 
 }

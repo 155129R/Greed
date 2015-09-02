@@ -2,6 +2,8 @@
 #define _POINT_H
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <Windows.h>
 
 void addingPoints(int selectedNumber, int &total1, int&total2);
 void convertTotalPoints(std::string &Result1, std::string &Result2, int &total1, int &total2);

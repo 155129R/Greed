@@ -27,6 +27,7 @@ void applyDiff(){
 		playfield.resize(30,30);
 		playfield.numberLimit = 5;
         genID = 0;
+     
 	}
 
 	else if (level == Intermediate){
