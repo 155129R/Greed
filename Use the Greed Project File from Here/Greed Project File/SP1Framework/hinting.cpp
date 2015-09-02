@@ -125,8 +125,20 @@ void checkWinner()
 
 	            }
 	            player2wonFile.close();
-          
-            
+            }
+            else if (player2.totalScore == player1.totalScore)
+            {
+                std::ifstream playersDraw;
+                std::string draw;
+	            playersDraw.open("drawtxt");
+	            while(playersDraw.good())
+	            {
+	                std::getline(playersDraw,draw);
+	                g_Console.writeToBuffer(victoryTextCOORD.X,victoryTextCOORD.Y, draw, 0x3F);
+                    victoryTextCOORD.Y++;
+
+	            }
+	            playersDraw.close();
             }
            
         }
