@@ -454,7 +454,7 @@ void playerInit(Player& P)
 	P.active = true;
 	P.hintsAvailable = 3;
 	P.totalScore = 0;
-	P.timeLeft = 100;
+	P.timeLeft = 101;
 }
 
 void gameInit()
