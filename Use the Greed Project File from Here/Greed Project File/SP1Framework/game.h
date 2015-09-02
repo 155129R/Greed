@@ -213,7 +213,9 @@ enum EGAMESTATES
     S_P1CTRL,
     S_P2CTRL,
 	S_HIGHSCORE,
-	S_PRINTHIGHSCORE
+	S_PRINTHIGHSCORE,
+	S_PRINTTIMEHIGHSCORE,
+	S_TIMEHIGHSCORECHECK
     
 };
 
@@ -265,7 +267,7 @@ void processmodeMenu();
 void playerInit(Player& P);
 void gameInit();
 void endTurn();
-
+void processmodeMenuHighScore();
 extern COORD renderOffset;
 extern Console g_Console;
 extern EGAMESTATES g_eGameState;

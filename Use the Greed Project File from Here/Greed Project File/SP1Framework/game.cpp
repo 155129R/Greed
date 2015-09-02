@@ -8,7 +8,7 @@
 #include "startmenu.h"
 #include "modemenu.h"
 #include "countdowntimer.h"
-
+#include "tutorial.h"
 bool hintOn;
 bool timer;
 bool gameRunning;
@@ -54,6 +54,8 @@ void rendermainmenu();
 void inputhighscore();
 void inputprintallhighscore();
 unsigned int currentTurn;
+void renderprinttimehighscore();
+void inputprinttimehighscore();
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -181,7 +183,11 @@ void update(double dt)
 		break;
 	case S_PRINTHIGHSCORE: {inputprintallhighscore();}
 		break;
+	case S_PRINTTIMEHIGHSCORE:{inputprinttimehighscore();}
+							  break;
 	case S_MODE: processmodeMenu(); 
+		break;
+	case S_TIMEHIGHSCORECHECK:processmodeMenuHighScore();
 		break;
   }
 }
@@ -238,8 +244,14 @@ void render()
 			break;
 	case S_PRINTHIGHSCORE: { renderprinthighscore();}
 		    break;
+	case S_PRINTTIMEHIGHSCORE:{ renderprinttimehighscore();}
+							  break;
 	case S_MODE:{renderMode(); }
 			break;
+	case S_TUTORIAL:renderTutorial();
+		break;
+	case S_TIMEHIGHSCORECHECK:renderMode();
+		break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -248,6 +260,11 @@ void inputprintallhighscore()
 {
 	NameInputKeys();
 	ResetSelectedHighScoreInput();
+}
+void inputprinttimehighscore()
+{
+	NameInputKeys();
+	ResetSelectedHighScoreInputTime();
 }
 
 void inputhighscore()
@@ -273,6 +290,11 @@ void renderhighscore()
 void renderprinthighscore()
 {
 	printall();
+	renderResetSelectedHighScore();
+}
+void renderprinttimehighscore()
+{
+	printalltime();
 	renderResetSelectedHighScore();
 }
 void splashScreenWait()    // waits for time to pass in splash screen
@@ -471,6 +493,7 @@ void endTurn()
 	(*P).timeLeft = (*P).timeLeft < 30 ? 30 : (*P).timeLeft;
 	
 	currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+	P = pickPlayer(currentTurn);
 
 	hintOn = false;
 	hasStarted = true;

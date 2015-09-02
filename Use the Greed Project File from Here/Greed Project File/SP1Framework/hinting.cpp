@@ -97,7 +97,7 @@ void checkWinner()
         }
     }
     
-    if ( B == false)	
+    if ( B == false)
     {
        
             player1.playerLocation.X = 0;

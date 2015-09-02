@@ -57,8 +57,17 @@ void ResetAdvanced1();
 void ResetNovice2();
 void ResetIntermediate2();
 void ResetAdvanced2();
+void ResetNovice1time();
+void ResetIntermediate1time();
+void ResetAdvanced1time();
+void ResetNovice2time();
+void ResetIntermediate2time();
+void ResetAdvanced2time();
+void printalltime();
+void ResetSelectedHighScoreInputTime();
 //void HighScorefor1player();
 void AskforInput();
+extern bool timer;
 //void HighScorefor1Player()
 //{
 //	AskforInput();
@@ -313,31 +322,57 @@ void check(int &total1,int &total2)
 	ChangeScore=total1;
 	
 	std::ifstream ReadFile;
-	if (level == Novice && totalPlayers == 1)
+	if (level == Novice && totalPlayers == 1&&timer==false)
 	{
-	ReadFile.open("HighScoreNovice1.txt");
+	ReadFile.open("HighScoreEasy1.txt");
 	}
-	if(level==Intermediate&&totalPlayers == 1)
+	if(level==Intermediate&&totalPlayers == 1&&timer==false)
 	{
-		ReadFile.open("HighScoreIntermediate1.txt");
+		ReadFile.open("HighScoreNormal1.txt");
 	}
-	if (level==Advanced &&totalPlayers == 1)
+	if (level==Advanced &&totalPlayers == 1&&timer==false)
 	{
-		ReadFile.open("HighScoreAdvanced1.txt");
+		ReadFile.open("HighScoreHard1.txt");
 	}
-	if (level==Novice &&totalPlayers ==2)
+	if (level==Novice &&totalPlayers ==2&&timer==false)
 	{
-	ReadFile.open("HighScoreNovice2.txt");
+	ReadFile.open("HighScoreEasy2.txt");
 	}
-	if(level==Intermediate &&totalPlayers == 2)
+	if(level==Intermediate &&totalPlayers == 2&&timer==false)
 	{
-		ReadFile.open("HighScoreIntermediate2.txt");
+		ReadFile.open("HighScoreNormal2.txt");
 	}
-	if (level==Advanced&&totalPlayers == 2)
+	if (level==Advanced&&totalPlayers == 2&&timer==false)
 	{
-		ReadFile.open("HighScoreAdvanced2.txt");
+		ReadFile.open("HighScoreHard2.txt");
 	
 	}
+	if (level == Novice && totalPlayers == 1&&timer==true)
+	{
+	ReadFile.open("HighScoreEasy1time.txt");
+	}
+	if(level==Intermediate&&totalPlayers == 1&&timer==true)
+	{
+		ReadFile.open("HighScoreNormal1time.txt");
+	}
+	if (level==Advanced &&totalPlayers == 1&&timer==true)
+	{
+		ReadFile.open("HighScoreHard1time.txt");
+	}
+	if (level==Novice &&totalPlayers ==2&&timer==true)
+	{
+	ReadFile.open("HighScoreEasy2time.txt");
+	}
+	if(level==Intermediate &&totalPlayers == 2&&timer==true)
+	{
+		ReadFile.open("HighScoreNormal2time.txt");
+	}
+	if (level==Advanced&&totalPlayers == 2&&timer==true)
+	{
+		ReadFile.open("HighScoreHard2time.txt");
+	
+	}
+	
 		std::getline(ReadFile,FirstPlayer,'\n');
 		std::getline(ReadFile,CheckPlayer1Score,'\n');
 		std::getline(ReadFile,SecondPlayer,'\n');
@@ -387,29 +422,54 @@ void write()
 {
 	
 	std::ofstream WriteFile;
-	if (level==Novice && totalPlayers == 1)
+	if (level==Novice && totalPlayers == 1&&timer==false)
 	{
-	WriteFile.open("HighScoreNovice1.txt");
+	WriteFile.open("HighScoreEasy1.txt");
 	}
-	if(level==Intermediate&&totalPlayers == 1)
+	if(level==Intermediate&&totalPlayers == 1&&timer==false)
 	{
-		WriteFile.open("HighScoreIntermediate1.txt");
+		WriteFile.open("HighScoreNormal1.txt");
 	}
-	if (level==Advanced&&totalPlayers ==1)
+	if (level==Advanced&&totalPlayers ==1&&timer==false)
 	{
-		WriteFile.open("HighScoreAdvanced1.txt");
+		WriteFile.open("HighScoreHard1.txt");
 	}
-	if (level==Novice&&totalPlayers == 2)
+	if (level==Novice&&totalPlayers == 2&&timer==false)
 	{
-	WriteFile.open("HighScoreNovice2.txt");
+	WriteFile.open("HighScoreEasy2.txt");
 	}
-	if(level==Intermediate&&totalPlayers == 2)
+	if(level==Intermediate&&totalPlayers == 2&&timer==false)
 	{
-		WriteFile.open("HighScoreIntermediate2.txt");
+		WriteFile.open("HighScoreNormal2.txt");
 	}
-	if (level==Advanced&&totalPlayers == 2)
+	if (level==Advanced&&totalPlayers == 2&&timer==false)
 	{
-		WriteFile.open("HighScoreAdvanced2.txt");
+		WriteFile.open("HighScoreHard2.txt");
+	}
+	if (level == Novice && totalPlayers == 1&&timer==true)
+	{
+	WriteFile.open("HighScoreEasy1time.txt");
+	}
+	if(level==Intermediate&&totalPlayers == 1&&timer==true)
+	{
+		WriteFile.open("HighScoreNormal1time.txt");
+	}
+	if (level==Advanced &&totalPlayers == 1&&timer==true)
+	{
+		WriteFile.open("HighScoreHard1time.txt");
+	}
+	if (level==Novice &&totalPlayers ==2&&timer==true)
+	{
+	WriteFile.open("HighScoreEasy2time.txt");
+	}
+	if(level==Intermediate &&totalPlayers == 2&&timer==true)
+	{
+		WriteFile.open("HighScoreNormal2time.txt");
+	}
+	if (level==Advanced&&totalPlayers == 2&&timer==true)
+	{
+		WriteFile.open("HighScoreHard2time.txt");
+	
 	}
 	if(ChangeFirst==0 && ChangeSecond==0 && ChangeThird==0)//Rewrite Text
 	{
@@ -480,35 +540,60 @@ void print()
 		std::ifstream ReadFile;
 		std::ifstream ReadTitle;
 		string Title;
-	if (level==Novice&&totalPlayers == 1)
+	if (level==Novice&&totalPlayers == 1&&timer==false)
 	{
-		ReadFile.open("HighScoreNovice1.txt");
+		ReadFile.open("HighScoreEasy1.txt");
 		ReadTitle.open("NoviceTitle.txt");
 	}
-	if(level==Intermediate&&totalPlayers == 1)
+	if(level==Intermediate&&totalPlayers == 1&&timer==false)
 	{
-		ReadFile.open("HighScoreIntermediate1.txt");
+		ReadFile.open("HighScoreNormal1.txt");
 		ReadTitle.open("IntermediateTitle.txt");
 	}
-	if (level==Advanced&&totalPlayers == 1)
+	if (level==Advanced&&totalPlayers == 1&&timer==false)
 	{
-		ReadFile.open("HighScoreAdvanced1.txt");
+		ReadFile.open("HighScoreHard1.txt");
 		ReadTitle.open("AdvancedTitle.txt");
 	}
-	if (level==Novice&&totalPlayers == 2)
+	if (level==Novice&&totalPlayers == 2&&timer==false)
 	{
-		ReadFile.open("HighScoreNovice2.txt");
+		ReadFile.open("HighScoreEasy2.txt");
 		ReadTitle.open("NoviceTitle.txt");
 	}
-	if(level==Intermediate&&totalPlayers == 2)
+	if(level==Intermediate&&totalPlayers == 2&&timer==false)
 	{
-		ReadFile.open("HighScoreIntermediate2.txt");
+		ReadFile.open("HighScoreNormal2.txt");
 		ReadTitle.open("IntermediateTitle.txt");
 	}
-	if (level==Advanced&&totalPlayers == 2)
+	if (level==Advanced&&totalPlayers == 2&&timer==false)
 	{
-		ReadFile.open("HighScoreAdvanced2.txt");
+		ReadFile.open("HighScoreHard2.txt");
 		ReadTitle.open("AdvancedTitle.txt");
+	}
+	if (level == Novice && totalPlayers == 1&&timer==true)
+	{
+	ReadFile.open("HighScoreEasy1time.txt");
+	}
+	if(level==Intermediate&&totalPlayers == 1&&timer==true)
+	{
+		ReadFile.open("HighScoreNormal1time.txt");
+	}
+	if (level==Advanced &&totalPlayers == 1&&timer==true)
+	{
+		ReadFile.open("HighScoreHard1time.txt");
+	}
+	if (level==Novice &&totalPlayers ==2&&timer==true)
+	{
+	ReadFile.open("HighScoreEasy2time.txt");
+	}
+	if(level==Intermediate &&totalPlayers == 2&&timer==true)
+	{
+		ReadFile.open("HighScoreNormal2time.txt");
+	}
+	if (level==Advanced&&totalPlayers == 2&&timer==true)
+	{
+		ReadFile.open("HighScoreHard2time.txt");
+	
 	}
 		std::getline(ReadFile,FirstPlayer,'\n');
 		std::getline(ReadFile,CheckPlayer1Score,'\n');
@@ -554,22 +639,19 @@ void print()
 		}
 		ReadFile.close();
 } 
-
-void printall()
+void printalltime()
 {
-
-	 
 		clearScreen();  
-		g_Console.writeToBuffer(20,3,"1 Player Mode");
+		g_Console.writeToBuffer(20,3,"1 Player Timed Mode");
 		std::ifstream ReadFile;
-		ReadFile.open("HighScoreNovice1.txt");
+		ReadFile.open("HighScoreEasy1time.txt");
 		std::getline(ReadFile,FirstPlayer,'\n');
 		std::getline(ReadFile,CheckPlayer1Score,'\n');
 		std::getline(ReadFile,SecondPlayer,'\n');
 		std::getline(ReadFile,CheckPlayer2Score,'\n');
 		std::getline(ReadFile,ThirdPlayer,'\n');
 		std::getline(ReadFile,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(0,5,"1:Novice");
+		g_Console.writeToBuffer(0,5,"1:Easy");
 		g_Console.writeToBuffer(0,7,FirstPlayer);
 		g_Console.writeToBuffer(0+FirstPlayer.length(),7," : ");
 		g_Console.writeToBuffer(0+3+FirstPlayer.length(),7,CheckPlayer1Score);
@@ -582,14 +664,14 @@ void printall()
 		ReadFile.close();
 
 		std::ifstream ReadFile2;
-		ReadFile2.open("HighScoreIntermediate1.txt");
+		ReadFile2.open("HighScoreNormal1time.txt");
 		std::getline(ReadFile2,FirstPlayer,'\n');
 		std::getline(ReadFile2,CheckPlayer1Score,'\n');
 		std::getline(ReadFile2,SecondPlayer,'\n');
 		std::getline(ReadFile2,CheckPlayer2Score,'\n');
 		std::getline(ReadFile2,ThirdPlayer,'\n');
 		std::getline(ReadFile2,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(20,5,"2:Intermediate");
+		g_Console.writeToBuffer(20,5,"2:Normal");
 		g_Console.writeToBuffer(20,7,FirstPlayer);
 		g_Console.writeToBuffer(20+FirstPlayer.length(),7," : ");
 		g_Console.writeToBuffer(20+2+FirstPlayer.length(),7,CheckPlayer1Score);
@@ -601,14 +683,14 @@ void printall()
 		g_Console.writeToBuffer(20+2+ThirdPlayer.length(),9,CheckPlayer3Score);
 		ReadFile2.close();
 		std::ifstream ReadFile3;
-		ReadFile3.open("HighScoreAdvanced1.txt");
+		ReadFile3.open("HighScoreHard1time.txt");
 		std::getline(ReadFile3,FirstPlayer,'\n');
 		std::getline(ReadFile3,CheckPlayer1Score,'\n');
 		std::getline(ReadFile3,SecondPlayer,'\n');
 		std::getline(ReadFile3,CheckPlayer2Score,'\n');
 		std::getline(ReadFile3,ThirdPlayer,'\n');
 		std::getline(ReadFile3,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(40,5,"3:Advanced");
+		g_Console.writeToBuffer(40,5,"3:Hard");
 		g_Console.writeToBuffer(40,7,FirstPlayer);
 		g_Console.writeToBuffer(40+FirstPlayer.length(),7," : ");
 		g_Console.writeToBuffer(40+2+FirstPlayer.length(),7,CheckPlayer1Score);
@@ -621,14 +703,14 @@ void printall()
 		ReadFile3.close();
 
 			std::ifstream ReadFile4;
-		ReadFile4.open("HighScoreNovice2.txt");
+		ReadFile4.open("HighScoreEasy2time.txt");
 		std::getline(ReadFile4,FirstPlayer,'\n');
 		std::getline(ReadFile4,CheckPlayer1Score,'\n');
 		std::getline(ReadFile4,SecondPlayer,'\n');
 		std::getline(ReadFile4,CheckPlayer2Score,'\n');
 		std::getline(ReadFile4,ThirdPlayer,'\n');
 		std::getline(ReadFile4,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(0,17,"4:Novice");
+		g_Console.writeToBuffer(0,17,"4:Easy");
 		g_Console.writeToBuffer(0,19,FirstPlayer);
 		g_Console.writeToBuffer(0+FirstPlayer.length(),19," : ");
 		g_Console.writeToBuffer(0+3+FirstPlayer.length(),19,CheckPlayer1Score);
@@ -641,14 +723,143 @@ void printall()
 		ReadFile4.close();
 
 			std::ifstream ReadFile5;
-		ReadFile5.open("HighScoreIntermediate2.txt");
+		ReadFile5.open("HighScoreNormal2time.txt");
 		std::getline(ReadFile5,FirstPlayer,'\n');
 		std::getline(ReadFile5,CheckPlayer1Score,'\n');
 		std::getline(ReadFile5,SecondPlayer,'\n');
 		std::getline(ReadFile5,CheckPlayer2Score,'\n');
 		std::getline(ReadFile5,ThirdPlayer,'\n');
 		std::getline(ReadFile5,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(20,17,"5:Intermediate");
+		g_Console.writeToBuffer(20,17,"5:Normal");
+		g_Console.writeToBuffer(20,19,FirstPlayer);
+		g_Console.writeToBuffer(20+FirstPlayer.length(),19," : ");
+		g_Console.writeToBuffer(20+2+FirstPlayer.length(),19,CheckPlayer1Score);
+		g_Console.writeToBuffer(20,20,SecondPlayer);
+		g_Console.writeToBuffer(20+SecondPlayer.length(),20," : ");
+		g_Console.writeToBuffer(20+2+SecondPlayer.length(),20,CheckPlayer2Score);
+		g_Console.writeToBuffer(20,21,ThirdPlayer);
+		g_Console.writeToBuffer(20+ThirdPlayer.length(),21," : ");
+		g_Console.writeToBuffer(20+2+ThirdPlayer.length(),21,CheckPlayer3Score);
+		ReadFile5.close();
+
+
+
+		g_Console.writeToBuffer(20,15,"2 Player Timed Mode");
+
+			std::ifstream ReadFile6;
+			ReadFile6.open("HighScoreHard2time.txt");
+		std::getline(ReadFile6,FirstPlayer,'\n');
+		std::getline(ReadFile6,CheckPlayer1Score,'\n');
+		std::getline(ReadFile6,SecondPlayer,'\n');
+		std::getline(ReadFile6,CheckPlayer2Score,'\n');
+		std::getline(ReadFile6,ThirdPlayer,'\n');
+		std::getline(ReadFile6,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(40,17,"6:Hard");
+		g_Console.writeToBuffer(40,19,FirstPlayer);
+		g_Console.writeToBuffer(40+FirstPlayer.length(),19," : ");
+		g_Console.writeToBuffer(40+2+FirstPlayer.length(),19,CheckPlayer1Score);
+		g_Console.writeToBuffer(40,20,SecondPlayer);
+		g_Console.writeToBuffer(40+SecondPlayer.length(),20," : ");
+		g_Console.writeToBuffer(40+2+SecondPlayer.length(),20,CheckPlayer2Score);
+		g_Console.writeToBuffer(40,21,ThirdPlayer);
+		g_Console.writeToBuffer(40+ThirdPlayer.length(),21," : ");
+		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),21,CheckPlayer3Score);
+		ReadFile6.close();
+}
+void printall()
+{
+
+	 
+		clearScreen();  
+		g_Console.writeToBuffer(20,3,"1 Player Mode");
+		std::ifstream ReadFile;
+		ReadFile.open("HighScoreEasy1.txt");
+		std::getline(ReadFile,FirstPlayer,'\n');
+		std::getline(ReadFile,CheckPlayer1Score,'\n');
+		std::getline(ReadFile,SecondPlayer,'\n');
+		std::getline(ReadFile,CheckPlayer2Score,'\n');
+		std::getline(ReadFile,ThirdPlayer,'\n');
+		std::getline(ReadFile,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(0,5,"1:Easy");
+		g_Console.writeToBuffer(0,7,FirstPlayer);
+		g_Console.writeToBuffer(0+FirstPlayer.length(),7," : ");
+		g_Console.writeToBuffer(0+3+FirstPlayer.length(),7,CheckPlayer1Score);
+		g_Console.writeToBuffer(0,8,SecondPlayer);
+		g_Console.writeToBuffer(0+SecondPlayer.length(),8," : ");
+		g_Console.writeToBuffer(0+3+SecondPlayer.length(),8,CheckPlayer2Score);
+		g_Console.writeToBuffer(0,9,ThirdPlayer);
+		g_Console.writeToBuffer(0+ThirdPlayer.length(),9," : ");
+		g_Console.writeToBuffer(0+3+ThirdPlayer.length(),9,CheckPlayer3Score);
+		ReadFile.close();
+
+		std::ifstream ReadFile2;
+		ReadFile2.open("HighScoreNormal1.txt");
+		std::getline(ReadFile2,FirstPlayer,'\n');
+		std::getline(ReadFile2,CheckPlayer1Score,'\n');
+		std::getline(ReadFile2,SecondPlayer,'\n');
+		std::getline(ReadFile2,CheckPlayer2Score,'\n');
+		std::getline(ReadFile2,ThirdPlayer,'\n');
+		std::getline(ReadFile2,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(20,5,"2:Normal");
+		g_Console.writeToBuffer(20,7,FirstPlayer);
+		g_Console.writeToBuffer(20+FirstPlayer.length(),7," : ");
+		g_Console.writeToBuffer(20+2+FirstPlayer.length(),7,CheckPlayer1Score);
+		g_Console.writeToBuffer(20,8,SecondPlayer);
+		g_Console.writeToBuffer(20+SecondPlayer.length(),8," : ");
+		g_Console.writeToBuffer(20+2+SecondPlayer.length(),8,CheckPlayer2Score);
+		g_Console.writeToBuffer(20,9,ThirdPlayer);
+		g_Console.writeToBuffer(20+ThirdPlayer.length(),9," : ");
+		g_Console.writeToBuffer(20+2+ThirdPlayer.length(),9,CheckPlayer3Score);
+		ReadFile2.close();
+		std::ifstream ReadFile3;
+		ReadFile3.open("HighScoreHard1.txt");
+		std::getline(ReadFile3,FirstPlayer,'\n');
+		std::getline(ReadFile3,CheckPlayer1Score,'\n');
+		std::getline(ReadFile3,SecondPlayer,'\n');
+		std::getline(ReadFile3,CheckPlayer2Score,'\n');
+		std::getline(ReadFile3,ThirdPlayer,'\n');
+		std::getline(ReadFile3,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(40,5,"3:Hard");
+		g_Console.writeToBuffer(40,7,FirstPlayer);
+		g_Console.writeToBuffer(40+FirstPlayer.length(),7," : ");
+		g_Console.writeToBuffer(40+2+FirstPlayer.length(),7,CheckPlayer1Score);
+		g_Console.writeToBuffer(40,8,SecondPlayer);
+		g_Console.writeToBuffer(40+SecondPlayer.length(),8," : ");
+		g_Console.writeToBuffer(40+2+SecondPlayer.length(),8,CheckPlayer2Score);
+		g_Console.writeToBuffer(40,9,ThirdPlayer);
+		g_Console.writeToBuffer(40+ThirdPlayer.length(),9," : ");
+		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),9,CheckPlayer3Score);
+		ReadFile3.close();
+
+			std::ifstream ReadFile4;
+		ReadFile4.open("HighScoreEasy2.txt");
+		std::getline(ReadFile4,FirstPlayer,'\n');
+		std::getline(ReadFile4,CheckPlayer1Score,'\n');
+		std::getline(ReadFile4,SecondPlayer,'\n');
+		std::getline(ReadFile4,CheckPlayer2Score,'\n');
+		std::getline(ReadFile4,ThirdPlayer,'\n');
+		std::getline(ReadFile4,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(0,17,"4:Easy");
+		g_Console.writeToBuffer(0,19,FirstPlayer);
+		g_Console.writeToBuffer(0+FirstPlayer.length(),19," : ");
+		g_Console.writeToBuffer(0+3+FirstPlayer.length(),19,CheckPlayer1Score);
+		g_Console.writeToBuffer(0,20,SecondPlayer);
+		g_Console.writeToBuffer(0+SecondPlayer.length(),20," : ");
+		g_Console.writeToBuffer(0+3+SecondPlayer.length(),20,CheckPlayer2Score);
+		g_Console.writeToBuffer(0,21,ThirdPlayer);
+		g_Console.writeToBuffer(0+ThirdPlayer.length(),21," : ");
+		g_Console.writeToBuffer(0+3+ThirdPlayer.length(),21,CheckPlayer3Score);
+		ReadFile4.close();
+
+			std::ifstream ReadFile5;
+		ReadFile5.open("HighScoreNormal2.txt");
+		std::getline(ReadFile5,FirstPlayer,'\n');
+		std::getline(ReadFile5,CheckPlayer1Score,'\n');
+		std::getline(ReadFile5,SecondPlayer,'\n');
+		std::getline(ReadFile5,CheckPlayer2Score,'\n');
+		std::getline(ReadFile5,ThirdPlayer,'\n');
+		std::getline(ReadFile5,CheckPlayer3Score,'\n');
+		g_Console.writeToBuffer(20,17,"5:Normal");
 		g_Console.writeToBuffer(20,19,FirstPlayer);
 		g_Console.writeToBuffer(20+FirstPlayer.length(),19," : ");
 		g_Console.writeToBuffer(20+2+FirstPlayer.length(),19,CheckPlayer1Score);
@@ -665,14 +876,14 @@ void printall()
 		g_Console.writeToBuffer(20,15,"2 Player Mode");
 
 			std::ifstream ReadFile6;
-			ReadFile6.open("HighScoreAdvanced2.txt");
+			ReadFile6.open("HighScoreHard2.txt");
 		std::getline(ReadFile6,FirstPlayer,'\n');
 		std::getline(ReadFile6,CheckPlayer1Score,'\n');
 		std::getline(ReadFile6,SecondPlayer,'\n');
 		std::getline(ReadFile6,CheckPlayer2Score,'\n');
 		std::getline(ReadFile6,ThirdPlayer,'\n');
 		std::getline(ReadFile6,CheckPlayer3Score,'\n');
-		g_Console.writeToBuffer(40,17,"6:Advanced");
+		g_Console.writeToBuffer(40,17,"6:Hard");
 		g_Console.writeToBuffer(40,19,FirstPlayer);
 		g_Console.writeToBuffer(40+FirstPlayer.length(),19," : ");
 		g_Console.writeToBuffer(40+2+FirstPlayer.length(),19,CheckPlayer1Score);
@@ -729,7 +940,7 @@ void ResetNovice1()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreNovice1.txt");
+		WriteFile.open("HighScoreEasy1.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -748,7 +959,7 @@ void ResetIntermediate1()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreIntermediate1.txt");
+		WriteFile.open("HighScoreNormal1.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -766,7 +977,7 @@ void ResetAdvanced1()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreAdvanced1.txt");
+		WriteFile.open("HighScoreHard1.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -785,7 +996,7 @@ void ResetNovice2()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreNovice2.txt");
+		WriteFile.open("HighScoreEasy2.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -804,7 +1015,7 @@ void ResetIntermediate2()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreIntermediate2.txt");
+		WriteFile.open("HighScoreNormal2.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -822,7 +1033,7 @@ void ResetAdvanced2()
 		CheckPlayer2Score="0";
 		CheckPlayer3Score="0";
 		std::ofstream WriteFile;
-		WriteFile.open("HighScoreAdvanced2.txt");
+		WriteFile.open("HighScoreHard2.txt");
 		WriteFile<<FirstPlayer <<std::endl;
 		WriteFile<<CheckPlayer1Score<<std::endl;
 		WriteFile<<SecondPlayer<<std::endl;
@@ -836,4 +1047,150 @@ void renderResetSelectedHighScore()
 {
 	g_Console.writeToBuffer(0,0,"Select what highscore you want to reset by pressing it's number",0x04);
 	//g_Console.writeToBuffer(0,1,ResetSelectedHighScore, 0x04);
+}
+void ResetNovice1time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreEasy1time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+	
+}
+void ResetIntermediate1time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreNormal1time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+}
+void ResetAdvanced1time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreHard1time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+	
+}
+void ResetNovice2time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreEasy2time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+	
+}
+void ResetIntermediate2time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreNormal2time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+}
+void ResetAdvanced2time()
+{
+		FirstPlayer="Empty";
+		SecondPlayer="Empty";
+		ThirdPlayer="Empty";
+		CheckPlayer1Score="0";
+		CheckPlayer2Score="0";
+		CheckPlayer3Score="0";
+		std::ofstream WriteFile;
+		WriteFile.open("HighScoreHard2time.txt");
+		WriteFile<<FirstPlayer <<std::endl;
+		WriteFile<<CheckPlayer1Score<<std::endl;
+		WriteFile<<SecondPlayer<<std::endl;
+		WriteFile<<CheckPlayer2Score<<std::endl;
+		WriteFile<<ThirdPlayer<<std::endl;
+		WriteFile<<CheckPlayer3Score<<std::endl;
+		WriteFile.close();
+	
+}
+void ResetSelectedHighScoreInputTime()
+{
+	if(g_abKeyPressedName[K_1])
+		 {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  ResetNovice1time();
+		 }
+		if(g_abKeyPressedName[K_2])
+		 {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		   ResetIntermediate1time();
+		 }
+	 
+		 if(g_abKeyPressedName[K_3])
+	     {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		ResetAdvanced1time();
+	
+	     } 
+	   if(g_abKeyPressedName[K_4])
+	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  ResetNovice2time();
+	  }
+	  if(g_abKeyPressedName[K_5])
+	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		   ResetIntermediate2time();
+	  }
+	  if(g_abKeyPressedName[K_6])
+	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		ResetAdvanced2time();
+	  }
+	  if (g_abKeyPressedName[K_ESCAPE2])
+	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  g_eGameState=S_MAINMENU;
+	  }
+
 }

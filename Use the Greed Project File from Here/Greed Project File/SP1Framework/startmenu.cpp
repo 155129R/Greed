@@ -50,6 +50,7 @@ void renderMenu()
 		}
 		ReadFile3.close();
 	
+	
 	std::ifstream ReadFile4;
 	string Tutorial;
 	ReadFile4.open("Tutorial.txt");
@@ -77,6 +78,8 @@ void renderMenu()
 		ReadFile5.close();
 	
 }
+	
+
 
 void selectMenuInput()
 {
@@ -94,17 +97,18 @@ void selectMenuInput()
 	 
 	  if(isKeyPressed(VK_NUMPAD3)||isKeyPressed('3'))
 	  {
-		  g_eGameState=S_PRINTHIGHSCORE;
+		  g_eGameState= S_TIMEHIGHSCORECHECK;
 		  PlaySound(L"button.wav",NULL,SND_ASYNC);
-	  }	 
-	  if(isKeyPressed(VK_NUMPAD4)||isKeyPressed('4'))
-	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
-		  g_eGameState= S_TUTORIAL; 
 	  }
+	  if(isKeyPressed(VK_NUMPAD4)||isKeyPressed('4'))
+	  {
+		  g_eGameState=S_TUTORIAL;
+		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+	  }
+	  
 	  if(isKeyPressed(VK_NUMPAD5)||isKeyPressed('5'))
 	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
-		  g_bQuitGame = true; 
+		  g_bQuitGame = true;
 	  }
-
 }
 

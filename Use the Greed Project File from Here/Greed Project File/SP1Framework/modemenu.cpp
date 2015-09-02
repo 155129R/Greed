@@ -1,5 +1,4 @@
 #include "game.h"
-
 void renderMode(){
     std::string normal;
     std::string time;
@@ -51,5 +50,25 @@ void processmodeMenu(){
 		  PlaySound(L"button.wav",NULL,SND_ASYNC);
 		  g_eGameState = S_MAINMENU;
 	  }
-    
+ 
 }
+void processmodeMenuHighScore()
+ {
+	 if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
+	    
+		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		timer = false;
+	    g_eGameState = S_PRINTHIGHSCORE;
+
+    }
+    if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
+	    PlaySound(L"button.wav",NULL,SND_ASYNC);
+		timer = true;
+	    g_eGameState = S_PRINTTIMEHIGHSCORE;
+    }
+    if (isKeyPressed(VK_ESCAPE))
+	  {
+		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  g_eGameState = S_MAINMENU;
+	  }
+ }

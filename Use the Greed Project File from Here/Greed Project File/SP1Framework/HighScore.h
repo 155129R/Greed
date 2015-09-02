@@ -57,6 +57,8 @@ void NameInputKeys();
 void ResetHighScore();
 void renderResetSelectedHighScore();
 void  ResetSelectedHighScoreInput();
+void printalltime();
+void ResetSelectedHighScoreInputTime();
 extern string PlayerName;
 extern Console g_Console;
 
