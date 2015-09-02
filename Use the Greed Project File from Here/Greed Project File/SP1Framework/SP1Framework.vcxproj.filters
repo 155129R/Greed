@@ -66,7 +66,7 @@
     <ClCompile Include="HighScore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tutorial.cpp">
+    <ClCompile Include="countdowntimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
