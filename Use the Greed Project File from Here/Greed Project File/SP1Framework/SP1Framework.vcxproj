@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="board.cpp" />
+    <ClCompile Include="countdowntimer.cpp" />
     <ClCompile Include="difficulty.cpp" />
     <ClCompile Include="Framework\console.cpp" />
     <ClCompile Include="Framework\timer.cpp" />
@@ -86,6 +87,7 @@
     <ClCompile Include="hinting.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="modemenu.cpp" />
     <ClCompile Include="move.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="playermenu.cpp" />
@@ -95,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h" />
+    <ClInclude Include="countdowntimer.h" />
     <ClInclude Include="difficulty.h" />
     <ClInclude Include="directions.h" />
     <ClInclude Include="Framework\console.h" />
@@ -103,6 +106,7 @@
     <ClInclude Include="gameGUI.h" />
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="hinting.h" />
+    <ClInclude Include="modemenu.h" />
     <ClInclude Include="move.h" />
     <ClInclude Include="playermenu.h" />
     <ClInclude Include="points.h" />
