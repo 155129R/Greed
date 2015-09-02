@@ -52,18 +52,30 @@ void renderMenu()
 		ReadFile3.close();
 	
 	std::ifstream ReadFile4;
-	string Exit;
-	ReadFile4.open("Exit.txt");
+	string Tutorial;
+	ReadFile4.open("Tutorial.txt");
 	
-		D.Y=18;
+		D.Y=19;
 		D.X=1;
 		while(ReadFile4.good())
 		{
-			std::getline(ReadFile4,Exit);
-				g_Console.writeToBuffer(D,Exit,0x03);
+			std::getline(ReadFile4,Tutorial);
+				g_Console.writeToBuffer(D,Tutorial,0x03);
 			D.Y++;
 		}
 		ReadFile4.close();
+	std::ifstream ReadFile5;
+	string Exit;
+	ReadFile5.open("Exit.txt");
+		D.Y=24;
+		D.X=1;
+		while(ReadFile5.good())
+		{
+			std::getline(ReadFile5,Exit);
+				g_Console.writeToBuffer(D,Exit,0x03);
+			D.Y++;
+		}
+		ReadFile5.close();
 	
 }
 
@@ -85,10 +97,15 @@ void selectMenuInput()
 	  {
 		  g_eGameState=S_PRINTHIGHSCORE;
 		  PlaySound(L"button.wav",NULL,SND_ASYNC);
-	  }
+	  }	 
 	  if(isKeyPressed(VK_NUMPAD4)||isKeyPressed('4'))
+	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  g_eGameState= S_TUTORIAL; 
+	  }
+	  if(isKeyPressed(VK_NUMPAD5)||isKeyPressed('5'))
 	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
 		  g_bQuitGame = true; 
 	  }
+
 }
 

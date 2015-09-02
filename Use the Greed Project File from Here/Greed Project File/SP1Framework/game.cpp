@@ -10,6 +10,7 @@
 #include <string>
 #include "HighScore.h"
 #include "startmenu.h"
+#include "tutorial.h"
 bool hintOn;
 
 double  g_dElapsedTime;
@@ -236,6 +237,7 @@ void render()
 			break;
 	case S_PRINTHIGHSCORE: { renderprinthighscore();}
 		    break;
+	case S_TUTORIAL: renderTutorial();
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
