@@ -1,6 +1,10 @@
 #ifndef _COUNTDOWNTIMER_H
 #define _COUNTDOWNTIMER_H
 
-int timeleft = 60000;
+#include "game.h"
+
+extern bool hasStarted;
+
+void countdownUpdate(double T, Player& P);
 
 #endif

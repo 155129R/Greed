@@ -1,7 +1,10 @@
 #include "board.h"
-#include "hinting.h"
+
 #include "game.h"
-char playerChar;
+#include "hinting.h"
+
+unsigned char playerChar;
+
 void renderMap()
 {
 	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
@@ -24,6 +27,7 @@ void renderMap()
 			loc.Y += Y;
 
 			g_Console.writeToBuffer(loc, V == 0 ? 0 : V + '0', C);
+
             checkWinner();
 		}
 	}
@@ -69,13 +73,10 @@ void boardGen()
 
 		playfield.cell[(*playerLocation).Y][(*playerLocation).X].value = 0;
 
-		(*P).active = true;
-		(*P).hintsAvailable = 3;
-		(*P).totalScore = 0;
+		playerInit(*P);
 	}
 
-	currentTurn = 0;
-	hintOn = false;
+	gameInit();
 
 	findMoves(player1.playerLocation);
 }
@@ -87,24 +88,24 @@ void renderCharacter()
 	WORD charColor;
 
 	Player *P;
-    playerChar = 153;
 	for (unsigned int i = 0; i < totalPlayers; i++)
 	{
 		P = pickPlayer(i);
 		COORD L = (*P).playerLocation;
 
 		COORD loc = renderOffset; 
-			loc.X += L.X;
+		loc.X += L.X;
 		loc.Y += L.Y;
 
 		switch (i)
 		{
-		case 0: charColor = 0x0E; break;
-		case 1: charColor = 0x0D; break;
+		case 0: playerChar = 153; charColor = 0x0E; break;
+		case 1: playerChar = 154; charColor = 0x0D; break;
 		default: charColor = 0x0F; break;
 		}
 
-		g_Console.writeToBuffer(loc, (char)playerChar, charColor);
-        playerChar++;
+		if (totalPlayers > 1 && currentTurn == i) charColor += 0x80;
+
+		g_Console.writeToBuffer(loc, playerChar, charColor);
 	}
 }

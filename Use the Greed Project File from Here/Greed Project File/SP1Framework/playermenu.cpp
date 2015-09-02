@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "game.h"
 #include "playermenu.h"
 #include "board.h"

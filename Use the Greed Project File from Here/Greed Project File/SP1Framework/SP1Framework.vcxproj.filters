@@ -92,9 +92,6 @@
     <ClInclude Include="move.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="board.h">
       <Filter>Header Files</Filter>
     </ClInclude>

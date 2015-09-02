@@ -1,19 +1,20 @@
-// This is the main file for the game logic and function
-//
-//
 #include "game.h"
-#include "gameGUI.h"
+
 #include "board.h"
-#include "hinting.h"
 #include "move.h"
-#include <fstream>
-#include <string>
+#include "hinting.h"
+#include "gameGUI.h"
 #include "HighScore.h"
 #include "startmenu.h"
-bool hintOn;
+#include "modemenu.h"
+#include "countdowntimer.h"
 
-double  g_dElapsedTime;
-double  g_dDeltaTime;
+bool hintOn;
+bool timer;
+bool gameRunning;
+
+double g_dElapsedTime;
+double g_dDeltaTime;
 
 const short fontSize = 28;
 const short consoleX = 100;
@@ -30,7 +31,6 @@ const EKEYS playerKeys2[] = { K_UP2, K_UPLEFT2, K_UPRIGHT2, K_DOWN2, K_DOWNLEFT2
 const Directions directions[] = { DIR_UP, DIR_UPLEFT, DIR_UPRIGHT, DIR_DOWN, DIR_DOWNLEFT, DIR_DOWNRIGHT, DIR_LEFT, DIR_RIGHT };
 
 Chances boardChances;
-
 
 Playfield playfield;
 
@@ -49,7 +49,7 @@ void printBoard();
 void changeScreen();
 void printNumber(COORD C, unsigned int N, WORD col);
 void renderhighscore();
-void  renderprinthighscore();
+void renderprinthighscore();
 void rendermainmenu();
 void inputhighscore();
 void inputprintallhighscore();
@@ -73,7 +73,6 @@ Console g_Console(consoleX, consoleY, "Greed Reloaded");
 //--------------------------------------------------------------
 void init( void )
 {
-
 	//--Defining keystates
 
 	//Player 1
@@ -155,6 +154,7 @@ void update(double dt)
     // get the delta time
     g_dElapsedTime += dt;
     g_dDeltaTime = dt;
+
     switch (g_eGameState)
     {
 	//case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
@@ -167,7 +167,7 @@ void update(double dt)
 		break;
 	case S_LOADING2: load2process();
 		break;
-	case S_GAME: gameplay(); // gameplay logic when we are in the game
+	case S_GAME: gameplay(dt); // gameplay logic when we are in the game
 		break;
 	case S_MAINMENU: {selectMenuInput();}
 		break;
@@ -180,6 +180,8 @@ void update(double dt)
 	case S_HIGHSCORE: inputhighscore();
 		break;
 	case S_PRINTHIGHSCORE: {inputprintallhighscore();}
+		break;
+	case S_MODE: processmodeMenu(); 
 		break;
   }
 }
@@ -236,6 +238,8 @@ void render()
 			break;
 	case S_PRINTHIGHSCORE: { renderprinthighscore();}
 		    break;
+	case S_MODE:{renderMode(); }
+			break;
     }
     renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -281,13 +285,20 @@ void splashScreenWait()    // waits for time to pass in splash screen
 
 //-----Gameplay logic
 
-void gameplay()
+void gameplay(double dt)
 {
+	
+
 	//Input section
+	//Players
+	if (!gameRunning) goto BB;
+
 	Player* P; //Pointer for player
 	const EKEYS* PK; //Pointer for keys array
 
 	P = pickPlayer(currentTurn);
+
+	countdownUpdate(dt, *P);
 
 	switch (currentTurn)
 	{
@@ -296,25 +307,34 @@ void gameplay()
 	}
 
 	//Player controls
-	bool B = false;
-
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		EKEYS K = PK[i];
 		if (keyStates[K].onPressed)
+		if (move(*P, directions[i])) goto AA;
+	}
+
+	if (keyStates[K_HINT].onPressed)
+	{
+		if (!hintOn && (*P).hintsAvailable > 0)
 		{
-			if (move(P, directions[i])) { B = true; break; }
+			hintOn = true;
+			(*P).hintsAvailable--;
+
+			showHints((*P).playerLocation);
 		}
 	}
 
-	if (B)
-	{
-		currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+	goto BB;
+AA:
+	currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+	P = pickPlayer(currentTurn);
 
-		hintOn = false;
-		hideHints();
-		findMoves((*(pickPlayer(currentTurn))).playerLocation);
-	}
+	hintOn = false;
+	hasStarted = true;
+	hideHints();
+	findMoves((*P).playerLocation);
+BB:
 
 	//Global controls
 
@@ -327,20 +347,6 @@ void gameplay()
 		Result2.clear();
 		boardGen();
 		void render();
-	}
-
-	if (keyStates[K_HINT].onPressed)
-	{
-		Player* P;
-		P = pickPlayer(currentTurn);
-
-		if (!hintOn && (*P).hintsAvailable > 0)
-		{
-			hintOn = true;
-			(*P).hintsAvailable--;
-
-			showHints((*P).playerLocation);
-		}
 	}
 
 	// quits the game if player hits the escape key
@@ -364,32 +370,19 @@ void clearScreen()
 
 void renderSplashScreen()  // renders the splash screen
 {
-  
-    std::string gamename;
+    string gamename;
     COORD c = g_Console.getConsoleSize();
 	
     c.Y = 0;
     c.X = 0; 
 	std::ifstream myfile;
     myfile.open("mainscreen.txt");
-        for(int i=0; myfile.good(); i++){
-            std::getline(myfile, gamename);
-            g_Console.writeToBuffer(c, gamename, 0x0A);
-            c.Y += 1;
-        }
- /*   c.X -= 20;
-    c.Y += 1;
-  
-    c.X = c.X / 2 - 9;
-    c.X -= 1;
-     g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);*/
-
+    while (myfile.good())
+	{
+        std::getline(myfile, gamename);
+        g_Console.writeToBuffer(c, gamename, 0x0A);
+        c.Y += 1;
+    }
 }
 
 void renderGame()
@@ -461,4 +454,20 @@ Player* pickPlayer(unsigned int N)
 	}
 
 	return P;
+}
+
+void playerInit(Player& P)
+{
+	P.active = true;
+	P.hintsAvailable = 3;
+	P.totalScore = 0;
+	P.timeLeft = 100;
+}
+
+void gameInit()
+{
+	currentTurn = 0;
+	hintOn = false;
+	hasStarted = false;
+	gameRunning = true;
 }

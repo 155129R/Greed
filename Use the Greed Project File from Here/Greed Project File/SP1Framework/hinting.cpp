@@ -1,16 +1,12 @@
 #include "hinting.h"
+
 #include "game.h"
-#include "playermenu.h"
 #include "countdowntimer.h"
-#include "modemenu.h"
-#include <fstream>
 
 bool allowedMoves[8];
 
-
 void findMoves(COORD P)
 {
-
 	for (unsigned int i = 0; i < 8; i++)
 	{
 		allowedMoves[i] = false;
@@ -44,6 +40,8 @@ void findMoves(COORD P)
 			if (playfield.cell[YY][XX].value == 0) { allowedMoves[i] = false; break; }
 		}
 	}
+
+	if (!hasPossibleMoves()) gameRunning = false;
 }
 
 void showHints(COORD P)
@@ -77,25 +75,27 @@ void hideHints()
 		}
 	}
 }
+
+bool hasPossibleMoves()
+{
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		if (allowedMoves[i]) return true;
+	}
+	return false;
+}
+
 void checkWinner()
 {
     bool B = false;
     for (unsigned int i = 0; i < 8; i++)
     {
         B |= allowedMoves[i];
-        if(((timemode == true) && (totalPlayers == 1)))
+        if(((timer == true) && (totalPlayers == 1)))
         {
-            if(timeleft == 0)
-            {
-
-                player1.playerLocation.X = 0;
-                player1.playerLocation.Y = 0;
-                g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x0B);
-  
-            }
+            
         }
     }
-  
     
     if ( B == false)
     {

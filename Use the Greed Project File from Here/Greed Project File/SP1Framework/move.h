@@ -5,6 +5,6 @@
 #include "directions.h"
 #include "hinting.h"
 
-bool move(Player* P, Directions D);
+bool move(Player& P, Directions D);
 
 #endif // _MOVE_H

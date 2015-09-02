@@ -110,7 +110,6 @@
     <ClInclude Include="move.h" />
     <ClInclude Include="playermenu.h" />
     <ClInclude Include="points.h" />
-    <ClInclude Include="PointSystem.h" />
     <ClInclude Include="startmenu.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>

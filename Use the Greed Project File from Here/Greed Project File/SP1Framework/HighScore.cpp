@@ -1,13 +1,11 @@
-#include<iostream>
-#include<string>
-#include<sstream>
-#include <fstream>
-#include <iomanip>
 #include "HighScore.h"
+
+#include <sstream>
 #include "game.h"
 #include "difficulty.h"
 #include "playermenu.h"
 #include "points.h"
+
 using std::string;
 int ChangeScore;
 extern string Result1;

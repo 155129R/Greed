@@ -6,6 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <fstream>
+#include <string>
 using std::vector;
 using std::string;
 
@@ -99,9 +101,8 @@ extern Playfield playfield;
 
 
 //--Player variables
-//---
+
 //Defines a player.
-//---
 struct Player
 {
 	bool active;
@@ -109,7 +110,8 @@ struct Player
 
 	unsigned int hintsAvailable;
 	unsigned int totalScore;
-	string scoreText;
+	unsigned int timeLeft; //100 represents 10 seconds.
+
 
 	COORD playerLocation;
 };
@@ -226,10 +228,11 @@ extern bool hintOn;
 extern KeyState keyStates[K_COUNT];
 Player* pickPlayer(unsigned int N);
 extern unsigned int genID;
-
+extern bool timer;
+extern bool gameRunning;
 
 void splashScreenWait();    // waits for time to pass in splash screen
-void gameplay();            // gameplay logic
+void gameplay(double dt);            // gameplay logic
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void setcursor(bool visible, DWORD size); //Changes cursor "visibility"
@@ -242,6 +245,7 @@ void changeDiff();          //Changes the difficulty according to user's chosen 
 void applyDiff();           //Apply changes for difficulty
 void processPlayerMenu();
 void renderPlayerMenu();
+void renderMode();
 void applyplayer();
 void totalplayerNumber();
 void processOptionsMenu();
@@ -257,10 +261,12 @@ void renderDiff();
 void renderLoading1();
 void renderLoading2();
 void chancesofNumber();
+void processmodeMenu();
+void playerInit(Player& P);
+void gameInit();
 
 extern COORD renderOffset;
 extern Console g_Console;
 extern EGAMESTATES g_eGameState;
-
 
 #endif

@@ -1,8 +1,6 @@
 #ifndef _HIGHSCORE_H
 #define	_HIGHSCORE_H
 
-#include "Framework\console.h"
-#include <iostream>
 #include "game.h"
 enum NameInputKeysenum
 {

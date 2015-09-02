@@ -1,9 +1,8 @@
-#include <iostream>
-#include <fstream>
+#include "startmenu.h"
+
 #include "game.h"
 #include "playermenu.h"
 #include "board.h"
-#include "startmenu.h"
 
 COORD D;
 void renderMenu()
