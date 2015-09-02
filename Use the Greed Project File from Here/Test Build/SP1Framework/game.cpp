@@ -348,7 +348,6 @@ void gameplay()
 	if(isKeyPressed(VK_ESCAPE))
 	{
 		g_eGameState=S_HIGHSCORE;
-        PlayerName = " ";
 		Sleep(200);
 	}
 	//End of Input section
@@ -374,7 +373,7 @@ void renderSplashScreen()  // renders the splash screen
     myfile.open("mainscreen.txt");
         for(int i=0; myfile.good(); i++){
             std::getline(myfile, gamename);
-            g_Console.writeToBuffer(c, gamename, 0x0A);
+            g_Console.writeToBuffer(c, gamename, 0x04);
             c.Y += 1;
         }
  /*   c.X -= 20;

@@ -11,7 +11,8 @@ void totalplayerNumber(){
 
         case 2: Number = Multi; break;
 
-
+        default: g_Console.writeToBuffer(4,4,"Invalid option");
+                     g_eGameState = S_SPLASHSCREEN;
                      
     }
 }
@@ -35,7 +36,7 @@ void renderPlayerMenu(){
     std::string Multi;
     COORD c = g_Console.getConsoleSize();
 
-    g_Console.writeToBuffer(0,1,"Choose how many players you want(1 for Single-Player , 2 for Multiplayer)", 0x0B);
+    g_Console.writeToBuffer(0,1,"Choose how many players you want(1 for Single-Player , 2 for Multiplayer)", 0x04);
 
     c.Y = 4;
     c.X = 4;
@@ -44,7 +45,7 @@ void renderPlayerMenu(){
     Singlefile.open("Single.txt");
     for(int i=0; Singlefile.good(); i++){
         std::getline(Singlefile, Single);
-        g_Console.writeToBuffer(c, Single, 0x03);
+        g_Console.writeToBuffer(c, Single, 0x04);
         c.Y += 1;
     }
 
@@ -54,7 +55,7 @@ void renderPlayerMenu(){
     Multifile.open("Multi.txt");
     for(int i=0; Multifile.good(); i++){
         std::getline(Multifile, Multi);
-        g_Console.writeToBuffer(c, Multi, 0x03);
+        g_Console.writeToBuffer(c, Multi, 0x04);
         c.Y += 1;
     }
 

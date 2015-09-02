@@ -88,7 +88,7 @@ void checkWinner()
        
             player1.playerLocation.X = 0;
             player1.playerLocation.Y = 0;
-            g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x0B);
+            g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x04);
         
       if ( totalPlayers == 2)
         {

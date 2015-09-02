@@ -91,7 +91,6 @@
     <ClCompile Include="playermenu.cpp" />
     <ClCompile Include="points.cpp" />
     <ClCompile Include="startmenu.cpp" />
-    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h" />

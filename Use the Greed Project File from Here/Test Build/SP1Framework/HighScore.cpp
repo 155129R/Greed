@@ -378,7 +378,7 @@ void check(int &total1,int &total2)
 		}
 		
 		ReadFile.close();
-
+	
 		//g_eGameState=S_HIGHSCOREWRITE;
 }
 		

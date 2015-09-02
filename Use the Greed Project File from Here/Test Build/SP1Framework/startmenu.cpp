@@ -17,7 +17,7 @@ void renderMenu()
 	while(ReadFile.good())
 	{
 	std::getline(ReadFile,Start);
-	g_Console.writeToBuffer(D.X,D.Y, Start, 0x03);
+	g_Console.writeToBuffer(D.X,D.Y, Start, 0x04);
 	D.Y+=1;
 	}
 	ReadFile.close();
@@ -32,7 +32,7 @@ void renderMenu()
 		{
 
 			std::getline(ReadFile2,Option);
-			g_Console.writeToBuffer(D,Option, 0x03);
+			g_Console.writeToBuffer(D,Option, 0x04);
 			D.Y++;
 		}
 		ReadFile2.close();
@@ -46,7 +46,7 @@ void renderMenu()
 		while(ReadFile3.good())
 		{
 			std::getline(ReadFile3,HighScore);
-			g_Console.writeToBuffer(D,HighScore,0x03);
+			g_Console.writeToBuffer(D,HighScore,0x04);
 			D.Y++;
 		}
 		ReadFile3.close();
@@ -60,7 +60,7 @@ void renderMenu()
 		while(ReadFile4.good())
 		{
 			std::getline(ReadFile4,Exit);
-				g_Console.writeToBuffer(D,Exit,0x03);
+				g_Console.writeToBuffer(D,Exit,0x04);
 			D.Y++;
 		}
 		ReadFile4.close();

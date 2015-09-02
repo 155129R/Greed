@@ -67,7 +67,7 @@ void renderDiff(){
 	std::string advanced;
 	COORD c = g_Console.getConsoleSize();
 
-	g_Console.writeToBuffer(0, 0, "Choose Your Difficulty (1,2, or 3)", 0x0B);
+	g_Console.writeToBuffer(0, 0, "Choose Your Difficulty (1,2, or 3)", 0x04);
 
 	c.Y = 4;
 	c.X = 4;
@@ -76,7 +76,7 @@ void renderDiff(){
 	novicefile.open("Novice.txt");
 	for (int i = 0; novicefile.good(); i++){
 		std::getline(novicefile, novice);
-		g_Console.writeToBuffer(c, novice, 0x03);
+		g_Console.writeToBuffer(c, novice, 0x04);
 		c.Y += 1;
 	}
 
@@ -87,7 +87,7 @@ void renderDiff(){
 	intermediatefile.open("Intermediate.txt");
 	for (int i = 0; intermediatefile.good(); i++){
 		std::getline(intermediatefile, intermediate);
-		g_Console.writeToBuffer(c, intermediate, 0x03);
+		g_Console.writeToBuffer(c, intermediate, 0x04);
 		c.Y += 1;
 	}
 
@@ -98,7 +98,7 @@ void renderDiff(){
 	advancedfile.open("Advanced.txt");
 	for (int i = 0; advancedfile.good(); i++){
 		std::getline(advancedfile, advanced);
-		g_Console.writeToBuffer(c, advanced, 0x03);
+		g_Console.writeToBuffer(c, advanced, 0x04);
 		c.Y += 1;
 	}
 
