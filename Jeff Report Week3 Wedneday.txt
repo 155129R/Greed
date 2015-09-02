@@ -1,0 +1,45 @@
+Week1
+Tuesday
+//Problem
+Jeffrey is working on the "whitespace" mechanic where after eating all the numbers in the game,
+the numbers will be replaced by whitespace.
+Had issues due to the eating mechanic and board generation mechanic.
+//Solution
+Sham worked on it instead and managed to fix it
+
+Friday
+//problem
+Points Stopped working after changing to new framework
+//Solution
+Insert the point into a string
+Print out the string
+
+week 2
+//Tuesday
+//Problem 
+point refused to print again due to splitting of files
+//Solution
+created a new game state for the highscore and proper linking fixed it
+
+
+
+//Thursday
+//Problem
+Cin function have issues with the frameowork
+//Solution
+Replace code with Hard code.it works by looping the a function that displays a string.
+Whenever they press a button for example A ,Add 'A' to the string.
+
+week 3
+//Wednesday
+//Problem
+Tutorial was not working properly after pressing enter to move on to next page.
+
+//Solution
+made several writetobuffer functions with a string attached to all of them.
+If they move on to next page, the string will be changed and it will display the string.
+
+
+
+
+
