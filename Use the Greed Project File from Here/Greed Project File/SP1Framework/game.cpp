@@ -287,9 +287,8 @@ void splashScreenWait()    // waits for time to pass in splash screen
 
 void gameplay(double dt)
 {
-	
-
 	//Input section
+
 	//Players
 	if (!gameRunning) goto BB;
 
@@ -327,13 +326,7 @@ void gameplay(double dt)
 
 	goto BB;
 AA:
-	currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
-	P = pickPlayer(currentTurn);
-
-	hintOn = false;
-	hasStarted = true;
-	hideHints();
-	findMoves((*P).playerLocation);
+	endTurn();
 BB:
 
 	//Global controls
@@ -470,4 +463,17 @@ void gameInit()
 	hintOn = false;
 	hasStarted = false;
 	gameRunning = true;
+}
+
+void endTurn()
+{
+	Player *P = pickPlayer(currentTurn);
+	(*P).timeLeft = (*P).timeLeft < 30 ? 30 : (*P).timeLeft;
+	
+	currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+
+	hintOn = false;
+	hasStarted = true;
+	hideHints();
+	findMoves((*P).playerLocation);
 }

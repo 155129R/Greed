@@ -264,6 +264,7 @@ void chancesofNumber();
 void processmodeMenu();
 void playerInit(Player& P);
 void gameInit();
+void endTurn();
 
 extern COORD renderOffset;
 extern Console g_Console;
