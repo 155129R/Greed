@@ -4,7 +4,11 @@
   \___| |_|   \___| \___| \__,_|   |_|_\ \___| |_| \___/ \__,_| \__,_| \___| \__,_|
 
 
-Controls
+  ___         _           _    
+ / __|___ _ _| |_ _ _ ___| |___
+| (__/ _ \ ' \  _| '_/ _ \ (_-<
+ \___\___/_||_\__|_| \___/_/__/
+
 In Greed Reloaded,We have 2 control scheme for the players
 Please select your controls before starting the game.
 
@@ -23,7 +27,12 @@ ESC-Move back to previous screen(When in the menus)/End the game(During gameplay
 
 
 
-OBJECTIVE:
+  ___  _     _        _   _         
+ / _ \| |__ (_)___ __| |_(_)_ _____ 
+| (_) | '_ \| / -_) _|  _| \ V / -_)
+ \___/|_.__// \___\__|\__|_|\_/\___|
+          |__/                      
+
 For all game modes:
 
 The objective of this game mode is to "eat" up points as much as possible by moving your character across the board.
