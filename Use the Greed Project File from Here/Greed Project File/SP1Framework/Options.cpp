@@ -16,7 +16,7 @@ void renderOptionsMenu()
     textPrintCoord.X = 5;
     textPrintCoord.Y = 3;
 
-	p1File.open("p1controls.txt");
+	p1File.open("display\\p1controls.txt");
     while(p1File.good())
 	{
 		std::getline(p1File,p1control);
@@ -27,7 +27,7 @@ void renderOptionsMenu()
 
     textPrintCoord.Y += 5;
 
-    p2File.open("p2controls.txt");
+    p2File.open("display\\p2controls.txt");
 	while(p2File.good())
 	{
 		std::getline(p2File,p2control);
@@ -44,7 +44,7 @@ void processOptionsMenu()
 		(isKeyPressed(VK_NUMPAD1))
 	   )
 	{
-	   PlaySound(L"button.wav",NULL,SND_ASYNC);
+	   PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
        g_eGameState = S_P1CTRL;
     }
 
@@ -53,14 +53,14 @@ void processOptionsMenu()
 		(isKeyPressed(VK_NUMPAD2))
 	   )
 	{
-	    PlaySound(L"button.wav",NULL,SND_ASYNC);
+	    PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
         g_eGameState = S_P2CTRL;
         
     }
 
     if (isKeyPressed(VK_ESCAPE))
 	{
-		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		g_eGameState=S_MAINMENU;
 	}
     
@@ -80,7 +80,7 @@ void renderPlayerControl(){
     textPrintCoord.X = 5;
     textPrintCoord.Y = 3;
 
-	qweFile.open("qwekeys.txt");
+	qweFile.open("display\\qwekeys.txt");
         
 		while(qweFile.good())
 		{
@@ -91,7 +91,7 @@ void renderPlayerControl(){
 		qweFile.close();
         textPrintCoord.Y = 3;
         textPrintCoord.X += 35;
-        	numFile.open("numkeys.txt");
+        	numFile.open("display\\numkeys.txt");
         
 		while(numFile.good())
 		{

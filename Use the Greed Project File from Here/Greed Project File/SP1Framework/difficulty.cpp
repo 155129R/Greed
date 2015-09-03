@@ -74,7 +74,7 @@ void renderDiff(){
 	c.X = 4;
 
 	std::ifstream novicefile;
-	novicefile.open("Novice.txt");
+	novicefile.open("display\\Easy.txt");
 	for (int i = 0; novicefile.good(); i++){
 		std::getline(novicefile, novice);
 		g_Console.writeToBuffer(c, novice, 0x03);
@@ -85,7 +85,7 @@ void renderDiff(){
 
 
 	std::ifstream intermediatefile;
-	intermediatefile.open("Intermediate.txt");
+	intermediatefile.open("display\\Normal.txt");
 	for (int i = 0; intermediatefile.good(); i++){
 		std::getline(intermediatefile, intermediate);
 		g_Console.writeToBuffer(c, intermediate, 0x03);
@@ -96,7 +96,7 @@ void renderDiff(){
 
 
 	std::ifstream advancedfile;
-	advancedfile.open("Advanced.txt");
+	advancedfile.open("display\\Hard.txt");
 	for (int i = 0; advancedfile.good(); i++){
 		std::getline(advancedfile, advanced);
 		g_Console.writeToBuffer(c, advanced, 0x03);

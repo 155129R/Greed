@@ -108,7 +108,7 @@ void checkWinner()
                 
                 std::ifstream timesupFile;
                 std::string timesup;
-	            timesupFile.open("timesup.txt");
+	            timesupFile.open("display\\timesup.txt");
 	            while(timesupFile.good())
 	            {
 	                std::getline(timesupFile,timesup);
@@ -156,7 +156,7 @@ void checkWinner()
             {
                 std::ifstream player2wonFile;
                 std::string playerwon;
-	            player2wonFile.open("player2win.txt");
+	            player2wonFile.open("display//player2win.txt");
 	            while(player2wonFile.good())
 	            {
 	                std::getline(player2wonFile,playerwon);
@@ -170,7 +170,7 @@ void checkWinner()
             {
                 std::ifstream playersDraw;
                 std::string draw;
-	            playersDraw.open("drawtxt");
+	            playersDraw.open("display\\draw.txt");
 	            while(playersDraw.good())
 	            {
 	                std::getline(playersDraw,draw);

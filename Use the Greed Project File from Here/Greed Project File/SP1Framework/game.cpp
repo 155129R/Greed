@@ -187,7 +187,7 @@ void update(double dt)
 							  break;
 	case S_MODE: processmodeMenu(); 
 		break;
-	case S_TIMEHIGHSCORECHECK:processmodeMenuHighScore();
+	case S_TIMEHIGHSCORECHECK:processmodeMenuHighScore();//checking for timed or normal mode
 		break;
   }
 }
@@ -236,17 +236,17 @@ void render()
         break;
     case S_P2CTRL: renderPlayerControl();
         break;
-	case S_MAINMENU:{rendermainmenu();}
+	case S_MAINMENU:rendermainmenu();
 		break;
     case S_OPTION: renderOptionsMenu();
         break;
-	case S_HIGHSCORE: {renderhighscore();}
+	case S_HIGHSCORE: renderhighscore();
 			break;
-	case S_PRINTHIGHSCORE: { renderprinthighscore();}
+	case S_PRINTHIGHSCORE: renderprinthighscore();
 		    break;
-	case S_PRINTTIMEHIGHSCORE:{ renderprinttimehighscore();}
+	case S_PRINTTIMEHIGHSCORE:renderprinttimehighscore();
 							  break;
-	case S_MODE:{renderMode(); }
+	case S_MODE:renderMode(); 
 			break;
 	case S_TUTORIAL:renderTutorial();
 		break;
@@ -269,7 +269,8 @@ void inputprinttimehighscore()
 
 void inputhighscore()
 {
-	NameInputKeys();NameInput();
+	NameInputKeys();
+	NameInput();
 }
 void rendermainmenu()
 {
@@ -355,7 +356,7 @@ BB:
 
 	if (keyStates[K_RETRY].onPressed) //Retry
 	{
-		PlaySound(L"retry.wav" ,NULL,SND_ASYNC);
+		PlaySound(L"sound\\retry.wav" ,NULL,SND_ASYNC);
 		total1 = 0;
 		total2 = 0;
 		Result1.clear();
@@ -372,7 +373,7 @@ BB:
 	if(isKeyPressed(VK_ESCAPE))
 	{
 		g_eGameState=S_HIGHSCORE;
-        PlayerName = " ";
+        PlayerName = "";
 		Sleep(200);
 	}
 	//End of Input section
@@ -394,7 +395,7 @@ void renderSplashScreen()  // renders the splash screen
     c.Y = 0;
     c.X = 0; 
 	std::ifstream myfile;
-    myfile.open("mainscreen.txt");
+    myfile.open("display\\mainscreen.txt");
     while (myfile.good())
 	{
         std::getline(myfile, gamename);

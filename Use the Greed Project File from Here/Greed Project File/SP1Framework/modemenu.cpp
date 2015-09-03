@@ -10,7 +10,7 @@ void renderMode(){
     c.X = 4;
     
     std::ifstream normalmodefile;
-    normalmodefile.open("normalmode.txt");
+    normalmodefile.open("display\\normalmode.txt");
     for(int i=0; normalmodefile.good(); i++)
 	{
         std::getline(normalmodefile, normal);
@@ -21,7 +21,7 @@ void renderMode(){
     c.Y += 2;
 
     std::ifstream timemodefile;
-    timemodefile.open("timemode.txt");
+    timemodefile.open("display\\timemode.txt");
     for(int i=0; timemodefile.good(); i++)
 	{
 		std::getline(timemodefile, time);
@@ -35,19 +35,19 @@ void renderMode(){
 void processmodeMenu(){
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
-		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		timer = false;
 	    g_eGameState = S_DIFFICULTY;
 
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
-	    PlaySound(L"button.wav",NULL,SND_ASYNC);
+	    PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		timer = true;
 	    g_eGameState = S_DIFFICULTY;
     }
     if (isKeyPressed(VK_ESCAPE))
 	  {
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		  g_eGameState = S_MAINMENU;
 	  }
  
@@ -56,19 +56,19 @@ void processmodeMenuHighScore()
  {
 	 if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
-		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		timer = false;
 	    g_eGameState = S_PRINTHIGHSCORE;
 
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
-	    PlaySound(L"button.wav",NULL,SND_ASYNC);
+	    PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		timer = true;
 	    g_eGameState = S_PRINTTIMEHIGHSCORE;
     }
     if (isKeyPressed(VK_ESCAPE))
 	  {
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		  g_eGameState = S_MAINMENU;
 	  }
  }

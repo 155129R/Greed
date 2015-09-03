@@ -10,7 +10,7 @@ void renderMenu()
 	string Start;
 
 	std::ifstream ReadFile;
-	ReadFile.open("Start.txt");
+	ReadFile.open("display\\Start.txt");
 	D.Y=5;
 	D.X=1;
 	while(ReadFile.good())
@@ -23,7 +23,7 @@ void renderMenu()
 		
 	std::ifstream ReadFile2;
 	string Option;
-	ReadFile2.open("Options.txt");
+	ReadFile2.open("display\\Options.txt");
 	
 		D.Y=9;
 		D.X=1;
@@ -34,11 +34,13 @@ void renderMenu()
 			g_Console.writeToBuffer(D,Option, 0x03);
 			D.Y++;
 		}
+		g_Console.writeToBuffer(55,11,"<-- Please select your controls");
+		g_Console.writeToBuffer(55,12,"before starting");
 		ReadFile2.close();
 	
 	std::ifstream ReadFile3;
 	string HighScore;
-	ReadFile3.open("HighScore.txt");
+	ReadFile3.open("display\\HighScore.txt");
 	
 		D.Y=14;
 		D.X=1;
@@ -53,7 +55,7 @@ void renderMenu()
 	
 	std::ifstream ReadFile4;
 	string Tutorial;
-	ReadFile4.open("Tutorial.txt");
+	ReadFile4.open("display\\Tutorial.txt");
 	
 		D.Y=19;
 		D.X=1;
@@ -66,7 +68,7 @@ void renderMenu()
 		ReadFile4.close();
 	std::ifstream ReadFile5;
 	string Exit;
-	ReadFile5.open("Exit.txt");
+	ReadFile5.open("display\\Exit.txt");
 		D.Y=24;
 		D.X=1;
 		while(ReadFile5.good())
@@ -86,28 +88,28 @@ void selectMenuInput()
 	 if(isKeyPressed(VK_NUMPAD1)||isKeyPressed('1'))
 	 {
 		 g_eGameState=S_PLAYERMENU;
-		 PlaySound(L"button.wav",NULL,SND_ASYNC);
+		 PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 
 	 }
 	 if(isKeyPressed(VK_NUMPAD2)||isKeyPressed('2'))
 	  {
 		  g_eGameState=S_OPTION;
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 	  }
 	 
 	  if(isKeyPressed(VK_NUMPAD3)||isKeyPressed('3'))
 	  {
 		  g_eGameState= S_TIMEHIGHSCORECHECK;
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 	  }
 	  if(isKeyPressed(VK_NUMPAD4)||isKeyPressed('4'))
 	  {
 		  g_eGameState=S_TUTORIAL;
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 	  }
 	  
 	  if(isKeyPressed(VK_NUMPAD5)||isKeyPressed('5'))
-	  {PlaySound(L"button.wav",NULL,SND_ASYNC);
+	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		  g_bQuitGame = true;
 	  }
 }

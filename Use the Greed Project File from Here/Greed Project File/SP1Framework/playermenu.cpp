@@ -39,7 +39,7 @@ void renderPlayerMenu(){
     c.X = 4;
     
     std::ifstream Singlefile;
-    Singlefile.open("Single.txt");
+    Singlefile.open("display\\Single.txt");
     for(int i=0; Singlefile.good(); i++){
         std::getline(Singlefile, Single);
         g_Console.writeToBuffer(c, Single, 0x03);
@@ -49,7 +49,7 @@ void renderPlayerMenu(){
     c.Y += 2;
 
     std::ifstream Multifile;
-    Multifile.open("Multi.txt");
+    Multifile.open("display\\Multi.txt");
     for(int i=0; Multifile.good(); i++){
         std::getline(Multifile, Multi);
         g_Console.writeToBuffer(c, Multi, 0x03);
@@ -62,19 +62,19 @@ void renderPlayerMenu(){
 void processPlayerMenu(){
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
-		PlaySound(L"button.wav",NULL,SND_ASYNC);
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		Number = static_cast<numberofPlayers>(1);
 	    g_eGameState = S_MODE;
 
     }
     if((isKeyPressed('2'))||(isKeyPressed(VK_NUMPAD2))){
-	    PlaySound(L"button.wav",NULL,SND_ASYNC);
+	    PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		Number = static_cast<numberofPlayers>(2);
 	    g_eGameState = S_MODE;
     }
     if (isKeyPressed(VK_ESCAPE))
 	  {
-		  PlaySound(L"button.wav",NULL,SND_ASYNC);
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
 		  g_eGameState=S_MAINMENU;
 	  }
     

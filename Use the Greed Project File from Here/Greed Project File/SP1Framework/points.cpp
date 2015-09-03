@@ -1,19 +1,12 @@
 #include "points.h"
 
-//int total=0;
-//int points=0;
+
 void addingPoints(int V,int &total1,int &total2);
 void convertTotalPoints (std::string &Result1,std::string Result2,int &total1,int total2);
-//void PointCounter(int N, int points,std::string &Result);
-//int main(void)
-//{
-//	addingPoints();
-//	convertTotalPoints();
 
 void addingPoints(int V,int &total1,int &total2)
 {
-	PlaySound(L"points.wav",NULL,SND_ASYNC);
-	//std::cin >> Nvalue; 
+	PlaySound(L"sound\\points.wav",NULL,SND_ASYNC);
 	if(currentTurn == 0)
 	{
 		int points=V;
