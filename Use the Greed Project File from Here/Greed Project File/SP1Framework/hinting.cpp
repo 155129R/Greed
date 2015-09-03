@@ -103,7 +103,7 @@ void checkWinner()// Done by Glence,Check the winner of the game
                 player1.playerLocation.X = 0;
                 player1.playerLocation.Y = 0;
                 COORD victoryTextCOORD;
-                victoryTextCOORD.X = 15;
+                victoryTextCOORD.X = 27;
                 victoryTextCOORD.Y = 15;
                 
                 std::ifstream timesupFile;
@@ -116,6 +116,7 @@ void checkWinner()// Done by Glence,Check the winner of the game
                     victoryTextCOORD.Y++;
 	            }
 	            timesupFile.close();
+                g_Console.writeToBuffer(12,14, "press the ESC key to end the game and check your score or press 'R' to retry", 0x0B);
              
             }
         }

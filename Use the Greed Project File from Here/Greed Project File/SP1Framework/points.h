@@ -7,6 +7,8 @@
 
 void addingPoints(int selectedNumber, int &total1, int&total2);//add points into total amount of points for player
 void convertTotalPoints(std::string &Result1, std::string &Result2, int &total1, int &total2);//conver total points into a string for display
+void addingPoints(int selectedNumber, int &total1, int&total2); 
+void convertTotalPoints(std::string &Result1, std::string &Result2, int &total1, int &total2);
 extern int V;
 extern int total1;//total amount of points for first player
 extern int total2;//total amount of points for second player
