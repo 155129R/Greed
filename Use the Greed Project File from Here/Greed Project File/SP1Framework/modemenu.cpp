@@ -50,7 +50,7 @@ void processmodeMenu()// Done by Glence, process mode menu inputs
     if (isKeyPressed(VK_ESCAPE))
 	  {
 		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  g_eGameState = S_MAINMENU;
+		  g_eGameState = S_PLAYERMENU;
 	  }
  
 }
