@@ -253,51 +253,26 @@ void render()
 	case S_TIMEHIGHSCORECHECK:renderMode();
 		break;
     }
-    renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+   // renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
-void inputprintallhighscore()
+void inputprintallhighscore()//Done by Jeffrey, inputs for resetting highscore for normal mode
 {
 	NameInputKeys();
 	ResetSelectedHighScoreInput();
 }
-void inputprinttimehighscore()
+void inputprinttimehighscore()//Done by Jeffrey, inputs for resetting highscore for Timed Mode
 {
 	NameInputKeys();
 	ResetSelectedHighScoreInputTime();
 }
 
-void inputhighscore()
+void inputhighscore()//Done by Jeffrey,Inputting name for highscore
 {
 	NameInputKeys();
 	NameInput();
 }
-void rendermainmenu()
-{
-	renderSplashScreen();
-	renderMenu();
-	total1 = 0;
-	total2 = 0;
-	Result1.clear();
-	Result2.clear();
-}
-void renderhighscore()
-{
-	AskforInput();
-	displayPlayerName();
-	print();
 
-}
-void renderprinthighscore()
-{
-	printall();
-	renderResetSelectedHighScore();
-}
-void renderprinttimehighscore()
-{
-	printalltime();
-	renderResetSelectedHighScore();
-}
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
@@ -308,7 +283,7 @@ void splashScreenWait()    // waits for time to pass in splash screen
 
 //-----Gameplay logic
 
-void gameplay(double dt)
+void gameplay(double dt) // Game Control and Game flow
 {
 	//Input section
 
@@ -370,7 +345,7 @@ BB:
 
 
 
-	if(isKeyPressed(VK_ESCAPE))
+	if(isKeyPressed(VK_ESCAPE))//Print out highscore after ending game
 	{
 		g_eGameState=S_HIGHSCORE;
         PlayerName = "";
@@ -386,7 +361,32 @@ void clearScreen()
     // Clears the buffer with this colour attribute
     g_Console.clearBuffer(0x00);
 }
+void rendermainmenu()//Done by Jeffrey,Rendereing the main menu
+{
+	renderSplashScreen();
+	renderMenu();
+	total1 = 0;
+	total2 = 0;
+	Result1.clear();
+	Result2.clear();
+}
+void renderhighscore()//Done by Jeffrey,Render highscore after game ends
+{
+	AskforInput();
+	displayPlayerName();
+	print();
 
+}
+void renderprinthighscore()//Done by Jeffrey,Render all highscore for normal mode
+{
+	printall();
+	renderResetSelectedHighScore();
+}
+void renderprinttimehighscore()//Done by Jeffrey,Render all highscore for timed mode
+{
+	printalltime();
+	renderResetSelectedHighScore();
+}
 void renderSplashScreen()  // renders the splash screen
 {
     string gamename;
@@ -404,7 +404,7 @@ void renderSplashScreen()  // renders the splash screen
     }
 }
 
-void renderGame()
+void renderGame()//Done by Gary,Render the whole game
 {
 	renderOffset.X = (consoleX - playfield.sizeX) / 2;
 	renderOffset.Y = 0;
@@ -414,7 +414,7 @@ void renderGame()
 	renderGUI();
 }
 
-void renderGUI()
+void renderGUI()//Done by Gary,Render user interface in-game
 {
 	COORD loc = renderOffset;
 	loc.X -= 9;
@@ -435,7 +435,7 @@ void renderGUI()
 	loc.Y = 0;
 }
 
-void renderFramerate()
+void renderFramerate()//Render framerate
 {
     //COORD c;
     //// displays the framerate
@@ -462,7 +462,7 @@ void renderToScreen()
 
 //-----Others
 
-Player* pickPlayer(unsigned int N)
+Player* pickPlayer(unsigned int N)//Done By Gary,Pick either Player 1 or 2
 {
 	Player* P;
 
@@ -475,7 +475,7 @@ Player* pickPlayer(unsigned int N)
 	return P;
 }
 
-void playerInit(Player& P)
+void playerInit(Player& P)//Done by Gary,Intialise the player at the start of the game
 {
 	P.active = true;
 	P.hintsAvailable = 3;
@@ -483,7 +483,7 @@ void playerInit(Player& P)
 	P.timeLeft = 100;
 }
 
-void gameInit()
+void gameInit()//Done by Gary,Intialise game hints,turns and starting turn at start of the game	
 {
 	currentTurn = 0;
 	hintOn = false;
@@ -491,7 +491,7 @@ void gameInit()
 	gameRunning = true;
 }
 
-void endTurn()
+void endTurn()//Done by Glence ends the turn for player
 {
 	Player *P = pickPlayer(currentTurn);
     switch (totalPlayers)

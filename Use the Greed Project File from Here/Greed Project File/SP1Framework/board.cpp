@@ -5,7 +5,7 @@
 
 unsigned char playerChar;
 
-void renderMap()
+void renderMap() //Done by : Gary . Prints board.
 {
 	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
 	{
@@ -33,7 +33,7 @@ void renderMap()
 	}
 }
 
-void boardGen()
+void boardGen() //Done by Sham .Generate Board
 {
 	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
 	{
@@ -81,7 +81,7 @@ void boardGen()
 	findMoves(player1.playerLocation);
 }
 
-void renderCharacter()
+void renderCharacter() //Done By Sham. Render Player Character
 {
 	// Draw the location of the characters
 	const WORD inactive = 0x0A;

@@ -51,36 +51,30 @@ bool g_abKeyPressedName[K_Z];
 void ResetHighScore();
 void renderResetSelectedHighScore();
 void  ResetSelectedHighScoreInput();
-void ResetNovice1();
-void ResetIntermediate1();
-void ResetAdvanced1();
-void ResetNovice2();
-void ResetIntermediate2();
-void ResetAdvanced2();
-void ResetNovice1time();
-void ResetIntermediate1time();
-void ResetAdvanced1time();
-void ResetNovice2time();
-void ResetIntermediate2time();
-void ResetAdvanced2time();
+void ResetEasy1();
+void ResetNormal1();
+void ResetHard1();
+void ResetEasy2();
+void ResetNormal2();
+void ResetHard2();
+void ResetEasy1time();
+void ResetNormal1time();
+void ResetHard1time();
+void ResetEasy2time();
+void ResetNormal2time();
+void ResetHard2time();
 void printalltime();
 void ResetSelectedHighScoreInputTime();
-//void HighScorefor1player();
+
 void AskforInput();
 extern bool timer;
-//void HighScorefor1Player()
-//{
-//	AskforInput();
-//	check(total1);
-//	write();
-//	print();
-//}
-void AskforInput()
+
+void AskforInput()//Done by Jeffrey,Ask player for name
 {
   g_Console.writeToBuffer(1,0,"Input Your name(will only take in max 10 characters)and press enter:", 0x04);
 
 }
-void NameInputKeys()
+void NameInputKeys()//Done by Jeffrey,input keys for highscore name
 {
 	g_abKeyPressedName[K_A]= isKeyPressed('A');
 	g_abKeyPressedName[K_B]=isKeyPressed('B');
@@ -122,158 +116,157 @@ void NameInputKeys()
 	g_abKeyPressedName[K_BACKSPACE]=isKeyPressed(VK_BACK);
 	g_abKeyPressedName[K_ESCAPE2] = isKeyPressed(VK_ESCAPE);
 }
-void NameInput()
+void NameInput()//Done by Jeffrey,insert letters into player name
 {
-	if(PlayerName.length()<11)
+	if(PlayerName.length()<11)//Max 10 characters for name
 	{
 	
-	if(g_abKeyPressedName[K_A])
-	{
+		if(g_abKeyPressedName[K_A])
+		{
 		PlayerName+="A";
 		Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_B])
-	{
-	 PlayerName+='B';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_C])
-	{
+		}
+		if(g_abKeyPressedName[K_B])
+		{
+		 PlayerName+='B';Sleep(100);
+		}
+		if(g_abKeyPressedName[K_C])
+		{
 		PlayerName+='C';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_D])
-	{
+		}
+		if(g_abKeyPressedName[K_D])
+		{
 		PlayerName+='D';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_E])
-	{
+		}
+		if(g_abKeyPressedName[K_E])
+		{
 		PlayerName+='E';Sleep(100);
-	}
-	  if(g_abKeyPressedName[K_F])
-	{
+		}
+		if(g_abKeyPressedName[K_F])
+		{
 		PlayerName+='F';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_G])
-	{
+		}
+		if(g_abKeyPressedName[K_G])
+		{
 		PlayerName+='G';Sleep(100);
-	}
-	if(g_abKeyPressedName[K_H])
-	{
+		}
+		if(g_abKeyPressedName[K_H])
+		{
 		PlayerName+='H';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_I])
-	{
+		}
+		if(g_abKeyPressedName[K_I])
+		{
 		PlayerName+='I';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_J])
-	{
+		}
+		if(g_abKeyPressedName[K_J])
+		{
 		PlayerName+='J';Sleep(100);
-	}
-	if(g_abKeyPressedName[K_K])
-	{
+		}
+		if(g_abKeyPressedName[K_K])
+		{
 		PlayerName+='K';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_L])
-	{
+		}
+		if(g_abKeyPressedName[K_L])
+		{
 		PlayerName+='L';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_M])
-	{
+		}
+		if(g_abKeyPressedName[K_M])
+		{
 		PlayerName+='M';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_N])
-	{
+		}
+		if(g_abKeyPressedName[K_N])
+		{
 		PlayerName+='N';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_O])
-	{
+		}
+		 if(g_abKeyPressedName[K_O])
+		{
 		PlayerName+='O';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_P])
-	{
+		}
+		if(g_abKeyPressedName[K_P])
+		{
 		PlayerName+='P';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_Q])
-	{
+		}
+		if(g_abKeyPressedName[K_Q])
+		{
 		PlayerName+='Q';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_R])
-	{
+		}
+		if(g_abKeyPressedName[K_R])
+		{
 		PlayerName+='R';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_S])
-	{
+		}
+		if(g_abKeyPressedName[K_S])
+		{
 		PlayerName+='S';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_T])
-	{
+		}
+		if(g_abKeyPressedName[K_T])
+		{
 		PlayerName+='T';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_U])
-	{
+		}
+		if(g_abKeyPressedName[K_U])
+		{
 		PlayerName+='U';Sleep(100);
-	}
-	  if(g_abKeyPressedName[K_V])
-	{
+		}
+		if(g_abKeyPressedName[K_V])
+		{
 		PlayerName+='V';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_W])
-	{
+		}
+		if(g_abKeyPressedName[K_W])
+		{
 		PlayerName+='W';Sleep(100);
-	}
-	 if(g_abKeyPressedName[K_X])
-	{
+		}
+		if(g_abKeyPressedName[K_X])
+		{
 		PlayerName+='X';Sleep(100);
-	}
-	  if(g_abKeyPressedName[K_Y])
-	{
+		}
+		if(g_abKeyPressedName[K_Y])
+		{
 		PlayerName+='Y';Sleep(100);
-	  }
-	 if(g_abKeyPressedName[K_Z])
-	{
+		}
+		if(g_abKeyPressedName[K_Z])
+		{
 		PlayerName+='Z';Sleep(100);
-	 }
-	 if(g_abKeyPressedName[K_0])
-	 {
+		}
+		if(g_abKeyPressedName[K_0])
+		{
 		 PlayerName+='0';
-	 }
-	 if(g_abKeyPressedName[K_1])
-	 {
+		}
+		if(g_abKeyPressedName[K_1])
+		{
 		 PlayerName+='1';
-	 }
-	 if(g_abKeyPressedName[K_2])
-	  {
+		}
+		if(g_abKeyPressedName[K_2])
+		{
 		  PlayerName+='2';
-	  }
-	 
-	  if(g_abKeyPressedName[K_3])
-	  {
+		}
+		if(g_abKeyPressedName[K_3])
+		{
 		  PlayerName+='3';
-	  }
-	  if(g_abKeyPressedName[K_4])
-	  {
+		}
+		if(g_abKeyPressedName[K_4])
+		{
 		  PlayerName+='4';
-	  }
-	  if(g_abKeyPressedName[K_5])
-	  {
+		}
+		if(g_abKeyPressedName[K_5])
+		{
 		  PlayerName+='5';
-	  }
-	  if(g_abKeyPressedName[K_6])
-	  {
+		}
+		if(g_abKeyPressedName[K_6])
+		{
 		  PlayerName+='6';
-	  }
-	  if(g_abKeyPressedName[K_7])
-	  {
+		}
+		if(g_abKeyPressedName[K_7])
+		{
 		  PlayerName+='7';
-	  }
-	  if(g_abKeyPressedName[K_8])
-	  {
+		}
+		if(g_abKeyPressedName[K_8])
+		{
 		  PlayerName+='8';
- 	  }
-	  if(g_abKeyPressedName[K_9])
-	   {
+ 		}
+		if(g_abKeyPressedName[K_9])
+		{
 		   PlayerName+='9';
-	  }
-	  }
+		}
+	}
 	 if(g_abKeyPressedName[K_BACKSPACE])
 	{
 		if(PlayerName.length()<1)
@@ -293,20 +286,20 @@ void NameInput()
 		//g_eGameState=S_PRINTHIGHSCORE;
 		checkcounter++;
 	}
-	  if (isKeyPressed(VK_ESCAPE))
-	  {
-		  g_eGameState=S_MAINMENU;
-		  checkcounter=0;
-	  }
+	if (isKeyPressed(VK_ESCAPE))
+	{
+		 g_eGameState=S_MAINMENU;
+		 checkcounter=0;
+	}
 
 
 
 }
-void displayPlayerName()
+void displayPlayerName()//Done by Jeffrey,display player name when inputting
 {
 	{g_Console.writeToBuffer(0,2,PlayerName, 0x04);}
 }
-void check(int &total1,int &total2)
+void check(int &total1,int &total2)//done by jeffrey,check whether the points earned are in 1st,2nd or 3rd place
 {
 	
 	{
@@ -393,7 +386,8 @@ void check(int &total1,int &total2)
 		{
 			ThirdPlayerScore=ChangeScore;
 			ChangeThird++;
-		}else if (ChangeScore==0 && ChangeScore>=(atoi(CheckPlayer1Score.c_str())) )// If they score 0 and greater than first player,replace.
+		}
+		else if (ChangeScore==0 && ChangeScore>=(atoi(CheckPlayer1Score.c_str())) )// If they score 0 and greater than first player,replace.
 		{	
 			FirstPlayerScore=ChangeScore;
 			ChangeFirst++;
@@ -404,7 +398,7 @@ void check(int &total1,int &total2)
 			SecondPlayerScore=ChangeScore;
 			ChangeSecond++;
 		}
-			else if  (ChangeScore==0 && ChangeScore>=(atoi(CheckPlayer3Score.c_str())) )//if they score 0 and greater than third player,replace
+		else if  (ChangeScore==0 && ChangeScore>=(atoi(CheckPlayer3Score.c_str())) )//if they score 0 and greater than third player,replace
 		{
 			ThirdPlayerScore=ChangeScore;
 			ChangeThird++;
@@ -412,13 +406,13 @@ void check(int &total1,int &total2)
 		
 		ReadFile.close();
 
-		//g_eGameState=S_HIGHSCOREWRITE;
+		
 }
 		
 
 	
 }
-void write()
+void write()//Done by jeffrey,write highscore to text file
 {
 	
 	std::ofstream WriteFile;
@@ -460,7 +454,7 @@ void write()
 	}
 	if (level==Novice &&totalPlayers ==2&&timer==true)
 	{
-	WriteFile.open("display\\HighScoreEasy2time.txt");
+		WriteFile.open("display\\HighScoreEasy2time.txt");
 	}
 	if(level==Intermediate &&totalPlayers == 2&&timer==true)
 	{
@@ -531,9 +525,7 @@ void write()
 	
 	WriteFile.close();
 }
-
-
-void print()
+void print()//Done by jeffrey, Print out highscore after game ends
 {
 		COORD c;c.X=0;
 			c.Y=8;
@@ -562,7 +554,7 @@ void print()
 	if(level==Intermediate&&totalPlayers == 2&&timer==false)
 	{
 		ReadFile.open("display\\HighScoreNormal2.txt");
-		;
+		
 	}
 	if (level==Advanced&&totalPlayers == 2&&timer==false)
 	{
@@ -612,26 +604,22 @@ void print()
 		g_Console.writeToBuffer(8,16,ThirdPlayer);
 		g_Console.writeToBuffer(8+ThirdPlayer.length(),16," : ");
 		g_Console.writeToBuffer(8+2+ThirdPlayer.length(),16,CheckPlayer3Score);
-
-
-
-		if(Result1=="")
+		if(Result1=="")//If 0 points earned,a '0' will be placed in the string that will be printed
 		{
 			Result1="0";
 		}
-		g_Console.writeToBuffer(0,3,"Total Points Earned:");
+			g_Console.writeToBuffer(0,3,"Total Points Earned:");
 		if (total1>total2)
 		{
-		g_Console.writeToBuffer(22,3,Result1, 0x04);
+			g_Console.writeToBuffer(22,3,Result1, 0x04);
 		}
 		else
 		{
-
 			g_Console.writeToBuffer(22,3,Result2, 0x04);
 		}
 		ReadFile.close();
 } 
-void printalltime()
+void printalltime()//Done by Jeffrey,Print out all highscore for timed mode
 {
 		clearScreen();  
 		g_Console.writeToBuffer(20,3,"1 Player Timed Mode");
@@ -693,6 +681,8 @@ void printalltime()
 		g_Console.writeToBuffer(40+ThirdPlayer.length(),9," : ");
 		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),9,CheckPlayer3Score);
 		ReadFile3.close();
+		
+		g_Console.writeToBuffer(20,15,"2 Player Timed Mode");
 
 			std::ifstream ReadFile4;
 		ReadFile4.open("display\\HighScoreEasy2time.txt");
@@ -736,8 +726,6 @@ void printalltime()
 
 
 
-		g_Console.writeToBuffer(20,15,"2 Player Timed Mode");
-
 			std::ifstream ReadFile6;
 			ReadFile6.open("display\\HighScoreHard2time.txt");
 		std::getline(ReadFile6,FirstPlayer,'\n');
@@ -758,12 +746,13 @@ void printalltime()
 		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),21,CheckPlayer3Score);
 		ReadFile6.close();
 }
-void printall()
+void printall()//Done by Jeffrey,print all highscore for normal mode
 {
 
 	 
 		clearScreen();  
 		g_Console.writeToBuffer(20,3,"1 Player Mode");
+		
 		std::ifstream ReadFile;
 		ReadFile.open("display\\HighScoreEasy1.txt");
 		std::getline(ReadFile,FirstPlayer,'\n');
@@ -822,8 +811,10 @@ void printall()
 		g_Console.writeToBuffer(40+ThirdPlayer.length(),9," : ");
 		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),9,CheckPlayer3Score);
 		ReadFile3.close();
+		
+		g_Console.writeToBuffer(20,15,"2 Player Mode");
 
-			std::ifstream ReadFile4;
+		std::ifstream ReadFile4;
 		ReadFile4.open("display\\HighScoreEasy2.txt");
 		std::getline(ReadFile4,FirstPlayer,'\n');
 		std::getline(ReadFile4,CheckPlayer1Score,'\n');
@@ -843,7 +834,7 @@ void printall()
 		g_Console.writeToBuffer(0+3+ThirdPlayer.length(),21,CheckPlayer3Score);
 		ReadFile4.close();
 
-			std::ifstream ReadFile5;
+		std::ifstream ReadFile5;
 		ReadFile5.open("display\\HighScoreNormal2.txt");
 		std::getline(ReadFile5,FirstPlayer,'\n');
 		std::getline(ReadFile5,CheckPlayer1Score,'\n');
@@ -864,11 +855,8 @@ void printall()
 		ReadFile5.close();
 
 
-
-		g_Console.writeToBuffer(20,15,"2 Player Mode");
-
-			std::ifstream ReadFile6;
-			ReadFile6.open("display\\HighScoreHard2.txt");
+		std::ifstream ReadFile6;
+		ReadFile6.open("display\\HighScoreHard2.txt");
 		std::getline(ReadFile6,FirstPlayer,'\n');
 		std::getline(ReadFile6,CheckPlayer1Score,'\n');
 		std::getline(ReadFile6,SecondPlayer,'\n');
@@ -887,43 +875,48 @@ void printall()
 		g_Console.writeToBuffer(40+2+ThirdPlayer.length(),21,CheckPlayer3Score);
 		ReadFile6.close();
 }
-void  ResetSelectedHighScoreInput()
+void  ResetSelectedHighScoreInput()//Done by Jeffrey,Reset highscore for normal mode.
 {
 	
 		if(g_abKeyPressedName[K_1])
-		 {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  ResetNovice1();
+		 {
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		  ResetEasy1();
 		 }
 		if(g_abKeyPressedName[K_2])
-		 {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		   ResetIntermediate1();
+		 {
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		  ResetNormal1();
 		 }
 	 
 		 if(g_abKeyPressedName[K_3])
-	     {PlaySound(L"sound\\.wav",NULL,SND_ASYNC);
-		ResetAdvanced1();
-	
+	     {
+		   PlaySound(L"sound\\.wav",NULL,SND_ASYNC);
+		   ResetHard1();
 	     } 
-	   if(g_abKeyPressedName[K_4])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  ResetNovice2();
-	  }
-	  if(g_abKeyPressedName[K_5])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		   ResetIntermediate2();
-	  }
-	  if(g_abKeyPressedName[K_6])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		ResetAdvanced2();
-	  }
-	  if (g_abKeyPressedName[K_ESCAPE2])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  g_eGameState=S_MAINMENU;
-	  }
+		 if(g_abKeyPressedName[K_4])
+		 {
+		    PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+			ResetEasy2();
+		 }
+		if(g_abKeyPressedName[K_5])
+		 {
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		   ResetNormal2();
+	     }
+		if(g_abKeyPressedName[K_6])
+		{
+		 PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		 ResetHard2();
+		}
+		if (g_abKeyPressedName[K_ESCAPE2])
+		{
+		 PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		 g_eGameState=S_MAINMENU;
+		}
 
-}
-	
-void ResetNovice1()
+}	
+void ResetEasy1()//Done by Jeffrey,Reset Easy difficulty ,1 player for normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -942,7 +935,7 @@ void ResetNovice1()
 		WriteFile.close();
 	
 }
-void ResetIntermediate1()
+void ResetNormal1()// Done by jeffrey ,Reset Normal difficulty, 1 player for normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -960,7 +953,7 @@ void ResetIntermediate1()
 		WriteFile<<CheckPlayer3Score<<std::endl;
 		WriteFile.close();
 }
-void ResetAdvanced1()
+void ResetHard1()//Done by jeffrey,Reset Hard difficulty,1 player,for normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -979,7 +972,7 @@ void ResetAdvanced1()
 		WriteFile.close();
 	
 }
-void ResetNovice2()
+void ResetEasy2()// Done by Jeffrey,Reset Easy difficulty,2 player,Normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -998,7 +991,7 @@ void ResetNovice2()
 		WriteFile.close();
 	
 }
-void ResetIntermediate2()
+void ResetNormal2()//Done by Jeffrey,Reset Normal difficulty ,2 player,for normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1016,7 +1009,7 @@ void ResetIntermediate2()
 		WriteFile<<CheckPlayer3Score<<std::endl;
 		WriteFile.close();
 }
-void ResetAdvanced2()
+void ResetHard2()//Done by Jeffrey,Reset Hard difficulty,2 player ,Normal mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1035,12 +1028,12 @@ void ResetAdvanced2()
 		WriteFile.close();
 	
 }
-void renderResetSelectedHighScore()
+void renderResetSelectedHighScore()//Done by Jeffrey,Ask player what highscore they want to reset
 {
 	g_Console.writeToBuffer(0,0,"Select what highscore you want to reset by pressing it's number",0x04);
-	//g_Console.writeToBuffer(0,1,ResetSelectedHighScore, 0x04);
+	
 }
-void ResetNovice1time()
+void ResetEasy1time()//Done by Jeffrey,Reset Easy Difficulty, for 1 player,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1059,7 +1052,7 @@ void ResetNovice1time()
 		WriteFile.close();
 	
 }
-void ResetIntermediate1time()
+void ResetNormal1time()// Done by jeffrey,Reset Normal Difficulty,for 1 player,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1077,7 +1070,7 @@ void ResetIntermediate1time()
 		WriteFile<<CheckPlayer3Score<<std::endl;
 		WriteFile.close();
 }
-void ResetAdvanced1time()
+void ResetHard1time()//Done by Jeffrey ,Reset Hard difficulty,1 player mode,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1096,7 +1089,7 @@ void ResetAdvanced1time()
 		WriteFile.close();
 	
 }
-void ResetNovice2time()
+void ResetEasy2time()//Done by Jeffrey,Reset Easy difficulty,2player mode,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1115,7 +1108,7 @@ void ResetNovice2time()
 		WriteFile.close();
 	
 }
-void ResetIntermediate2time()
+void ResetNormal2time()//Done by Jeffrey,Reset normal difficulty,2 player mode,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1133,7 +1126,7 @@ void ResetIntermediate2time()
 		WriteFile<<CheckPlayer3Score<<std::endl;
 		WriteFile.close();
 }
-void ResetAdvanced2time()
+void ResetHard2time()//Reset Hard Difficulty,2 player mode,timed mode
 {
 		FirstPlayer="Empty";
 		SecondPlayer="Empty";
@@ -1152,37 +1145,44 @@ void ResetAdvanced2time()
 		WriteFile.close();
 	
 }
-void ResetSelectedHighScoreInputTime()
+void ResetSelectedHighScoreInputTime()//Done by jeffrey,Reset highscore for Timed mode
 {
 	if(g_abKeyPressedName[K_1])
-		 {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  ResetNovice1time();
+		 {
+		  PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		  ResetEasy1time();
 		 }
 		if(g_abKeyPressedName[K_2])
-		 {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		   ResetIntermediate1time();
+		 {
+		   PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		   ResetNormal1time();
 		 }
 	 
 		 if(g_abKeyPressedName[K_3])
-	     {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		ResetAdvanced1time();
+	     {
+			PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+			ResetHard1time();
 	
 	     } 
-	   if(g_abKeyPressedName[K_4])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  ResetNovice2time();
-	  }
+		if(g_abKeyPressedName[K_4])
+		{
+		 PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		 ResetEasy2time();
+		}
 	  if(g_abKeyPressedName[K_5])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		   ResetIntermediate2time();
-	  }
+		{
+		 PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		 ResetNormal2time();
+		}
 	  if(g_abKeyPressedName[K_6])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		ResetAdvanced2time();
-	  }
+		{
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		ResetHard2time();
+		}
 	  if (g_abKeyPressedName[K_ESCAPE2])
-	  {PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
-		  g_eGameState=S_MAINMENU;
+	  {
+		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
+		g_eGameState=S_MAINMENU;
 	  }
 
 }

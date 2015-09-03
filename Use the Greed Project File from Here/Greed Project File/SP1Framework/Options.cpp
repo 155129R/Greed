@@ -5,7 +5,7 @@ bool p2KeySet = 0;
 string choicePrint;
 KeyState keyStates[K_COUNT];
 
-void renderOptionsMenu()
+void renderOptionsMenu()//Done by Sham,Render Options
 {
     std::ifstream p1File;
 	string p1control;
@@ -37,7 +37,7 @@ void renderOptionsMenu()
 	p2File.close();
 }
 
-void processOptionsMenu()
+void processOptionsMenu()//Done by Sham, process options
 {
 	if (
 		(isKeyPressed('1')) ||
@@ -69,7 +69,8 @@ void processOptionsMenu()
 
 //PLAYER 1 CONTROL MENU
 
-void renderPlayerControl(){
+void renderPlayerControl()//Done by Sham ,Render Player Control scheme
+{
     
     std::ifstream qweFile;
 	string controlSet1;
@@ -111,7 +112,8 @@ void renderPlayerControl(){
 
 }
 
-void processPlayer1Control(){
+void processPlayer1Control()//Done by sham,Set control scheme for player1
+{
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 
 	    keyStates[K_UP].key = 'W';
@@ -148,7 +150,8 @@ void processPlayer1Control(){
 
 
 
-void processPlayer2Control(){
+void processPlayer2Control()//Done by Sham,Set player 2 control scheme
+{
         if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 
 	    keyStates[K_UP2].key = 'W';

@@ -2,7 +2,7 @@
 #define _BOARD_H
 #include "game.h"
 
-void boardGen();
+void boardGen();//Description of function. Summarise
 void renderMap();
 void renderCharacter();
 

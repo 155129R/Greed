@@ -6,7 +6,7 @@ void playersTurn(COORD C, unsigned int N, WORD col);
 
 void playersTimer(COORD C, unsigned int N, WORD col);
 
-void drawPlayerGUI(COORD loc, unsigned int playerNum)
+void drawPlayerGUI(COORD loc, unsigned int playerNum)//Done By Gary.Render userinterface
 {
 	Player* p = pickPlayer(playerNum);
 	const char *playerString;
@@ -47,7 +47,7 @@ void drawPlayerGUI(COORD loc, unsigned int playerNum)
 
 
 
-void printNumber(COORD C, unsigned int N, WORD col)
+void printNumber(COORD C, unsigned int N, WORD col)//Done by Gary.Render points earned
 {
 	if (N == 0) g_Console.writeToBuffer(C, '0', col);
 
@@ -58,13 +58,13 @@ void printNumber(COORD C, unsigned int N, WORD col)
 	}
 }
 
-void playersTurn(COORD C, unsigned int P, WORD col)
+void playersTurn(COORD C, unsigned int P, WORD col)//Done by gary,show whos turn it is for the players
 {
 	if (totalPlayers == 1) return;
 	if (currentTurn == P) g_Console.writeToBuffer(C, "^^^^^^", col);
 }
 
-void playersTimer(COORD C, unsigned int N, WORD col)
+void playersTimer(COORD C, unsigned int N, WORD col)//Done by Gary,Render Timer
 {
 	if (!timer) return;
 

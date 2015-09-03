@@ -17,7 +17,7 @@ std::string hint2="";
 std::string hint3="";
 std::string wholeboard="";
 int tutorial=0;
-void renderTutorial()
+void renderTutorial()//Done by Jeffrey,Render the tutorial
 {
 	if(tutorial==0)
 	{	

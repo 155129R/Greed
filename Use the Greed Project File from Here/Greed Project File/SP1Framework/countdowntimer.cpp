@@ -2,7 +2,7 @@
 
 bool hasStarted;
 
-void countdownUpdate(double T, Player& P)
+void countdownUpdate(double T, Player& P)//Done by GlenceTimer,check whether it ends 
 {
 	if (!hasStarted) return;
 

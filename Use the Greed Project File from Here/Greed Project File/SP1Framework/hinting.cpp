@@ -5,7 +5,7 @@
 
 bool allowedMoves[8];
 
-void findMoves(COORD P)
+void findMoves(COORD P)//Done by Gary,Find possibles moves when using hints
 {
 	for (unsigned int i = 0; i < 8; i++)
 	{
@@ -44,7 +44,7 @@ void findMoves(COORD P)
 	if (!hasPossibleMoves()) gameRunning = false;
 }
 
-void showHints(COORD P)
+void showHints(COORD P)//Done by gary,shows possible moves when using hints
 {
 	for (unsigned int i = 0; i < 8; i++)
 	{
@@ -65,7 +65,7 @@ void showHints(COORD P)
 	}
 }
 
-void hideHints()
+void hideHints()//Done by Gary ,Hide hints
 {
 	for (unsigned int i = 0; i < playfield.sizeX; i++)
 	{
@@ -76,7 +76,7 @@ void hideHints()
 	}
 }
 
-bool hasPossibleMoves()
+bool hasPossibleMoves()//Done by Gary, Check whether theres a possible move
 {
 	for (unsigned int i = 0; i < 8; i++)
 	{
@@ -85,7 +85,7 @@ bool hasPossibleMoves()
 	return false;
 }
 
-void checkWinner()
+void checkWinner()// Done by Glence,Check the winner of the game
 {
     bool B = false;
     for (unsigned int i = 0; i < 8; i++)

@@ -1,5 +1,6 @@
 #include "game.h"
-void renderMode(){
+void renderMode() //Done by Glence, Render the modes on screen
+	{
     std::string normal;
     std::string time;
     COORD c = g_Console.getConsoleSize();
@@ -10,7 +11,7 @@ void renderMode(){
     c.X = 4;
     
     std::ifstream normalmodefile;
-    normalmodefile.open("display\\normalmode.txt");
+    normalmodefile.open("display/normalmode.txt");
     for(int i=0; normalmodefile.good(); i++)
 	{
         std::getline(normalmodefile, normal);
@@ -32,7 +33,8 @@ void renderMode(){
     c.Y += 2;
 }
 
-void processmodeMenu(){
+void processmodeMenu()// Done by Glence, Inputs for Mode Menu
+{
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
 		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
@@ -52,7 +54,7 @@ void processmodeMenu(){
 	  }
  
 }
-void processmodeMenuHighScore()
+void processmodeMenuHighScore()//Done By Jeffrey,Inputs for printing all highscore boards
  {
 	 if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    

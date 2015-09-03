@@ -7,7 +7,8 @@ unsigned int genID = 0;
 
 //S_LOADING 1
 
-void changeDiff(){
+void changeDiff()//Done by Sham, Changing difficulty
+{
 	switch (level){
 	case 1: level = Novice; break;
 
@@ -21,7 +22,9 @@ void changeDiff(){
 	}
 }
 
-void applyDiff(){
+void applyDiff()//Done by Sham,change board according to difficulty
+
+{
 	if (level == Novice)
 	{
 		playfield.resize(30,30);
@@ -44,7 +47,7 @@ void applyDiff(){
 
 }
 
-void chancesofNumber()
+void chancesofNumber()// Done by Glence, Set chances of number appearing for difficulty
 {
 
 	const unsigned int* P;
@@ -62,7 +65,8 @@ void chancesofNumber()
 }
 
 //S_DIFFICULTY
-void renderDiff(){
+void renderDiff()// Done by sham,render difficulty screen 
+{
 	std::string novice;
 	std::string intermediate;
 	std::string advanced;
@@ -105,7 +109,8 @@ void renderDiff(){
 
 }
 
-void processDiff(){
+void processDiff() //Done by Sham, processing the difficulty choosed
+{
 
 	if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    level = static_cast<Difficulty>(1);

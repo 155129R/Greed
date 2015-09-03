@@ -3,7 +3,8 @@
 #include "board.h"
 
 extern numberofPlayers Number = Single;
-void totalplayerNumber(){
+void totalplayerNumber()//Done by Glence,1 or 2 players
+{
     switch(Number){
         case 1: Number = Single; break;
 
@@ -14,7 +15,8 @@ void totalplayerNumber(){
     }
 }
 
-void applyplayer(){
+void applyplayer()//Done by Glence,Set 1 player or 2 player for game
+{
     if(Number == Single){
 
    totalPlayers = 1;
@@ -28,7 +30,8 @@ void applyplayer(){
 }
 
 
-void renderPlayerMenu(){
+void renderPlayerMenu()//Done by Glence,Render Player menu screen
+{
     std::string Single;
     std::string Multi;
     COORD c = g_Console.getConsoleSize();
@@ -59,7 +62,8 @@ void renderPlayerMenu(){
     c.Y += 2;
 }
 
-void processPlayerMenu(){
+void processPlayerMenu()//Done by glence,process Player menu
+{
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
 		PlaySound(L"sound\\button.wav",NULL,SND_ASYNC);
