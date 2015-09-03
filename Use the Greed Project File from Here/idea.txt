@@ -1,0 +1,85 @@
+To Do:
+moveCharacter if else? Loop?  - Glence
+sperate checking into new function - Sham
+another function for eating - Sham
+SHOW WHICH PLAYER'S TURN IS - Jeff
+Player structs << can put point here - Gary
+Vector of player structs? - Gary/Jeff
+Use struct to pass in which player for move() - Glence
+Move Functions to different .cpp
+Split functions if they do more than they should
+USE STRUCT FOR PLAYFIELD (height, width, vector) - Glence/Gary
+HIGHSCORE & Leaderboard - JEFF
+TAKE PLAYER NAME - Jeff
+Difficulty - Sham
+Board size changing - Sham
+player id, coord, points
+Endless  Mode
+Time Mode
+	- Get as many points during given time
+Arcade Mode 
+	- Endless with powerups
+PowerUps 
+	- Review powerups( Item to sabotage other player? Item to boost ?)
+	- How to get powerups? Unlock by reaching scores? Unlock by getting gold? Unlock by something else?
+
+Bomb Mode
+	- 1 bomb in playfield. do not go across or touch it. No. of bomb will increase. 
+Stage Mode
+CHANGE PLAYER 2 Key naming to player2UP etc.
+PvP Mode
+	-Best of 3?
+	-Reach No. of points before the other
+Get timed mode done 
+Main Menu 
+
+
+NO STORY!NOOOOOOOO.
+Change how we use repository
+
+What has been done:
+Sham - Board Gen [18/08/2015] (tweaked by Gary [18/08/2015])
+Sham - eating and movement [19/08/2015 - 20/08/2015]  (tweaked by Gary [20/08/2015])
+Jeff - Sound FX (TO BE INCLUDED INTO NEW FRAMEWORK) [20/08/2015]
+Jeff - MUSIC (TO BE INCLUDED INTO NEW FRAMEWORK) [20/08/2015]
+Sham - move all functions to new framework [20/08/2015]
+Glence debugged movement (for new framework)[21/08/2015]
+Glence Set Up Keys [21/08/2015]
+Gary - 2nd player [21/08/2015]
+Glence movement for player 2 [21/08/2015]
+Jeff - Points [21/08/2015]
+Jeff - Retry [21/08/2015]
+
+Jeff - seperate points func into new function in its own cpp [21/08/2015]
+Gary - Hinting Function [21/08/2015]
+Gary - Move the move function to new cpp [24/08/2015]
+Glence - header for move and hinting [24/08/2015]
+Glence & Sham - Debugging for movement & Change of keys [24/08/2015]
+Jeff - Move point calculation function to new .cpp and .h [24/08/2015]
+Jeff - Debugging for points [24/08/2015]
+
+Glence - Move board to new .cpp and .h [26/8/2015]
+Jeff - worked on highscore [25-26/8/2015]
+Gary & Glence- playerStruct [25/8/2015]
+Gary - edit move function such that the players have to press enter before making a move [ 26- 27/8/2015]
+Sham - Help Glence with board [25-26/8/2015]
+Sham - Split Move function to check,move,eat [26/8/2015]
+Sham - Started on allowing user to choose difficulty and change game elements based on chose difficulty[26/8/2015]
+Jeff - Highscore finished [27/08/2015]
+Sham - Finished Difficulty [27/08/2015] 
+Gary - Edited move function. Added "delay" between each key pressed.[27/08/2015]
+Glence - Formatting of move - [27/08/2015]
+Gary & Glence - keyStates and modified playerStruct [28/08/2015]
+Sham - edited movement and keyStates [28/08/2015]
+Sham - allow singleplayer/multiplayer [28/08/2015]
+Gary - Fix points after GUI implementation [28/08/2015]
+Sham - Edited Menus [28/08/2015]
+Sham - Fixed error with resizing of playfield [31/08/2015]
+Sham - Default Keys [31/08/2015]
+Jeff - Music & Sounds [31/08/2015]
+Glence - Check if no moves left, end game [31/08/2015]
+Sham - Start on report and presentation[01/09/2015]
+Sham - Continue presentation slides [02/09/2015]
+Jeff - Tutorial [01/09/2015 - 02/09/2015]
+Glence - Time-attack mode [01/09/2015 - 02/09/2015]
+
