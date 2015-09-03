@@ -366,6 +366,9 @@ BB:
 
 	// quits the game if player hits the escape key
 	/*if (keyStates[K_ESCAPE].onPressed) g_bQuitGame = true;*/
+
+
+
 	if(isKeyPressed(VK_ESCAPE))
 	{
 		g_eGameState=S_HIGHSCORE;
@@ -476,7 +479,7 @@ void playerInit(Player& P)
 	P.active = true;
 	P.hintsAvailable = 3;
 	P.totalScore = 0;
-	P.timeLeft = 101;
+	P.timeLeft = 100;
 }
 
 void gameInit()
@@ -490,10 +493,20 @@ void gameInit()
 void endTurn()
 {
 	Player *P = pickPlayer(currentTurn);
-	(*P).timeLeft = (*P).timeLeft < 30 ? 30 : (*P).timeLeft;
-	
-	currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
-	P = pickPlayer(currentTurn);
+    switch (totalPlayers)
+    {
+    case 1: 
+        currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+        P = pickPlayer(currentTurn);
+        break;
+
+
+    case 2:
+        (*P).timeLeft = (*P).timeLeft < 30 ? 30 : (*P).timeLeft;	
+        currentTurn = (currentTurn < totalPlayers - 1) ? currentTurn + 1 : 0;
+        P = pickPlayer(currentTurn);
+        break;
+    }
 
 	hintOn = false;
 	hasStarted = true;

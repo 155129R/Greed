@@ -93,6 +93,7 @@ void checkWinner()
         B |= allowedMoves[i];
         if(((timer == true) && (totalPlayers == 1)))
         {
+
             
         }
     }
