@@ -91,19 +91,44 @@ void checkWinner()
     for (unsigned int i = 0; i < 8; i++)
     {
         B |= allowedMoves[i];
-        if(((timer == true) && (totalPlayers == 1)))
-        {
 
-            
+   
+    }
+    if ( B == true)
+    {
+         if(((timer == true) && (totalPlayers == 1)))
+        {
+            if (player1.timeLeft == 0)
+            {
+                player1.playerLocation.X = 0;
+                player1.playerLocation.Y = 0;
+                COORD victoryTextCOORD;
+                victoryTextCOORD.X = 15;
+                victoryTextCOORD.Y = 15;
+                
+                std::ifstream timesupFile;
+                std::string timesup;
+	            timesupFile.open("timesup.txt");
+	            while(timesupFile.good())
+	            {
+	                std::getline(timesupFile,timesup);
+	                g_Console.writeToBuffer(victoryTextCOORD.X ,victoryTextCOORD.Y, timesup, 0x3F);
+                    victoryTextCOORD.Y++;
+	            }
+	            timesupFile.close();
+             
+            }
         }
     }
     
     if ( B == false)
     {
+        
        
             player1.playerLocation.X = 0;
             player1.playerLocation.Y = 0;
-            g_Console.writeToBuffer(12,10, "press the ESC key to end the game and check your score or press 'R' to retry", 0x0B);
+            g_Console.writeToBuffer(12,14, "press the ESC key to end the game and check your score or press 'R' to retry", 0x0B);
+
         
       if ( totalPlayers == 2)
         {

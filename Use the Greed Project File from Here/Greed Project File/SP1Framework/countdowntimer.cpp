@@ -10,5 +10,9 @@ void countdownUpdate(double T, Player& P)
 
 	P.timeLeft = P.timeLeft > D ? P.timeLeft - D : 0;
 
-	if (P.timeLeft == 0) endTurn();
+	if (P.timeLeft == 0) 
+    {
+        if (totalPlayers == 2) endTurn();
+        else gameRunning = false;
+    }
 }

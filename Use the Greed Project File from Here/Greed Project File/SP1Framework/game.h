@@ -225,6 +225,7 @@ enum playsize{
     big = 3
 };
 
+
 extern unsigned int currentTurn;
 extern bool hintOn;
 extern KeyState keyStates[K_COUNT];
