@@ -1,0 +1,20 @@
+Sri Sham:
+Board gen 
+Movement
+Options
+Difficulties
+
+Jeffrey Low:
+Highscore
+Tutorial
+
+Glence Low:
+Chances (Chances of certain numbers appearing on board for a better balanced game)
+Time mode
+
+
+Gary Goh:
+Hinting
+Player and player struct
+Movement Tweaking
+Graphical User Interface
