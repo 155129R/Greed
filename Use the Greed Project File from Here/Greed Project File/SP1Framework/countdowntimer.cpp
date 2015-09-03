@@ -5,6 +5,7 @@ bool hasStarted;
 void countdownUpdate(double T, Player& P)
 {
 	if (!hasStarted) return;
+    if (!timer) return;
 
 	unsigned int D = (unsigned int)(T * 10);
 
