@@ -3,12 +3,12 @@
 
 #include "game.h"
 
-void findMoves(COORD P);
-void showHints(COORD P);
-void hideHints();
-void checkWinner();
+void findMoves(COORD P);//find possible moves when using hints
+void showHints(COORD P);//show possible moves when using hints
+void hideHints();		//hide hints
+void checkWinner();		//Check the winner of the game
 
-bool hasPossibleMoves();
+bool hasPossibleMoves();//check whether theres a possible move
 
 extern bool allowedMoves[8];
 

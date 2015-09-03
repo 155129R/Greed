@@ -1,7 +1,7 @@
 #ifndef _DIRECTIONS_H
 #define _DIRECTIONS_H
 
-enum Directions
+enum Directions//for directions
 {
 	DIR_LEFT,
 	DIR_RIGHT,

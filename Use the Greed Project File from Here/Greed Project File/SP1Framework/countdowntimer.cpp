@@ -1,8 +1,8 @@
 #include "countdowntimer.h"
 
-bool hasStarted;
+bool hasStarted;//Done by Glence,Whether the game has started or not
 
-void countdownUpdate(double T, Player& P)//Done by GlenceTimer,check whether it ends 
+void countdownUpdate(double T, Player& P)//Done by Glence,check whether timer ends ends 
 {
 	if (!hasStarted) return;
     if (!timer) return;

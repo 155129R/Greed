@@ -5,7 +5,7 @@ bool p2KeySet = 0;
 string choicePrint;
 KeyState keyStates[K_COUNT];
 
-void renderOptionsMenu()//Done by Sham,Render Options
+void renderOptionsMenu()//Done by Sham,Render Options screen
 {
     std::ifstream p1File;
 	string p1control;
@@ -37,7 +37,7 @@ void renderOptionsMenu()//Done by Sham,Render Options
 	p2File.close();
 }
 
-void processOptionsMenu()//Done by Sham, process options
+void processOptionsMenu()//Done by Sham, process options input
 {
 	if (
 		(isKeyPressed('1')) ||

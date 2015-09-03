@@ -12,7 +12,7 @@ using std::vector;
 using std::string;
 
 extern CStopWatch g_swTimer;
-extern bool g_bQuitGame;
+extern bool g_bQuitGame;//quit game
 
 void init(void);      // initialize your variables, allocate memory, etc
 void getInput(void);      // get input from player
@@ -34,13 +34,13 @@ enum highlightedState
 //Defines a cell in the playfield.
 //Variable highlight represents a highlighted state.
 //---
-struct PlayfieldCell
+struct PlayfieldCell//For the board individual cells
 {
 	unsigned int value;
 	highlightedState highlight;
 };
 
-class Chances
+class Chances// calculate chances of number appearing in the board
 {
 public:
 	unsigned int percentiles[8]; //Chances (in %) for 2, 3, 4, 5, 6, 7, 8, 9 respectively. Uses 1 if rolled value is less than required for 2.
@@ -65,7 +65,7 @@ extern Chances boardChances;
 //---
 //Defines a playfield class.
 //---
-class Playfield
+class Playfield//For the board
 {
 public:
 	size_t sizeX;
@@ -103,7 +103,7 @@ extern Playfield playfield;
 //--Player variables
 
 //Defines a player.
-struct Player
+struct Player//for keeping track of score,time left(timed mode) and hints left
 {
 	bool active;
 	unsigned int playerNum;
@@ -124,7 +124,7 @@ extern unsigned int totalPlayers;
 //---
 //Enumeration to store the control keys that your game will have
 //---
-enum EKEYS
+enum EKEYS//For keyboard inputs
 {
 	K_UP,
 	K_UPLEFT,
@@ -154,7 +154,7 @@ enum EKEYS
 extern bool p1KeySet;
 extern bool p2KeySet;
 //---
-class KeyState
+class KeyState //Check whether button is pressed or not
 {
 public:
 	char key;
@@ -194,9 +194,8 @@ private:
 	}
 };
 
-//---
 //Enum for the different screen states
-//---
+
 enum EGAMESTATES
 {
     S_SPLASHSCREEN,
@@ -219,7 +218,7 @@ enum EGAMESTATES
     
 };
 
-enum playsize{
+enum playsize{		//for difficulty also
     mini = 1,
     normal = 2,
     big = 3
@@ -241,34 +240,33 @@ void renderSplashScreen();  // renders the splash screen
 void setcursor(bool visible, DWORD size); //Changes cursor "visibility"
 void renderGame();          // renders the game stuff
 void renderCharacter();     // renders the character to buffer
-void renderGUI();
+void renderGUI();			//render user interface
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void changeDiff();          //Changes the difficulty according to user's chosen difficulty
 void applyDiff();           //Apply changes for difficulty
-void processPlayerMenu();
-void renderPlayerMenu();
-void renderMode();
-void applyplayer();
-void totalplayerNumber();
-void processOptionsMenu();
-void renderOptionsMenu();
-void renderPlayerControl();
-void processPlayer1Control();
-void renderPlayer2Control();
-void processPlayer2Control();
-void load1process();
-void load2process();
-void processDiff();
-void renderDiff();
-void renderLoading1();
-void renderLoading2();
-void chancesofNumber();
-void processmodeMenu();
-void playerInit(Player& P);
-void gameInit();
-void endTurn();
-void processmodeMenuHighScore();
+void processPlayerMenu();	//Process Player input for playermenu
+void renderPlayerMenu();	//Render Player Menu screen
+void renderMode();			//Render the modes screen
+void applyplayer();			//set 1 or 2 player for game
+void totalplayerNumber();	//find total number of players
+void processOptionsMenu();	//Process options input
+void renderOptionsMenu();	//Render Option Screen
+void renderPlayerControl();	//Render PLayer Control Scheme
+void processPlayer1Control();//Set control scheme for player 1
+void processPlayer2Control();//set control scheme for player 2
+void load1process();		//Check for difficulty ,player and apply
+void load2process();		//Render the board and game
+void processDiff();			//Proccessing difficulty chosen
+void renderDiff();			//Render Difficulty Screen
+void renderLoading1();		// Render Loading screen 1
+void renderLoading2();		//Render loading screen 2
+void chancesofNumber();		//set chances of number appearing for difficulty
+void processmodeMenu();		//Proccess mode menu inputs
+void playerInit(Player& P);	//Initialise the player at the start of the game
+void gameInit();			//Initialise gamehints,turns and starting turn at start of the game
+void endTurn();				//ends the turn for the player
+void processmodeMenuHighScore();//process inputs for printing all highscore boards
 extern COORD renderOffset;
 extern Console g_Console;
 extern EGAMESTATES g_eGameState;

@@ -33,7 +33,7 @@ void renderMode() //Done by Glence, Render the modes on screen
     c.Y += 2;
 }
 
-void processmodeMenu()// Done by Glence, Inputs for Mode Menu
+void processmodeMenu()// Done by Glence, process mode menu inputs
 {
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    
@@ -54,7 +54,7 @@ void processmodeMenu()// Done by Glence, Inputs for Mode Menu
 	  }
  
 }
-void processmodeMenuHighScore()//Done By Jeffrey,Inputs for printing all highscore boards
+void processmodeMenuHighScore()//Done By Jeffrey,process inputs for printing all highscore boards
  {
 	 if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    

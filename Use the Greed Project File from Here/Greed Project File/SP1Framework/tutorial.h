@@ -5,9 +5,8 @@
 
 
 extern Console g_Console;
-void renderTutorial();
-void renderCharacterTutorial();
-void renderBoardTutorial();
+void renderTutorial();//Render Tutorial
+
 
 
 #endif  

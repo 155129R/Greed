@@ -2,7 +2,7 @@
 #include "board.h"
 #include <iostream>
 
-void load1process()//Done by Sham,check for difficulty and apply 
+void load1process()//Done by Sham,check for difficulty ,player and apply 
 {
 
 	changeDiff();

@@ -3,7 +3,7 @@
 #include "board.h"
 
 extern numberofPlayers Number = Single;
-void totalplayerNumber()//Done by Glence,1 or 2 players
+void totalplayerNumber()//Done by Glence,find total amount of players
 {
     switch(Number){
         case 1: Number = Single; break;
@@ -62,7 +62,7 @@ void renderPlayerMenu()//Done by Glence,Render Player menu screen
     c.Y += 2;
 }
 
-void processPlayerMenu()//Done by glence,process Player menu
+void processPlayerMenu()//Done by glence,process Player menu inputs
 {
     if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){
 	    

@@ -109,7 +109,7 @@ void renderDiff()// Done by sham,render difficulty screen
 
 }
 
-void processDiff() //Done by Sham, processing the difficulty choosed
+void processDiff() //Done by Sham, processing the difficulty chosen
 {
 
 	if((isKeyPressed('1'))||(isKeyPressed(VK_NUMPAD1))){

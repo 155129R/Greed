@@ -40,33 +40,7 @@ extern Console g_Console;
 extern int total1;
 extern int total2;
 extern Difficulty level;
-void write();
-void print();
-void check(int &total1,int &total2);
-void NameInput();
-void printall();
-void displayPlayerName();
-void NameInputKeys();
 bool g_abKeyPressedName[K_Z];
-void ResetHighScore();
-void renderResetSelectedHighScore();
-void  ResetSelectedHighScoreInput();
-void ResetEasy1();
-void ResetNormal1();
-void ResetHard1();
-void ResetEasy2();
-void ResetNormal2();
-void ResetHard2();
-void ResetEasy1time();
-void ResetNormal1time();
-void ResetHard1time();
-void ResetEasy2time();
-void ResetNormal2time();
-void ResetHard2time();
-void printalltime();
-void ResetSelectedHighScoreInputTime();
-
-void AskforInput();
 extern bool timer;
 
 void AskforInput()//Done by Jeffrey,Ask player for name

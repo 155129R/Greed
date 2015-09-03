@@ -2,7 +2,8 @@
 #define _difficulty
 
 
-enum Difficulty{
+enum Difficulty //Difficulty level
+{
 
 	Novice = 1,
 	Intermediate = 2,

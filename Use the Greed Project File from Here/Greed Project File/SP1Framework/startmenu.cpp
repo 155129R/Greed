@@ -83,7 +83,7 @@ void renderMenu()//Done by Jeffrey,Render Start Menu
 	
 
 
-void selectMenuInput()//Done by Jeffrey,Process start menu
+void selectMenuInput()//Done by Jeffrey,Process start menu inputs
 {
 	 if(isKeyPressed(VK_NUMPAD1)||isKeyPressed('1'))
 	 {

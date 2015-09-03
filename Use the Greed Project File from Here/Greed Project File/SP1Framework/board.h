@@ -3,8 +3,8 @@
 #include "game.h"
 
 void boardGen();//Description of function. Summarise
-void renderMap();
-void renderCharacter();
+void renderMap();//Prints board.
+void renderCharacter();//Generate Board
 
 extern unsigned char playerChar;
 
