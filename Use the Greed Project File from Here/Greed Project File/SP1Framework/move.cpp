@@ -1,6 +1,6 @@
 #include "move.h"
 #include "points.h"
-bool move(Player& P, Directions D)//Done by Gary, Player movement
+bool move(Player& P, Directions D)//Done by Sham & Gary, Player movement
 {
 	if (!allowedMoves[D]) return false;
 

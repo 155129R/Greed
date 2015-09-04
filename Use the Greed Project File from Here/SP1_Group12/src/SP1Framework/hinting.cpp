@@ -143,7 +143,7 @@ void checkWinner()// Done by Glence,Check the winner of the game
                 
                 std::ifstream player1wonFile;
                 std::string playerwon;
-	            player1wonFile.open("player1win.txt");
+	            player1wonFile.open("display\\player1win.txt");
 	            while(player1wonFile.good())
 	            {
 	                std::getline(player1wonFile,playerwon);

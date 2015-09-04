@@ -5,7 +5,7 @@
 
 unsigned char playerChar;
 
-void renderMap() //Done by : Gary . Prints board.
+void renderMap() //Done by : Sham & Gary . Prints board.
 {
 	for (unsigned int Y = 0; Y < playfield.sizeY; Y++)
 	{

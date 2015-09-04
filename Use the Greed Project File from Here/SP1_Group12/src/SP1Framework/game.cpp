@@ -404,7 +404,7 @@ void renderSplashScreen()  // renders the splash screen
     }
 }
 
-void renderGame()//Done by Gary,Render the whole game
+void renderGame()//Render the whole game
 {
 	renderOffset.X = (consoleX - playfield.sizeX) / 2;
 	renderOffset.Y = 0;
@@ -462,7 +462,7 @@ void renderToScreen()
 
 //-----Others
 
-Player* pickPlayer(unsigned int N)//Done By Gary,Pick either Player 1 or 2
+Player* pickPlayer(unsigned int N)//Done By Sham,Pick either Player 1 or 2
 {
 	Player* P;
 
